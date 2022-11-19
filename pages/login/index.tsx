@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { ChangeEvent, FormEvent, useState } from 'react';
+import React, { FormEvent, useEffect, useRef } from 'react';
 import { saveToLocalStorage } from '../../utils/localStorage';
 import {
     ACCESS_TOKEN_LOCAL_STORAGE_KEY,
@@ -12,21 +12,20 @@ import InputField from '../../components/inputField';
 export default function Login() {
     const router = useRouter();
 
-    const [inputEmail, setInputEmail] = useState<string | undefined>();
-    const [inputPassword, setInputPassword] = useState<string | undefined>();
+    const emailRef = useRef<HTMLInputElement>(null);
+    const passwordRef = useRef<HTMLInputElement>(null);
 
     const submitLogin = (e: FormEvent) => {
         e.preventDefault();
-        if (inputPassword !== undefined && inputEmail !== undefined) {
+
+        const email = emailRef.current?.value;
+        const password = passwordRef.current?.value;
+
+        if (email !== '' && password !== '') {
             fetch(`${EASY_ERP_BASE_URL}/auth/login`, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    email: inputEmail,
-                    password: inputPassword,
-                }),
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email: email, password: password }),
             })
                 .then(response => {
                     if (response.ok) {
@@ -44,10 +43,19 @@ export default function Login() {
                         REFRESH_TOKEN_LOCAL_STORAGE_KEY,
                         data.refresh
                     );
+
                     router.push('/home');
+                })
+                .catch(error => {
+                    // TODO: should we log errors? We could then gain better understanding if something is not working properly
+                    console.error(error);
                 });
         }
     };
+
+    useEffect(() => {
+        emailRef.current?.focus();
+    });
 
     return (
         <div className="flex flex-col items-center justify-center h-screen gap-4">
@@ -58,21 +66,11 @@ export default function Login() {
                 className="flex flex-col bg-sky-900 px-8 py-12 items-center rounded-lg gap-3 w-1/5"
                 onSubmit={submitLogin}
             >
-                <InputField
-                    type="email"
-                    placeholder="Email"
-                    value={inputEmail}
-                    onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                        setInputEmail(e.target.value)
-                    }
-                />
+                <InputField type="email" placeholder="Email" ref={emailRef} />
                 <InputField
                     type="password"
                     placeholder="Password"
-                    value={inputPassword}
-                    onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                        setInputPassword(e.target.value)
-                    }
+                    ref={passwordRef}
                 />
                 <input
                     type="submit"
