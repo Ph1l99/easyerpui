@@ -1,6 +1,11 @@
 import Head from 'next/head';
+import Link from 'next/link';
+import { useAuth } from '../components/useAuth';
 
 export default function Home() {
+    const { user, setUser } = useAuth();
+    const shadyUser = { name: 'Cristian', email: 'cb@easyerp.com' };
+
     return (
         <>
             <Head>
@@ -12,7 +17,21 @@ export default function Home() {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
 
-            <main className="bg-amber-700">Hello, welcome to my tutorial</main>
+            <main className="bg-amber-700 p-4">
+                <p>Hello, welcome {user?.name}</p>
+                <button
+                    className="border rounded p-2 bg-white hover:bg-zinc-200 transition duration-300 ease-in-out"
+                    onClick={() => setUser(user?.name ? {} : shadyUser)}
+                >
+                    Toggle setting user context
+                </button>
+
+                <Link href="/me">
+                    <button className="border rounded p-2 bg-white hover:bg-zinc-200 transition duration-300 ease-in-out">
+                        Check context
+                    </button>
+                </Link>
+            </main>
         </>
     );
 }
