@@ -1,13 +1,17 @@
 import Link from 'next/link';
-import { FormEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, useState } from 'react';
 import { saveToLocalStorage } from '../../utils/localStorage';
 import {
     ACCESS_TOKEN_LOCAL_STORAGE_KEY,
     EASY_ERP_BASE_URL,
     REFRESH_TOKEN_LOCAL_STORAGE_KEY,
 } from '../../utils/constants';
+import { useRouter } from 'next/router';
+import InputField from '../../components/inputField';
 
 export default function Login() {
+    const router = useRouter();
+
     const [inputEmail, setInputEmail] = useState<string | undefined>();
     const [inputPassword, setInputPassword] = useState<string | undefined>();
 
@@ -40,6 +44,7 @@ export default function Login() {
                         REFRESH_TOKEN_LOCAL_STORAGE_KEY,
                         data.refresh
                     );
+                    router.push('/home');
                 });
         }
     };
@@ -53,19 +58,21 @@ export default function Login() {
                 className="flex flex-col bg-sky-900 px-8 py-12 items-center rounded-lg gap-3 w-1/5"
                 onSubmit={submitLogin}
             >
-                <input
-                    type="text"
-                    className="p-2 bg-zinc-200 rounded-lg placeholder-zinc-700 w-full outline-none focus:outline focus:outline-offset-4 focus:outline-white"
+                <InputField
+                    type="email"
                     placeholder="Email"
                     value={inputEmail}
-                    onChange={e => setInputEmail(e.target.value)}
+                    onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                        setInputEmail(e.target.value)
+                    }
                 />
-                <input
+                <InputField
                     type="password"
-                    className="p-2 bg-zinc-200 rounded-lg placeholder-zinc-700 w-full outline-none focus:outline focus:outline-offset-4 focus:outline-white"
                     placeholder="Password"
                     value={inputPassword}
-                    onChange={e => setInputPassword(e.target.value)}
+                    onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                        setInputPassword(e.target.value)
+                    }
                 />
                 <input
                     type="submit"
