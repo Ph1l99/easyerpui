@@ -2,8 +2,8 @@ import Link from 'next/link';
 import { useState } from 'react';
 
 export default function Login() {
-    const [inputEmail, setInputEmail] = useState<String | null>();
-    const [inputPassword, setInputPassword] = useState<String | null>();
+    const [inputEmail, setInputEmail] = useState<string | undefined>();
+    const [inputPassword, setInputPassword] = useState<string | undefined>();
 
     return (
         <div className="flex flex-col items-center justify-center h-screen gap-4">
@@ -15,11 +15,15 @@ export default function Login() {
                     type="text"
                     className="p-2 bg-zinc-200 rounded-lg placeholder-zinc-700 w-full outline-none focus:outline focus:outline-offset-4 focus:outline-white"
                     placeholder="Email"
+                    value={inputEmail}
+                    onChange={e => setInputEmail(e.target.value)}
                 />
                 <input
                     type="password"
                     className="p-2 bg-zinc-200 rounded-lg placeholder-zinc-700 w-full outline-none focus:outline focus:outline-offset-4 focus:outline-white"
                     placeholder="Password"
+                    value={inputPassword}
+                    onChange={e => setInputPassword(e.target.value)}
                 />
                 <button className="border text-center rounded px-5 py-1 bg-zinc-200 font-bold outline-none focus:outline focus:outline-offset-4 focus:outline-white">
                     Login
