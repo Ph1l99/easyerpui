@@ -4,7 +4,7 @@ import {
     REFRESH_TOKEN_LOCAL_STORAGE_KEY,
 } from '../utils/constants';
 import { saveToLocalStorage } from '../utils/localStorage';
-import { EASY_ERP_LOGIN_URL } from '../utils/urls';
+import { EASY_ERP_BASE_URL, EASY_ERP_LOGIN_URL } from '../utils/urls';
 
 type User = {
     name?: string;
@@ -45,7 +45,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         password?: string
     ): Promise<boolean> => {
         if (email !== '' && password !== '') {
-            await fetch(EASY_ERP_LOGIN_URL, {
+            await fetch(EASY_ERP_BASE_URL + EASY_ERP_LOGIN_URL, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email: email, password: password }),
