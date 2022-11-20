@@ -10,7 +10,7 @@ export default function Drawer() {
     return (
         <>
             <div className="flex flex-col bg-sky-900 w-56 text-white font-light">
-                <div className="ml-4">
+                <div className="ml-4 mt-5">
                     <ul className="space-y-3.5">
                         <li>
                             <Link href="/">Home</Link>
