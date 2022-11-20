@@ -46,7 +46,7 @@ export default function Login() {
                     className="border text-center rounded px-5 py-1 bg-zinc-200 font-semibold outline-none focus:outline focus:outline-offset-4 focus:outline-white"
                     value="Login"
                 />
-                <Link href="/" className="mt-2 text-white">
+                <Link href="/signup" className="mt-2 text-white">
                     Non hai un account? <u>Registrati!</u>
                 </Link>
             </form>
