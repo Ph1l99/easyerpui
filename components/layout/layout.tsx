@@ -1,6 +1,6 @@
 import React from 'react';
 import Header from '../header';
-import Drawer from '../drawer';
+import Drawer from './drawer/drawer';
 
 type Props = {
     children: React.ReactNode;

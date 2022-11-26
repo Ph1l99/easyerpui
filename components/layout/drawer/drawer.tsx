@@ -3,7 +3,7 @@ import {
     EASY_ERP_INVENTORY_URL,
     EASY_ERP_REPAIRS_BASE_URL,
     EASY_ERP_TRANSACTIONS_URL,
-} from '../utils/urls';
+} from '../../../utils/urls';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
