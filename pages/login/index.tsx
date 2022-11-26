@@ -4,8 +4,6 @@ import { useRouter } from 'next/router';
 import InputField from '../../components/inputField';
 import { useAuth } from '../../components/useAuth';
 import Head from 'next/head';
-import Header from '../../components/header';
-import Drawer from '../../components/drawer';
 
 export default function Login() {
     const router = useRouter();
