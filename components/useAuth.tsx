@@ -8,11 +8,7 @@ import {
     getFromLocalStorage,
     saveToLocalStorage,
 } from '../utils/localStorage';
-import {
-    EASY_ERP_BASE_URL,
-    EASY_ERP_LOGIN_URL,
-    EASY_ERP_PROFILE_URL,
-} from '../utils/urls';
+import { EASY_ERP_LOGIN_URL, EASY_ERP_PROFILE_URL } from '../utils/urls';
 import useApi from './useApi';
 
 type User = {
