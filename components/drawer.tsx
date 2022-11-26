@@ -1,48 +1,62 @@
-import Link from 'next/link';
 import {
     EASY_ERP_ARTICLES_URL,
     EASY_ERP_INVENTORY_URL,
     EASY_ERP_REPAIRS_BASE_URL,
     EASY_ERP_TRANSACTIONS_URL,
 } from '../utils/urls';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBars } from '@fortawesome/free-solid-svg-icons';
+import { useState } from 'react';
+import clsx from 'clsx';
+import DrawerMenuItem from './drawerMenuItem';
+import { DrawerSubMenuItem } from './drawerSubMenuItem';
 
 export default function Drawer() {
+    const [isOpen, setIsOpen] = useState(true);
+
     return (
-        <>
-            <div className="flex flex-col bg-sky-900 w-56 text-white font-light">
+        <div
+            className={clsx(
+                'flex flex-col bg-sky-900 text-white w-56 font-light pt-4',
+                isOpen ? ' h-screen' : ''
+            )}
+        >
+            <div className="flex flex-row justify-start items-center pl-4 text-white">
+                <FontAwesomeIcon
+                    icon={faBars}
+                    className="cursor-pointer"
+                    onClick={() => setIsOpen(prev => !prev)}
+                />
+                <h1 className="text-upper ml-6 font-bold">EASY ERP</h1>
+            </div>
+            {isOpen && (
                 <div className="ml-4 mt-5">
-                    <ul className="space-y-3.5">
-                        <li>
-                            <Link href="/">Home</Link>
-                        </li>
-                        <li>
-                            Magazzino
-                            <ul className="space-y-1.5">
-                                <li>
-                                    <Link href={EASY_ERP_INVENTORY_URL}>
-                                        Inventario
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link href={EASY_ERP_TRANSACTIONS_URL}>
-                                        Movimentazioni
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link href={EASY_ERP_ARTICLES_URL}>
-                                        Articoli
-                                    </Link>
-                                </li>
-                            </ul>
-                        </li>
-                        <li>
-                            <Link href={EASY_ERP_REPAIRS_BASE_URL}>
-                                Riparazioni
-                            </Link>
-                        </li>
+                    <ul className="flex flex-col gap-3">
+                        <DrawerMenuItem url="/" description="Home" />
+
+                        <DrawerMenuItem description="Magazzino" />
+                        <ul className="flex flex-col gap-2">
+                            <DrawerSubMenuItem
+                                url={EASY_ERP_INVENTORY_URL}
+                                description="Inventario"
+                            />
+                            <DrawerSubMenuItem
+                                url={EASY_ERP_TRANSACTIONS_URL}
+                                description="Movimentazioni"
+                            />
+                            <DrawerSubMenuItem
+                                url={EASY_ERP_ARTICLES_URL}
+                                description="Articoli"
+                            />
+                        </ul>
+
+                        <DrawerMenuItem
+                            url={EASY_ERP_REPAIRS_BASE_URL}
+                            description="Riparazioni"
+                        />
                     </ul>
                 </div>
-            </div>
-        </>
+            )}
+        </div>
     );
 }
