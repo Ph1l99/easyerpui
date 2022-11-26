@@ -13,6 +13,7 @@ import {
     EASY_ERP_LOGIN_URL,
     EASY_ERP_PROFILE_URL,
 } from '../utils/urls';
+import useApi from './useApi';
 
 type User = {
     firstName?: string;
@@ -42,6 +43,8 @@ export const useAuth = () => React.useContext(AuthContext);
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const [user, setUser] = useState<User | null | undefined>();
 
+    const axios = useApi();
+
     const register = (email: string, password: string) => {
         // TODO: call API
     };
@@ -51,68 +54,39 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         password?: string
     ): Promise<boolean> => {
         if (email !== '' && password !== '') {
-            await fetch(EASY_ERP_BASE_URL + EASY_ERP_LOGIN_URL, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email: email, password: password }),
-            })
+            axios.publicAxios
+                .post(EASY_ERP_LOGIN_URL, { email: email, password: password })
                 .then(response => {
-                    if (response.ok) {
-                        return response.json();
-                    } else {
-                        throw new Error('Invalid credentials');
-                    }
-                })
-                .then(data => {
                     saveToLocalStorage(
                         ACCESS_TOKEN_LOCAL_STORAGE_KEY,
-                        data.access
+                        response.data.access
                     );
                     saveToLocalStorage(
                         REFRESH_TOKEN_LOCAL_STORAGE_KEY,
-                        data.refresh
+                        response.data.refresh
                     );
                     getProfileInfo();
                     return true;
                 })
                 .catch(error => {
-                    // TODO: should we log errors? We could then gain better understanding if something is not working properly
-                    console.error(error);
+                    console.log(error); // todo
                 });
         }
-
         return false;
     };
 
     const getProfileInfo = async () => {
-        await fetch(EASY_ERP_BASE_URL + EASY_ERP_PROFILE_URL, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization:
-                    'Bearer ' +
-                    getFromLocalStorage(ACCESS_TOKEN_LOCAL_STORAGE_KEY),
-            },
-        })
+        axios.authAxios
+            .get(EASY_ERP_PROFILE_URL)
             .then(response => {
-                if (response.ok) {
-                    return response.json();
-                } else {
-                    throw new Error('Invalid token');
-                }
-            })
-            .then(data => {
                 setUser({
-                    firstName: data.first_name,
-                    lastName: data.last_name,
-                    username: data.username,
+                    firstName: response.data.first_name,
+                    lastName: response.data.last_name,
+                    username: response.data.username,
                 });
-
-                return true;
             })
             .catch(error => {
-                // TODO: should we log errors? We could then gain better understanding if something is not working properly
-                console.error(error);
+                console.log(error); // todo
             });
     };
 
