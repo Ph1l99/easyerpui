@@ -3,13 +3,21 @@ import {
     ACCESS_TOKEN_LOCAL_STORAGE_KEY,
     REFRESH_TOKEN_LOCAL_STORAGE_KEY,
 } from '../utils/constants';
-import { saveToLocalStorage } from '../utils/localStorage';
-import { EASY_ERP_BASE_URL, EASY_ERP_LOGIN_URL } from '../utils/urls';
+import {
+    deleteFromLocalStorage,
+    getFromLocalStorage,
+    saveToLocalStorage,
+} from '../utils/localStorage';
+import {
+    EASY_ERP_BASE_URL,
+    EASY_ERP_LOGIN_URL,
+    EASY_ERP_PROFILE_URL,
+} from '../utils/urls';
 
 type User = {
-    name?: string;
-    email?: string;
-    roles?: [];
+    firstName?: string;
+    lastName?: string;
+    username?: string;
 };
 
 interface IAuthProvider {
@@ -18,7 +26,6 @@ interface IAuthProvider {
     register: (email: string, password: string) => void;
     login: (email?: string, password?: string) => Promise<boolean>;
     logout: () => void;
-    resetPassword: (email: string) => void;
     updatePassword: (password: string) => void;
 }
 
@@ -28,7 +35,6 @@ const AuthContext = React.createContext<IAuthProvider>({
     register: () => {},
     login: async () => false,
     logout: () => {},
-    resetPassword: () => {},
     updatePassword: () => {},
 });
 export const useAuth = () => React.useContext(AuthContext);
@@ -66,7 +72,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
                         REFRESH_TOKEN_LOCAL_STORAGE_KEY,
                         data.refresh
                     );
-
+                    getProfileInfo();
                     return true;
                 })
                 .catch(error => {
@@ -78,12 +84,43 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         return false;
     };
 
-    const logout = () => {
-        // TODO: call API
+    const getProfileInfo = async () => {
+        await fetch(EASY_ERP_BASE_URL + EASY_ERP_PROFILE_URL, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization:
+                    'Bearer ' +
+                    getFromLocalStorage(ACCESS_TOKEN_LOCAL_STORAGE_KEY),
+            },
+        })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error('Invalid token');
+                }
+            })
+            .then(data => {
+                setUser({
+                    firstName: data.first_name,
+                    lastName: data.last_name,
+                    username: data.username,
+                });
+
+                return true;
+            })
+            .catch(error => {
+                // TODO: should we log errors? We could then gain better understanding if something is not working properly
+                console.error(error);
+            });
     };
 
-    const resetPassword = (email: string) => {
-        // TODO: call API
+    const logout = () => {
+        if (getFromLocalStorage(ACCESS_TOKEN_LOCAL_STORAGE_KEY)) {
+            deleteFromLocalStorage(ACCESS_TOKEN_LOCAL_STORAGE_KEY);
+            deleteFromLocalStorage(REFRESH_TOKEN_LOCAL_STORAGE_KEY);
+        }
     };
 
     const updatePassword = (password: string) => {
@@ -96,7 +133,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         register,
         login,
         logout,
-        resetPassword,
         updatePassword,
     };
 
