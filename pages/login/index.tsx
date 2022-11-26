@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import React, { FormEvent, useEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
-import InputField from '../../components/inputField';
+import InputField from '../../components/layout/inputField';
 import { useAuth } from '../../components/useAuth';
 import Head from 'next/head';
 

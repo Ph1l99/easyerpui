@@ -1,4 +1,4 @@
-import InputField from '../../components/inputField';
+import InputField from '../../components/layout/inputField';
 import React, { FormEvent, useEffect, useRef } from 'react';
 import Head from 'next/head';
 
