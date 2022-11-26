@@ -12,7 +12,7 @@ export default function Layout({ children }: Props) {
             <Drawer />
             <div className="flex flex-col flex-1">
                 <Header />
-                <div className="flex-1">{children}</div>
+                <div className="flex-1 p-4">{children}</div>
             </div>
         </div>
     );
