@@ -16,11 +16,13 @@ export default function Login() {
         e.preventDefault();
         const email = emailRef.current?.value;
         const password = passwordRef.current?.value;
-        const successfulLogin = await login(email, password);
-
-        if (successfulLogin) {
-            await router.push('/');
-        }
+        login(email, password)
+            .then(successfulAuth => {
+                router.push('/');
+            })
+            .catch(error => {
+                console.log('Error while authenticating');
+            });
     };
 
     useEffect(() => {

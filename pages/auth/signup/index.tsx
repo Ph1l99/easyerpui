@@ -24,7 +24,7 @@ export default function Signup() {
         const lastName = lastNameRef.current?.value;
         const username = usernameRef.current?.value;
 
-        const successfulSignup = await signup({
+        signup({
             email: email,
             password: password,
             profile: {
@@ -32,11 +32,13 @@ export default function Signup() {
                 last_name: lastName,
                 username: username,
             },
-        });
-
-        if (successfulSignup) {
-            await router.push(EASY_ERP_LOGIN_URL);
-        }
+        })
+            .then(successfulSignup => {
+                router.push(EASY_ERP_LOGIN_URL);
+            })
+            .catch(error => {
+                console.log('Error while registering to EasyERP');
+            });
     };
 
     useEffect(() => {

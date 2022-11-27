@@ -34,8 +34,8 @@ type UserRegistration = {
 interface IAuthProvider {
     user: User | null | undefined;
     setUser: (user: User) => void;
-    signup: (userReg: UserRegistration) => Promise<boolean>;
-    login: (email?: string, password?: string) => Promise<boolean>;
+    signup: (userReg: UserRegistration) => Promise<void>;
+    login: (email?: string, password?: string) => Promise<void>;
     logout: () => void;
     updatePassword: (password: string) => void;
 }
@@ -43,8 +43,8 @@ interface IAuthProvider {
 const AuthContext = React.createContext<IAuthProvider>({
     user: null,
     setUser: () => {},
-    signup: async () => false,
-    login: async () => false,
+    signup: async () => {},
+    login: async () => {},
     logout: () => {},
     updatePassword: () => {},
 });
@@ -55,44 +55,50 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
     const axios = useApi();
 
-    const signup = async (userReg: UserRegistration): Promise<boolean> => {
-        if (userReg) {
-            axios.publicAxios
-                .post(EASY_ERP_SIGNUP_URL, userReg)
-                .then(response => {
-                    return true;
-                })
-                .catch(error => {
-                    console.log(error);
-                });
-        }
-        return false; // todo does not work
+    const signup = async (userReg: UserRegistration): Promise<void> => {
+        return new Promise((resolve, reject) => {
+            if (userReg) {
+                axios.publicAxios
+                    .post(EASY_ERP_SIGNUP_URL, userReg)
+                    .then(response => {
+                        resolve();
+                    })
+                    .catch(error => {
+                        reject();
+                    });
+            } else {
+                reject();
+            }
+        });
     };
 
-    const login = async (
-        email?: string,
-        password?: string
-    ): Promise<boolean> => {
-        if (email !== '' && password !== '') {
-            axios.publicAxios
-                .post(EASY_ERP_LOGIN_URL, { email: email, password: password })
-                .then(response => {
-                    saveToLocalStorage(
-                        ACCESS_TOKEN_LOCAL_STORAGE_KEY,
-                        response.data.access
-                    );
-                    saveToLocalStorage(
-                        REFRESH_TOKEN_LOCAL_STORAGE_KEY,
-                        response.data.refresh
-                    );
-                    getProfileInfo();
-                    return true;
-                })
-                .catch(error => {
-                    console.log(error); // todo
-                });
-        }
-        return false;
+    const login = async (email?: string, password?: string): Promise<void> => {
+        return new Promise((resolve, reject) => {
+            if (email !== '' && password !== '') {
+                axios.publicAxios
+                    .post(EASY_ERP_LOGIN_URL, {
+                        email: email,
+                        password: password,
+                    })
+                    .then(response => {
+                        saveToLocalStorage(
+                            ACCESS_TOKEN_LOCAL_STORAGE_KEY,
+                            response.data.access
+                        );
+                        saveToLocalStorage(
+                            REFRESH_TOKEN_LOCAL_STORAGE_KEY,
+                            response.data.refresh
+                        );
+                        getProfileInfo();
+                        resolve();
+                    })
+                    .catch(error => {
+                        reject();
+                    });
+            } else {
+                reject();
+            }
+        });
     };
 
     const getProfileInfo = async () => {
