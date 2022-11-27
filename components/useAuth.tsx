@@ -8,7 +8,11 @@ import {
     getFromLocalStorage,
     saveToLocalStorage,
 } from '../utils/localStorage';
-import { EASY_ERP_LOGIN_URL, EASY_ERP_PROFILE_URL } from '../utils/urls';
+import {
+    EASY_ERP_LOGIN_URL,
+    EASY_ERP_PROFILE_URL,
+    EASY_ERP_SIGNUP_URL,
+} from '../utils/urls';
 import useApi from './useApi';
 
 type User = {
@@ -17,10 +21,20 @@ type User = {
     username?: string;
 };
 
+type UserRegistration = {
+    email?: string;
+    password?: string;
+    profile?: {
+        first_name?: string;
+        last_name?: string;
+        username?: string;
+    };
+};
+
 interface IAuthProvider {
     user: User | null | undefined;
     setUser: (user: User) => void;
-    register: (email: string, password: string) => void;
+    signup: (userReg: UserRegistration) => Promise<boolean>;
     login: (email?: string, password?: string) => Promise<boolean>;
     logout: () => void;
     updatePassword: (password: string) => void;
@@ -29,7 +43,7 @@ interface IAuthProvider {
 const AuthContext = React.createContext<IAuthProvider>({
     user: null,
     setUser: () => {},
-    register: () => {},
+    signup: async () => false,
     login: async () => false,
     logout: () => {},
     updatePassword: () => {},
@@ -41,8 +55,18 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
     const axios = useApi();
 
-    const register = (email: string, password: string) => {
-        // TODO: call API
+    const signup = async (userReg: UserRegistration): Promise<boolean> => {
+        if (userReg) {
+            axios.publicAxios
+                .post(EASY_ERP_SIGNUP_URL, userReg)
+                .then(response => {
+                    return true;
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        }
+        return false; // todo does not work
     };
 
     const login = async (
@@ -100,7 +124,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const value = {
         user,
         setUser,
-        register,
+        signup,
         login,
         logout,
         updatePassword,

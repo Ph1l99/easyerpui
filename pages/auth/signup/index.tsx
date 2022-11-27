@@ -1,8 +1,14 @@
 import InputField from '../../../components/layout/inputField';
 import React, { FormEvent, useEffect, useRef } from 'react';
 import Head from 'next/head';
+import { useAuth } from '../../../components/useAuth';
+import { EASY_ERP_LOGIN_URL } from '../../../utils/urls';
+import { useRouter } from 'next/router';
 
 export default function Signup() {
+    const router = useRouter();
+    const { signup } = useAuth();
+
     const firstNameRef = useRef<HTMLInputElement>(null);
     const lastNameRef = useRef<HTMLInputElement>(null);
     const usernameRef = useRef<HTMLInputElement>(null);
@@ -11,7 +17,26 @@ export default function Signup() {
 
     const submitSignup = async (e: FormEvent) => {
         e.preventDefault();
-        return;
+
+        const email = emailRef.current?.value;
+        const password = passwordRef.current?.value;
+        const firstName = firstNameRef.current?.value;
+        const lastName = lastNameRef.current?.value;
+        const username = usernameRef.current?.value;
+
+        const successfulSignup = await signup({
+            email: email,
+            password: password,
+            profile: {
+                first_name: firstName,
+                last_name: lastName,
+                username: username,
+            },
+        });
+
+        if (successfulSignup) {
+            await router.push(EASY_ERP_LOGIN_URL);
+        }
     };
 
     useEffect(() => {
