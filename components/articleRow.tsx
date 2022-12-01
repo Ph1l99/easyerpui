@@ -18,7 +18,7 @@ export default function ArticleRow({
 }) {
     return (
         <div
-            className="flex px-2 py-2 bg-zinc-200 rounded-lg justify-start items-center cursor-pointer h-20"
+            className="flex px-2 py-2 bg-zinc-200 rounded-lg justify-start items-center cursor-pointer h-16"
             onClick={() => navigateToArticlePage(article.barcode)}
         >
             <div className="flex basis-1/12 items-center h-full justify-center rounded-lg bg-white">
@@ -26,7 +26,7 @@ export default function ArticleRow({
             </div>
             <div className="flex basis-10/12 justify-start items-center px-4 h-full">
                 <div className="basis-4/12 font-bold">{article.name}</div>
-                <div className="basis-8/12 font-light">
+                <div className="basis-8/12 font-light text-sm">
                     {article.description}
                 </div>
             </div>
@@ -34,10 +34,12 @@ export default function ArticleRow({
                 <FontAwesomeIcon
                     className="mx-2"
                     icon={faPenToSquare}
+                    title="Modifica"
                 ></FontAwesomeIcon>
                 <FontAwesomeIcon
                     className="mx-2"
                     icon={faTag}
+                    title="Stampa etichetta"
                 ></FontAwesomeIcon>
             </div>
         </div>
