@@ -34,7 +34,7 @@ export default function ArticleRow({
             </div>
             <div className="flex basis-1/12 items-center justify-end h-full">
                 <FontAwesomeIcon
-                    className="mx-2"
+                    className="mx-2 fa-lg"
                     icon={faTag}
                     title="Stampa etichetta"
                     onClick={() => printArticleLabel(article.barcode)}
