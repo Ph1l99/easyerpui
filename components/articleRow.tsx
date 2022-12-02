@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPenToSquare, faTag } from '@fortawesome/free-solid-svg-icons';
+import { faTag } from '@fortawesome/free-solid-svg-icons';
 import { faImage } from '@fortawesome/free-regular-svg-icons';
 
 type Article = {
@@ -12,9 +12,11 @@ type Article = {
 export default function ArticleRow({
     article,
     navigateToArticlePage,
+    printArticleLabel,
 }: {
     article: Article;
     navigateToArticlePage: Function;
+    printArticleLabel: Function;
 }) {
     return (
         <div
@@ -26,20 +28,16 @@ export default function ArticleRow({
             </div>
             <div className="flex basis-10/12 justify-start items-center px-4 h-full">
                 <div className="basis-4/12 font-bold">{article.name}</div>
-                <div className="basis-8/12 font-light text-sm">
+                <div className="basis-8/12 font-light text-sm overflow-hidden">
                     {article.description}
                 </div>
             </div>
             <div className="flex basis-1/12 items-center justify-end h-full">
                 <FontAwesomeIcon
                     className="mx-2"
-                    icon={faPenToSquare}
-                    title="Modifica"
-                ></FontAwesomeIcon>
-                <FontAwesomeIcon
-                    className="mx-2"
                     icon={faTag}
                     title="Stampa etichetta"
+                    onClick={() => printArticleLabel(article.barcode)}
                 ></FontAwesomeIcon>
             </div>
         </div>

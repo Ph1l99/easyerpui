@@ -1,7 +1,10 @@
 import ArticleRow from '../../../components/articleRow';
 
 export default function Articles() {
-    const navigateToPage = function (barcode: string) {
+    const navigateToArticlePage = function (barcode: string) {
+        console.log(barcode);
+    };
+    const printArticleLabel = function (barcode: string) {
         console.log(barcode);
     };
     return (
@@ -13,7 +16,8 @@ export default function Articles() {
                     description: 'Lorem ipsum sit ciao',
                     barcode: '123456E',
                 }}
-                navigateToArticlePage={navigateToPage}
+                navigateToArticlePage={navigateToArticlePage}
+                printArticleLabel={printArticleLabel}
             ></ArticleRow>
         </>
     );
