@@ -1,11 +1,14 @@
 import ArticleRow from '../../../components/articleRow';
+import { useRouter } from 'next/router';
+import { EASY_ERP_ARTICLES_URL } from '../../../utils/urls';
 
 export default function Articles() {
+    const router = useRouter();
     const navigateToArticlePage = function (barcode: string) {
-        console.log(barcode);
+        if (barcode) router.push(EASY_ERP_ARTICLES_URL + '/' + barcode);
     };
     const printArticleLabel = function (barcode: string) {
-        console.log(barcode);
+        if (barcode) console.log('PRINTING BARCODE: ', barcode);
     };
     return (
         <>
@@ -14,7 +17,7 @@ export default function Articles() {
                 article={{
                     name: 'PRODOTTO 1',
                     description: 'Lorem ipsum sit ciao',
-                    barcode: '123456E',
+                    barcode: 'RTDZKZE8MBHVRUGYWWKABE94',
                 }}
                 navigateToArticlePage={navigateToArticlePage}
                 printArticleLabel={printArticleLabel}
