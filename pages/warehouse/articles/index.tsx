@@ -1,4 +1,4 @@
-import ArticleRow from '../../../components/articleRow';
+import ArticleRow from '../../../components/layout/articleRow';
 import { useRouter } from 'next/router';
 import { EASY_ERP_ARTICLES_URL } from '../../../utils/urls';
 
