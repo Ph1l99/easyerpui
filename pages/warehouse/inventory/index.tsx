@@ -1,3 +1,9 @@
+import SectionTitle from '../../../components/layout/sectionTitle';
+
 export default function Inventory() {
-    return <p>Inventory</p>;
+    return (
+        <>
+            <SectionTitle title="Inventario"></SectionTitle>
+        </>
+    );
 }

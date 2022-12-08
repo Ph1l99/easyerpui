@@ -1,3 +1,9 @@
+import SectionTitle from '../../components/layout/sectionTitle';
+
 export default function Repairs() {
-    return <p>Repairs</p>;
+    return (
+        <>
+            <SectionTitle title="Riparazioni"></SectionTitle>
+        </>
+    );
 }
