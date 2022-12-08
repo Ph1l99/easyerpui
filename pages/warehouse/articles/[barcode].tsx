@@ -57,14 +57,14 @@ export default function Article() {
                     <input
                         type="text"
                         placeholder="Titolo"
-                        className="bg-gray-300 w-full outline-none p-2 placeholder-black align-middle rounded-md"
+                        className="bg-zinc-200 w-full outline-none p-2 placeholder-black align-middle rounded-md"
                         maxLength={100}
                         value={article.name}
                     />
                     <input
                         type="text"
                         placeholder="Descrizione"
-                        className="mt-5 bg-gray-300 w-full outline-none p-2 placeholder-black h-40 rounded-md"
+                        className="mt-5 bg-zinc-200 w-full outline-none p-2 placeholder-black h-40 rounded-md"
                         maxLength={250}
                         value={article.description}
                     />
@@ -74,7 +74,7 @@ export default function Article() {
                             readOnly={!isNewArticle}
                             placeholder="Barcode"
                             className={clsx(
-                                'basis-4/12 bg-gray-300 w-full outline-none p-2 placeholder-black rounded-md',
+                                'basis-4/12 bg-zinc-200 w-full outline-none p-2 placeholder-black rounded-md',
                                 !isNewArticle ? 'cursor-not-allowed' : ''
                             )}
                             value={article.barcode}
