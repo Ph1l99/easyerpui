@@ -20,7 +20,7 @@ export default function SearchAdd({
             />
             <div
                 className="flex flex-col w-20 bg-green-600 text-white rounded-lg justify-center cursor-pointer"
-                onClick={() => addItem}
+                onClick={() => addItem()}
             >
                 <FontAwesomeIcon
                     icon={faPlus}
