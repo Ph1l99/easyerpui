@@ -3,6 +3,7 @@ import { useState } from 'react';
 import useApi from '../../../components/useApi';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTag } from '@fortawesome/free-solid-svg-icons';
+import clsx from 'clsx';
 
 export default function Article() {
     const router = useRouter();
@@ -72,7 +73,10 @@ export default function Article() {
                             type="text"
                             readOnly={!isNewArticle}
                             placeholder="Barcode"
-                            className="basis-4/12 bg-gray-300 w-full outline-none p-2 placeholder-black rounded-md"
+                            className={clsx(
+                                'basis-4/12 bg-gray-300 w-full outline-none p-2 placeholder-black rounded-md',
+                                !isNewArticle ? 'cursor-not-allowed' : ''
+                            )}
                             value={article.barcode}
                         />
                         <div className="basis-4/12">
