@@ -6,6 +6,7 @@ import {
 } from '../../../utils/urls';
 import SearchAdd from '../../../components/layout/searchAdd';
 import { func } from 'prop-types';
+import SectionTitle from '../../../components/layout/sectionTitle';
 
 export default function Articles() {
     const router = useRouter();
@@ -27,7 +28,7 @@ export default function Articles() {
 
     return (
         <>
-            <div className="px-2 py-4 font-bold text-xl">Articoli</div>
+            <SectionTitle title="Articoli"></SectionTitle>
             <SearchAdd
                 addItem={openNewArticlePage}
                 searchItem={searchArticle}
