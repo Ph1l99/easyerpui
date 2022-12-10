@@ -7,7 +7,7 @@ type Article = {
     description?: string;
     barcode?: string;
     is_active?: boolean;
-    reorder_threshold?: bigint;
+    reorder_threshold?: number;
 };
 export default function ArticleRow({
     article,
