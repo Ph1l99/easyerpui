@@ -1,11 +1,7 @@
 import ArticleRow from '../../../components/layout/articleRow';
 import { useRouter } from 'next/router';
-import {
-    EASY_ERP_ARTICLE_URL,
-    EASY_ERP_ARTICLES_URL,
-} from '../../../utils/urls';
+import { EASY_ERP_ARTICLE_URL } from '../../../utils/urls';
 import SearchAdd from '../../../components/layout/searchAdd';
-import { func } from 'prop-types';
 import SectionTitle from '../../../components/layout/sectionTitle';
 
 export default function Articles() {
