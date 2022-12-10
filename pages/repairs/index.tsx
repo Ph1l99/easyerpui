@@ -2,6 +2,7 @@ import SectionTitle from '../../components/layout/sectionTitle';
 import SearchAdd from '../../components/layout/searchAdd';
 import { useRouter } from 'next/router';
 import { EASY_ERP_REPAIR_URL } from '../../utils/urls';
+import RepairRow from '../../components/layout/repair/repairRow';
 
 export default function Repairs() {
     const router = useRouter();
@@ -17,6 +18,9 @@ export default function Repairs() {
     const searchRepair = function (input: string) {
         console.log('Searching ', input); // todo
     };
+    const deleteRepair = function (barcode: string) {
+        console.log('Delete');
+    };
     return (
         <>
             <SectionTitle title="Riparazioni"></SectionTitle>
@@ -24,6 +28,15 @@ export default function Repairs() {
                 addItem={openNewRepairPage}
                 searchItem={searchRepair}
             ></SearchAdd>
+            <RepairRow
+                repair={{
+                    title: 'Aspirapolvere cinese',
+                    delivery_date: new Date(),
+                    status: 1,
+                }}
+                navigateToRepairPage={navigateToRepairPage}
+                deleteRepair={deleteRepair}
+            ></RepairRow>
         </>
     );
 }
