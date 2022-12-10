@@ -32,7 +32,11 @@ export default function Repairs() {
                 repair={{
                     title: 'Aspirapolvere cinese',
                     delivery_date: new Date(),
-                    status: 1,
+                    status: {
+                        id: 1,
+                        status: 'DA LAVORARE',
+                        is_active: true,
+                    },
                 }}
                 navigateToRepairPage={navigateToRepairPage}
                 deleteRepair={deleteRepair}
