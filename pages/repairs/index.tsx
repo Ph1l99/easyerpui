@@ -3,9 +3,11 @@ import SearchAdd from '../../components/layout/searchAdd';
 import { useRouter } from 'next/router';
 import { EASY_ERP_REPAIR_URL } from '../../utils/urls';
 import RepairRow from '../../components/layout/repair/repairRow';
+import useApi from '../../components/useApi';
 
 export default function Repairs() {
     const router = useRouter();
+    const api = useApi();
     const navigateToRepairPage = function (barcode: string) {
         if (barcode)
             router.push(
@@ -19,7 +21,19 @@ export default function Repairs() {
         console.log('Searching ', input); // todo
     };
     const deleteRepair = function (barcode: string) {
-        console.log('Delete');
+        if (barcode) {
+            api.authAxios
+                .delete(
+                    EASY_ERP_REPAIR_URL.replace('{REPAIR_BARCODE}', barcode)
+                )
+                .then(response => {
+                    console.log('Deleted succesfully');
+                    // todo download repairs
+                })
+                .catch(error => {
+                    // todo error management
+                });
+        }
     };
     return (
         <>
