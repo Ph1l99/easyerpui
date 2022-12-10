@@ -1,15 +1,18 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import clsx from 'clsx';
 
 type Repair = {
     barcode?: string;
     title?: string;
     description?: string;
     delivery_date?: Date;
-    customer?: string;
-    customer_phone?: string;
-    status?: number; // todo
-    insert_date_time?: Date;
+    status?: {
+        id?: number;
+        status?: string;
+        is_active?: boolean;
+        class_name?: string;
+    };
 };
 export default function RepairRow({
     repair,
@@ -27,8 +30,17 @@ export default function RepairRow({
         >
             <div className="flex basis-11/12 justify-start items-center px-4 h-full">
                 <div className="basis-5/12 font-bold">{repair.title}</div>
-                <div className="basis-4/12 font-light text-sm overflow-hidden">
-                    {repair.status}
+                <div className="basis-4/12">
+                    <div
+                        className={clsx(
+                            'w-6/12 font-bold text-white text-center rounded-lg capitalize',
+                            repair.status?.class_name
+                                ? repair.status.class_name
+                                : 'bg-sky-900'
+                        )}
+                    >
+                        {repair.status?.status}
+                    </div>
                 </div>
                 <div className="basis-3/12 font-bold">
                     <span className="font-normal">Consegna: </span>
