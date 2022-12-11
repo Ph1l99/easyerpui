@@ -3,6 +3,8 @@ import { useRouter } from 'next/router';
 import { EASY_ERP_ARTICLE_URL } from '../../../utils/urls';
 import SearchAdd from '../../../components/layout/searchAdd';
 import SectionTitle from '../../../components/layout/sectionTitle';
+import Head from 'next/head';
+import React from 'react';
 
 export default function Articles() {
     const router = useRouter();
@@ -24,6 +26,9 @@ export default function Articles() {
 
     return (
         <>
+            <Head>
+                <title>Articoli</title>
+            </Head>
             <SectionTitle title="Articoli"></SectionTitle>
             <SearchAdd
                 addItem={openNewArticlePage}

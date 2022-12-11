@@ -4,6 +4,8 @@ import { useRouter } from 'next/router';
 import { EASY_ERP_REPAIR_URL } from '../../utils/urls';
 import RepairRow from '../../components/layout/repair/repairRow';
 import useApi from '../../components/useApi';
+import Head from 'next/head';
+import React from 'react';
 
 export default function Repairs() {
     const router = useRouter();
@@ -37,6 +39,9 @@ export default function Repairs() {
     };
     return (
         <>
+            <Head>
+                <title>Riparazioni</title>
+            </Head>
             <SectionTitle title="Riparazioni"></SectionTitle>
             <SearchAdd
                 addItem={openNewRepairPage}
@@ -46,6 +51,7 @@ export default function Repairs() {
                 repair={{
                     title: 'Aspirapolvere cinese',
                     delivery_date: new Date(),
+                    barcode: '123456789',
                     status: {
                         id: 1,
                         status: 'DA LAVORARE',
