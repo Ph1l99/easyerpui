@@ -1,8 +1,13 @@
 import Head from 'next/head';
 import { useAuth } from '../components/useAuth';
+import { useEffect } from 'react';
 
 export default function Home() {
-    const { user } = useAuth();
+    const { user, getProfileInfo } = useAuth();
+
+    useEffect(() => {
+        getProfileInfo();
+    }, []);
 
     return (
         <>

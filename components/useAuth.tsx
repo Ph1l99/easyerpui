@@ -38,6 +38,7 @@ interface IAuthProvider {
     login: (email?: string, password?: string) => Promise<void>;
     logout: () => void;
     updatePassword: (password: string) => void;
+    getProfileInfo: () => Promise<void>;
 }
 
 const AuthContext = React.createContext<IAuthProvider>({
@@ -47,6 +48,7 @@ const AuthContext = React.createContext<IAuthProvider>({
     login: async () => {},
     logout: () => {},
     updatePassword: () => {},
+    getProfileInfo: async () => {},
 });
 export const useAuth = () => React.useContext(AuthContext);
 
@@ -134,6 +136,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         login,
         logout,
         updatePassword,
+        getProfileInfo,
     };
 
     return (
