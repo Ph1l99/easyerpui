@@ -1,7 +1,7 @@
 import SectionTitle from '../../components/layout/sectionTitle';
 import SearchAdd from '../../components/layout/searchAdd';
 import { useRouter } from 'next/router';
-import { EASY_ERP_REPAIR_URL } from '../../utils/urls';
+import { EASY_ERP_REPAIRS_URL } from '../../utils/urls';
 import RepairRow from '../../components/layout/repair/repairRow';
 import useApi from '../../components/useApi';
 import Head from 'next/head';
@@ -11,10 +11,7 @@ export default function Repairs() {
     const router = useRouter();
     const api = useApi();
     const navigateToRepairPage = function (barcode: string) {
-        if (barcode)
-            router.push(
-                EASY_ERP_REPAIR_URL.replace('{REPAIR_BARCODE}', barcode)
-            );
+        if (barcode) router.push(`${EASY_ERP_REPAIRS_URL}/${barcode}`);
     };
     const openNewRepairPage = function () {
         navigateToRepairPage('-1');
@@ -25,9 +22,7 @@ export default function Repairs() {
     const deleteRepair = function (barcode: string) {
         if (barcode) {
             api.authAxios
-                .delete(
-                    EASY_ERP_REPAIR_URL.replace('{REPAIR_BARCODE}', barcode)
-                )
+                .delete(`${EASY_ERP_REPAIRS_URL}/${barcode}`)
                 .then(response => {
                     console.log('Deleted succesfully');
                     // todo download repairs
