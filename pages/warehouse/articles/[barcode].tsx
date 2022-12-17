@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import useApi from '../../../components/useApi';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTag } from '@fortawesome/free-solid-svg-icons';
@@ -21,6 +21,18 @@ export default function Article() {
     });
     const [isEditing, setIsEditing] = useState(false);
     const [isNewArticle, setIsNewArticle] = useState(false);
+
+    const changeFormValue = function (
+        e: ChangeEvent<HTMLInputElement>,
+        field: string
+    ) {
+        setIsEditing(true);
+
+        setArticle(prevState => ({
+            ...prevState,
+            [field]: field === 'is_active' ? e.target.checked : e.target.value,
+        }));
+    };
 
     useEffect(() => {
         if (barcode === '-1') {
@@ -78,6 +90,7 @@ export default function Article() {
                         className="bg-zinc-200 w-full outline-none p-2 placeholder-black align-middle rounded-md"
                         maxLength={100}
                         value={article.name}
+                        onChange={e => changeFormValue(e, 'name')}
                     />
                     <input
                         type="text"
@@ -85,6 +98,7 @@ export default function Article() {
                         className="mt-5 bg-zinc-200 w-full outline-none p-2 placeholder-black h-40 rounded-md"
                         maxLength={250}
                         value={article.description}
+                        onChange={e => changeFormValue(e, 'description')}
                     />
                     <div className="flex mt-5 text-center items-center">
                         <input
@@ -96,6 +110,7 @@ export default function Article() {
                                 !isNewArticle ? 'cursor-not-allowed' : ''
                             )}
                             value={article.barcode}
+                            onChange={e => changeFormValue(e, 'barcode')}
                         />
                         <div className="basis-4/12">
                             <label htmlFor="isActiveCheckbox" className="pr-2">
@@ -105,6 +120,7 @@ export default function Article() {
                                 id="isActiveCheckbox"
                                 type="checkbox"
                                 checked={article.is_active}
+                                onChange={e => changeFormValue(e, 'is_active')}
                             />
                         </div>
                         <div className="basis-4/12">
@@ -117,6 +133,9 @@ export default function Article() {
                                 className="border-2 border-solid rounded-md text-right"
                                 min="0"
                                 value={article.reorder_threshold}
+                                onChange={e =>
+                                    changeFormValue(e, 'reorder_threshold')
+                                }
                             />
                         </div>
                     </div>
