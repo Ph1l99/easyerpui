@@ -1,13 +1,16 @@
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import useApi from '../../../components/useApi';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTag } from '@fortawesome/free-solid-svg-icons';
 import clsx from 'clsx';
+import { EASY_ERP_ARTICLE_URL } from '../../../utils/urls';
 
 export default function Article() {
     const router = useRouter();
     const api = useApi();
+
+    const { barcode } = router.query;
 
     const [article, setArticle] = useState({
         name: '',
@@ -17,13 +20,28 @@ export default function Article() {
         reorder_threshold: 0,
     });
     const [isEditing, setIsEditing] = useState(false);
-    const [isNewArticle, setIsNewArticle] = useState(true);
+    const [isNewArticle, setIsNewArticle] = useState(false);
 
-    const loadArticleData = () => {
-        api.authAxios.get(router.asPath).then(response => {
-            setArticle(response.data);
-        });
-    };
+    useEffect(() => {
+        if (barcode === '-1') {
+            setIsNewArticle(true);
+        } else {
+            setIsNewArticle(false);
+            api.authAxios
+                .get(
+                    EASY_ERP_ARTICLE_URL.replace(
+                        '{ARTICLE_BARCODE}',
+                        barcode as string
+                    )
+                )
+                .then(response => {
+                    setArticle(response.data);
+                })
+                .catch(error => {
+                    // todo toast error
+                });
+        }
+    }, [barcode]);
 
     return (
         <>
