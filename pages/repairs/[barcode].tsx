@@ -3,8 +3,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faReceipt, faTag } from '@fortawesome/free-solid-svg-icons';
 import Head from 'next/head';
 import clsx from 'clsx';
+import { EASY_ERP_REPAIRS_URL } from '../../utils/urls';
+import useApi from '../../components/useApi';
+import { useRouter } from 'next/router';
 
 export default function Repair() {
+    const router = useRouter();
+    const api = useApi();
+
+    const { barcode } = router.query;
     const [repair, setRepair] = useState({
         title: '',
         description: '',
@@ -17,6 +24,15 @@ export default function Repair() {
     });
     const [isEditing, setIsEditing] = useState(false);
     const [isNewRepair, setIsNewRepair] = useState(true);
+
+    const printRepairReceipt = function (barcode: string) {
+        if (barcode) {
+            api.authAxios.post(`${EASY_ERP_REPAIRS_URL}/${barcode}/receipt`);
+        }
+    };
+    const printRepairLabel = function (barcode: string) {
+        if (barcode) console.log('PRINTING BARCODE: ', barcode); //todo
+    };
     // todo just for testing
     const status: any[] = [
         {

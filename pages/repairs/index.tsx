@@ -10,6 +10,7 @@ import React from 'react';
 export default function Repairs() {
     const router = useRouter();
     const api = useApi();
+
     const navigateToRepairPage = function (barcode: string) {
         if (barcode) router.push(`${EASY_ERP_REPAIRS_URL}/${barcode}`);
     };
