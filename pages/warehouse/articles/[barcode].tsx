@@ -4,14 +4,13 @@ import useApi from '../../../components/useApi';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTag } from '@fortawesome/free-solid-svg-icons';
 import clsx from 'clsx';
-import { EASY_ERP_ARTICLE_URL } from '../../../utils/urls';
+import { EASY_ERP_ARTICLES_URL } from '../../../utils/urls';
 
 export default function Article() {
     const router = useRouter();
     const api = useApi();
 
     const { barcode } = router.query;
-
     const [article, setArticle] = useState({
         name: '',
         description: '',
@@ -19,6 +18,7 @@ export default function Article() {
         is_active: true,
         reorder_threshold: 0,
     });
+    const [beforeUpdateArticle, setBeforeUpdateArticle] = useState(article);
     const [isEditing, setIsEditing] = useState(false);
     const [isNewArticle, setIsNewArticle] = useState(false);
 
@@ -34,20 +34,33 @@ export default function Article() {
         }));
     };
 
+    const saveArticle = function () {
+        if (isNewArticle) {
+            api.authAxios
+                .post(`${EASY_ERP_ARTICLES_URL}/-1`, article)
+                .then(() => {
+                    // todo push route with article id
+                }); // todo toast
+        } else {
+            api.authAxios.put(`${EASY_ERP_ARTICLES_URL}/${barcode}`, article); // todo toast
+        }
+    };
+
+    const revertChanges = function () {
+        setArticle(beforeUpdateArticle);
+        setIsEditing(false);
+    };
+
     useEffect(() => {
         if (barcode === '-1') {
             setIsNewArticle(true);
         } else {
             setIsNewArticle(false);
             api.authAxios
-                .get(
-                    EASY_ERP_ARTICLE_URL.replace(
-                        '{ARTICLE_BARCODE}',
-                        barcode as string
-                    )
-                )
+                .get(EASY_ERP_ARTICLES_URL + '/' + barcode)
                 .then(response => {
                     setArticle(response.data);
+                    setBeforeUpdateArticle(response.data);
                 })
                 .catch(error => {
                     // todo toast error
@@ -66,12 +79,14 @@ export default function Article() {
                             <input
                                 type="button"
                                 value="Salva"
-                                className="basis-1/12 rounded-lg bg-green-600 text-white outline-none mr-4 text-center h-8"
+                                className="basis-1/12 rounded-lg bg-green-600 text-white outline-none mr-4 text-center h-8 cursor-pointer"
+                                onClick={saveArticle}
                             />
                             <input
                                 type="button"
                                 value="Annulla"
-                                className="basis-1/12 rounded-lg bg-red-600 text-white outline-none text-center h-8"
+                                className="basis-1/12 rounded-lg bg-red-600 text-white outline-none text-center h-8 cursor-pointer"
+                                onClick={revertChanges}
                             />
                         </>
                     )}
