@@ -29,7 +29,8 @@ export default function Articles() {
     useEffect(() => {
         api.authAxios
             .get(EASY_ERP_ARTICLES_URL)
-            .then(response => setArticles(response.data.results));
+            .then(response => setArticles(response.data.results))
+            .catch(() => {});
     }, []);
 
     return (

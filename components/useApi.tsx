@@ -52,23 +52,25 @@ export default function useApi() {
         // If we get a 403 Forbidden result, then the token needs to be refreshed
         async error => {
             if (error.response.status === 403) {
-                const response = await unauthenticated.post(
-                    EASY_ERP_REFRESH_TOKEN_URL,
-                    {
+                await unauthenticated
+                    .post(EASY_ERP_REFRESH_TOKEN_URL, {
                         refresh: getFromLocalStorage(
                             REFRESH_TOKEN_LOCAL_STORAGE_KEY
                         ),
-                    }
-                );
-                // Save token if the refresh operation has succedeed and retry the previous call
-                if (response.status === 200) {
-                    saveToLocalStorage(
-                        ACCESS_TOKEN_LOCAL_STORAGE_KEY,
-                        response.data.access
-                    );
-                    return authenticated(error.config);
-                }
-                await router.push(EASY_ERP_LOGIN_URL);
+                    })
+                    .then(response => {
+                        // Save token if the refresh operation has succedeed and retry the previous call
+                        if (response.status === 200) {
+                            saveToLocalStorage(
+                                ACCESS_TOKEN_LOCAL_STORAGE_KEY,
+                                response.data.access
+                            );
+                            return authenticated(error.config);
+                        }
+                    })
+                    .catch(() => {
+                        router.push(EASY_ERP_LOGIN_URL);
+                    });
             }
             return Promise.reject(error);
         }
