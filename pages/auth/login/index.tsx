@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import InputField from '../../../components/layout/inputField';
 import { useAuth } from '../../../components/useAuth';
 import Head from 'next/head';
+import toast from 'react-hot-toast';
 
 export default function Login() {
     const router = useRouter();
@@ -21,7 +22,7 @@ export default function Login() {
                 router.push('/');
             })
             .catch(error => {
-                console.log('Error while authenticating');
+                toast.error('Error while authenticating');
             });
     };
 
