@@ -5,6 +5,7 @@ import useApi from '../../../components/useApi';
 import { EASY_ERP_FIDELITY_CARD_BASE_URL } from '../../../utils/urls';
 import FidelityCardRow from '../../../components/layout/customers/fidelityCards/fidelityCardRow';
 import SearchAdd from '../../../components/layout/searchAdd';
+import toast from 'react-hot-toast';
 
 export default function FidelityCards() {
     const api = useApi();
@@ -12,9 +13,14 @@ export default function FidelityCards() {
     const [fidelityCards, setFidelityCards] = useState([]);
 
     const loadFidelityCards = function () {
-        api.authAxios.get(EASY_ERP_FIDELITY_CARD_BASE_URL).then(response => {
-            setFidelityCards(response.data.results);
-        });
+        api.authAxios
+            .get(EASY_ERP_FIDELITY_CARD_BASE_URL)
+            .then(response => {
+                setFidelityCards(response.data.results);
+            })
+            .catch(() => {
+                toast.error('Error while retrieving fidelity cards');
+            });
     };
 
     const openModalFidelityCard = function (barcode: string) {
