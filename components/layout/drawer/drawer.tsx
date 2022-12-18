@@ -36,6 +36,11 @@ export default function Drawer() {
                     <ul className="flex flex-col gap-3">
                         <DrawerMenuItem url="/" description="Home" />
 
+                        <DrawerMenuItem
+                            url={EASY_ERP_REPAIRS_BASE_URL}
+                            description="Riparazioni"
+                        />
+
                         <DrawerMenuItem description="Magazzino" />
                         <ul className="flex flex-col gap-2">
                             <DrawerSubMenuItem
@@ -51,11 +56,6 @@ export default function Drawer() {
                                 description="Articoli"
                             />
                         </ul>
-
-                        <DrawerMenuItem
-                            url={EASY_ERP_REPAIRS_BASE_URL}
-                            description="Riparazioni"
-                        />
 
                         <DrawerMenuItem description="Clienti" />
                         <ul className="flex flex-col gap-2">
