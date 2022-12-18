@@ -38,7 +38,10 @@ export default function CustomerRow({
                     className="mx-2 fa-lg text-red-600"
                     icon={faTrash}
                     title="Elimina cliente"
-                    onClick={() => deleteCustomer(customer.id)}
+                    onClick={e => {
+                        e.stopPropagation();
+                        deleteCustomer(customer.id);
+                    }}
                 ></FontAwesomeIcon>
             </div>
         </div>
