@@ -9,6 +9,7 @@ import {
 } from '../../utils/urls';
 import useApi from '../../components/useApi';
 import { useRouter } from 'next/router';
+import toast from 'react-hot-toast';
 
 export default function Repair() {
     const router = useRouter();
@@ -52,14 +53,22 @@ export default function Repair() {
                 .get(`${EASY_ERP_REPAIRS_URL}${barcode}`)
                 .then(response => {
                     setRepair(response.data);
+                })
+                .catch(() => {
+                    toast.error('Error while loading repair info');
                 });
         }
     };
 
     const loadRepairStatusInfo = function () {
-        api.authAxios.get(EASY_ERP_REPAIR_STATUS_URL).then(response => {
-            setRepairStatuses(response.data);
-        });
+        api.authAxios
+            .get(EASY_ERP_REPAIR_STATUS_URL)
+            .then(response => {
+                setRepairStatuses(response.data);
+            })
+            .catch(() => {
+                toast.error('Error while loading repair status info');
+            });
     };
 
     const changeFormValue = function (
@@ -78,11 +87,23 @@ export default function Repair() {
         if (isNewRepair) {
             api.authAxios
                 .post(`${EASY_ERP_REPAIRS_URL}-1`, repair)
-                .then(() => setIsEditing(false));
+                .then(() => {
+                    toast.success('Repair created succesfully');
+                    setIsEditing(false);
+                })
+                .catch(() => {
+                    toast.error('Error while creating repair');
+                });
         } else {
             api.authAxios
                 .put(`${EASY_ERP_REPAIRS_URL}${barcode}`, repair)
-                .then(() => setIsEditing(false));
+                .then(() => {
+                    toast.success('Repair updated succesfully');
+                    setIsEditing(false);
+                })
+                .catch(() => {
+                    toast.error('Error while updating repair');
+                });
         }
     };
 

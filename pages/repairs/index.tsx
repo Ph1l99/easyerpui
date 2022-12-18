@@ -9,6 +9,7 @@ import RepairRow from '../../components/layout/repair/repairRow';
 import useApi from '../../components/useApi';
 import Head from 'next/head';
 import React, { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
 
 export default function Repairs() {
     const router = useRouter();
@@ -26,19 +27,25 @@ export default function Repairs() {
         console.log('Searching ', input); // todo
     };
     const loadRepairs = function () {
-        api.authAxios.get(`${EASY_ERP_REPAIRS_BASE_URL}`).then(response => {
-            setRepairs(response.data.results);
-        });
+        api.authAxios
+            .get(`${EASY_ERP_REPAIRS_BASE_URL}`)
+            .then(response => {
+                setRepairs(response.data.results);
+            })
+            .catch(() => {
+                toast.error('Error while loading repairs');
+            });
     };
     const deleteRepair = function (barcode: string) {
         if (barcode) {
             api.authAxios
                 .delete(`${EASY_ERP_REPAIRS_URL}/${barcode}`)
-                .then(response => {
+                .then(() => {
+                    toast.success('Repair deleted succesfully');
                     loadRepairs();
                 })
-                .catch(error => {
-                    // todo error management
+                .catch(() => {
+                    toast.success('Error while deleting repair');
                 });
         }
     };
