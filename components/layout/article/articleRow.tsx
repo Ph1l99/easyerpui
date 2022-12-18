@@ -37,7 +37,10 @@ export default function ArticleRow({
                     className="mx-2 fa-lg"
                     icon={faTag}
                     title="Stampa etichetta"
-                    onClick={() => printArticleLabel(article.barcode)}
+                    onClick={e => {
+                        e.stopPropagation();
+                        printArticleLabel(article.barcode);
+                    }}
                 ></FontAwesomeIcon>
             </div>
         </div>

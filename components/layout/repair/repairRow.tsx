@@ -52,7 +52,10 @@ export default function RepairRow({
                     className="mx-2 fa-lg text-red-600"
                     icon={faTrash}
                     title="Elimina riparazione"
-                    onClick={() => deleteRepair(repair.barcode)}
+                    onClick={e => {
+                        e.stopPropagation();
+                        deleteRepair(repair.barcode);
+                    }}
                 ></FontAwesomeIcon>
             </div>
         </div>
