@@ -58,7 +58,7 @@ export default function Article() {
         } else {
             setIsNewArticle(false);
             api.authAxios
-                .get(EASY_ERP_ARTICLES_URL + '/' + barcode)
+                .get(`${EASY_ERP_ARTICLES_URL}/${barcode}`)
                 .then(response => {
                     setArticle(response.data);
                     setBeforeUpdateArticle(response.data);
