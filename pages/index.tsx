@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import { useAuth } from '../components/useAuth';
 import { useEffect } from 'react';
+import SectionTitle from '../components/layout/sectionTitle';
 
 export default function Home() {
     const { user, getProfileInfo } = useAuth();
@@ -17,7 +18,9 @@ export default function Home() {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
 
-            <main>Benvenuto, {user?.firstName}</main>
+            <main>
+                <SectionTitle title={`Benvenuto, ${user?.firstName}`} />
+            </main>
         </>
     );
 }
