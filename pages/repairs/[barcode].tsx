@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faReceipt, faTag } from '@fortawesome/free-solid-svg-icons';
 import Head from 'next/head';
 import clsx from 'clsx';
-import { EASY_ERP_REPAIRS_URL } from '../../utils/urls';
+import {
+    EASY_ERP_REPAIR_STATUS_URL,
+    EASY_ERP_REPAIRS_URL,
+} from '../../utils/urls';
 import useApi from '../../components/useApi';
 import { useRouter } from 'next/router';
 
@@ -12,58 +15,100 @@ export default function Repair() {
     const api = useApi();
 
     const { barcode } = router.query;
+
     const [repair, setRepair] = useState({
         title: '',
         description: '',
         barcode: '',
         delivery_date: '',
         customer: '',
-        customer_phone: '',
         insert_date_time: '',
-        status: 1,
+        status: '',
     });
+    const [repairStatuses, setRepairStatuses] = useState([
+        {
+            id: 0,
+            status: '',
+            is_active: true,
+            class_name: '',
+        },
+    ]);
+    const [beforeUpdateRepair, setBeforeUpdateRepair] = useState(repair);
     const [isEditing, setIsEditing] = useState(false);
-    const [isNewRepair, setIsNewRepair] = useState(true);
+    const [isNewRepair, setIsNewRepair] = useState(false);
 
-    const printRepairReceipt = function (barcode: string) {
+    const printRepairReceipt = function () {
         if (barcode) {
             api.authAxios.post(`${EASY_ERP_REPAIRS_URL}/${barcode}/receipt`);
         }
     };
-    const printRepairLabel = function (barcode: string) {
+    const printRepairLabel = function () {
         if (barcode) console.log('PRINTING BARCODE: ', barcode); //todo
     };
-    // todo just for testing
-    const status: any[] = [
-        {
-            id: 1,
-            status: 'DA LAVORARE',
-            is_active: true,
-            class_name: '',
-        },
-        {
-            id: 2,
-            status: 'DA CONSENGARE',
-            is_active: true,
-            class_name: '',
-        },
-        {
-            id: 3,
-            status: 'IN LAVORAZIONE',
-            is_active: true,
-            class_name: '',
-        },
-        {
-            id: 4,
-            status: 'CONSEGNATO',
-            is_active: true,
-            class_name: '',
-        },
-    ];
+
+    const loadRepairInfo = function () {
+        if (barcode) {
+            api.authAxios
+                .get(`${EASY_ERP_REPAIRS_URL}${barcode}`)
+                .then(response => {
+                    setRepair(response.data);
+                });
+        }
+    };
+
+    const loadRepairStatusInfo = function () {
+        api.authAxios.get(EASY_ERP_REPAIR_STATUS_URL).then(response => {
+            setRepairStatuses(response.data);
+        });
+    };
+
+    const changeFormValue = function (
+        e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+        field: string
+    ) {
+        setIsEditing(true);
+
+        setRepair(prevState => ({
+            ...prevState,
+            [field]: e.target.value,
+        }));
+    };
+
+    const saveRepair = function () {
+        if (isNewRepair) {
+            api.authAxios
+                .post(`${EASY_ERP_REPAIRS_URL}-1`, repair)
+                .then(() => setIsEditing(false));
+        } else {
+            api.authAxios
+                .put(`${EASY_ERP_REPAIRS_URL}${barcode}`, repair)
+                .then(() => setIsEditing(false));
+        }
+    };
+
+    const revertChanges = function () {
+        setRepair(beforeUpdateRepair);
+        setIsEditing(false);
+    };
+
+    useEffect(() => {
+        loadRepairStatusInfo();
+        if (barcode == '-1') {
+            setIsNewRepair(true);
+        } else {
+            setIsNewRepair(false);
+            loadRepairInfo();
+        }
+    }, [barcode]);
+
     return (
         <>
             <Head>
-                <title>{barcode}</title>
+                <title>
+                    {isNewRepair
+                        ? 'Nuova riparazione'
+                        : `Riparazione ${barcode}`}
+                </title>
             </Head>
             <div className="flex flex-col p-8 h-full">
                 <div className="basis-1 /12 font-bold text-xl">
@@ -75,26 +120,40 @@ export default function Repair() {
                             <input
                                 type="button"
                                 value="Salva"
-                                className="basis-1/12 rounded-lg bg-green-600 text-white outline-none mr-4 text-center h-8"
+                                className="basis-1/12 rounded-lg bg-green-600 text-white outline-none mr-4 text-center h-8 cursor-pointer"
+                                onClick={saveRepair}
                             />
                             <input
                                 type="button"
                                 value="Annulla"
-                                className="basis-1/12 rounded-lg bg-red-600 text-white outline-none text-center h-8"
+                                className="basis-1/12 rounded-lg bg-red-600 text-white outline-none text-center h-8 cursor-pointer"
+                                onClick={revertChanges}
                             />
                         </>
                     )}
                 </div>
                 <div className="basis-1/12 justify-end flex items-center">
                     <FontAwesomeIcon
-                        className="mx-2 fa-xl cursor-pointer"
+                        className={clsx(
+                            'mx-2 fa-xl',
+                            isNewRepair
+                                ? 'cursor-not-allowed'
+                                : ' cursor-pointer'
+                        )}
                         icon={faReceipt}
                         title="Stampa ricevuta"
+                        onClick={printRepairReceipt}
                     ></FontAwesomeIcon>
                     <FontAwesomeIcon
-                        className="mx-2 fa-xl cursor-pointer"
+                        className={clsx(
+                            'mx-2 fa-xl',
+                            isNewRepair
+                                ? 'cursor-not-allowed'
+                                : ' cursor-pointer'
+                        )}
                         icon={faTag}
                         title="Stampa etichetta"
+                        onClick={printRepairLabel}
                     ></FontAwesomeIcon>
                 </div>
                 <div className="basis-9/12">
@@ -104,6 +163,9 @@ export default function Repair() {
                         className="bg-zinc-200 w-full outline-none p-2 placeholder-black align-middle rounded-md"
                         maxLength={100}
                         value={repair.title}
+                        onChange={e => {
+                            changeFormValue(e, 'title');
+                        }}
                     />
                     <input
                         type="text"
@@ -111,6 +173,9 @@ export default function Repair() {
                         className="mt-5 bg-zinc-200 w-full outline-none p-2 placeholder-black h-40 rounded-md"
                         maxLength={250}
                         value={repair.description}
+                        onChange={e => {
+                            changeFormValue(e, 'description');
+                        }}
                     />
                     <div className="flex mt-5 gap-6 justify-start">
                         <input
@@ -118,15 +183,19 @@ export default function Repair() {
                             placeholder="Data consegna"
                             className="basis-4/12 bg-zinc-200 w-full outline-none p-2 placeholder-black rounded-md"
                             value={repair.delivery_date}
+                            onChange={e => {
+                                changeFormValue(e, 'delivery_date');
+                            }}
                         />
                         <select
-                            className={clsx(
-                                'basis-4/12 bg-zinc-200 w-full outline-none p-2 placeholder-black rounded-md',
-                                isNewRepair ? 'cursor-not-allowed' : ''
-                            )}
-                            disabled={isNewRepair}
+                            className="basis-4/12 bg-zinc-200 w-full outline-none p-2 placeholder-black rounded-md cursor-pointer"
+                            value={repair.status}
+                            onChange={e => {
+                                changeFormValue(e, 'status');
+                            }}
                         >
-                            {status.map(statusItem => (
+                            <option value="">Seleziona uno stato</option>
+                            {repairStatuses.map(statusItem => (
                                 <option
                                     key={statusItem.id}
                                     value={statusItem.id}
@@ -135,19 +204,14 @@ export default function Repair() {
                                 </option>
                             ))}
                         </select>
-                    </div>
-                    <div className="flex mt-5 gap-6 justify-start">
                         <input
                             type="text"
                             placeholder="Cliente"
                             className="basis-4/12 bg-zinc-200 w-full outline-none p-2 placeholder-black rounded-md"
                             value={repair.customer}
-                        />
-                        <input
-                            type="text"
-                            placeholder="Contatto"
-                            className="basis-4/12 bg-zinc-200 w-full outline-none p-2 placeholder-black rounded-md"
-                            value={repair.customer_phone}
+                            onChange={e => {
+                                changeFormValue(e, 'customer'); //todo replace with customer select
+                            }}
                         />
                     </div>
                 </div>
