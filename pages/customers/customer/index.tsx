@@ -31,7 +31,14 @@ export default function Customer() {
     };
 
     const deleteCustomer = function (id: Number) {
-        // todo
+        if (id) {
+            api.authAxios
+                .delete(`${EASY_ERP_CUSTOMER_BASE_URL}/${id}`)
+                .then(() => {
+                    loadCustomers();
+                })
+                .catch(() => {});
+        }
     };
 
     const loadCustomers = function () {
