@@ -63,7 +63,7 @@ export default function Repair() {
     return (
         <>
             <Head>
-                <title>Dettaglio riparazione</title>
+                <title>{barcode}</title>
             </Head>
             <div className="flex flex-col p-8 h-full">
                 <div className="basis-1 /12 font-bold text-xl">

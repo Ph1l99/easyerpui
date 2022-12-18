@@ -1,10 +1,11 @@
 import { useRouter } from 'next/router';
-import { ChangeEvent, useEffect, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import useApi from '../../../components/useApi';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTag } from '@fortawesome/free-solid-svg-icons';
 import clsx from 'clsx';
 import { EASY_ERP_ARTICLES_URL } from '../../../utils/urls';
+import Head from 'next/head';
 
 export default function Article() {
     const router = useRouter();
@@ -70,6 +71,9 @@ export default function Article() {
 
     return (
         <>
+            <Head>
+                <title>{barcode}</title>
+            </Head>
             <div className="flex flex-col p-8 h-full">
                 <div className="basis-1 /12 font-bold text-xl">Articolo</div>
 
