@@ -73,12 +73,12 @@ export default function Customer() {
         <>
             <Head>
                 <title>
-                    {id !== '-1' ? `Cliente: ${id}` : 'Nuovo cliente'}
+                    {isNewCustomer ? 'Nuovo cliente' : `Cliente: ${id}`}
                 </title>
             </Head>
             <div className="flex flex-col p-8 h-full">
                 <div className="basis-1 /12 font-bold text-xl">
-                    Cliente: {id !== '-1' ? id : '-'}
+                    Cliente: {isNewCustomer ? '-' : id}
                 </div>
 
                 <div className="basis-1/12 flex justify-end">
