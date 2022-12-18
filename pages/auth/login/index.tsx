@@ -18,10 +18,10 @@ export default function Login() {
         const email = emailRef.current?.value;
         const password = passwordRef.current?.value;
         login(email, password)
-            .then(successfulAuth => {
+            .then(() => {
                 router.push('/');
             })
-            .catch(error => {
+            .catch(() => {
                 toast.error('Error while authenticating');
             });
     };
