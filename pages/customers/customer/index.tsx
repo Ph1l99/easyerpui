@@ -8,7 +8,7 @@ import {
 } from '../../../utils/urls';
 import SearchAdd from '../../../components/layout/searchAdd';
 import useApi from '../../../components/useApi';
-import CustomerRow from '../../../components/layout/customer/customerRow';
+import CustomerRow from '../../../components/layout/customers/customer/customerRow';
 
 export default function Customer() {
     const router = useRouter();

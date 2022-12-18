@@ -1,4 +1,4 @@
-import ArticleRow from '../../../components/layout/article/articleRow';
+import ArticleRow from '../../../components/layout/warehouse/article/articleRow';
 import { useRouter } from 'next/router';
 import { EASY_ERP_ARTICLES_URL } from '../../../utils/urls';
 import SearchAdd from '../../../components/layout/searchAdd';
