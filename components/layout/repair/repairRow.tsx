@@ -6,7 +6,7 @@ type Repair = {
     barcode?: string;
     title?: string;
     description?: string;
-    delivery_date?: Date;
+    delivery_date?: string;
     status?: {
         id?: number;
         status?: string;
@@ -44,7 +44,7 @@ export default function RepairRow({
                 </div>
                 <div className="basis-3/12 font-bold">
                     <span className="font-normal">Consegna: </span>
-                    {repair.delivery_date?.toLocaleDateString()}
+                    {repair.delivery_date}
                 </div>
             </div>
             <div className="flex basis-1/12 items-center justify-end h-full">
