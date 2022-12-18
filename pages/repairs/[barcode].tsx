@@ -119,6 +119,7 @@ export default function Repair() {
         } else {
             setIsNewRepair(false);
             loadRepairInfo();
+            setBeforeUpdateRepair(repair);
         }
     }, [barcode]);
 
