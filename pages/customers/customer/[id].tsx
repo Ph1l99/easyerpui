@@ -3,6 +3,7 @@ import React, { ChangeEvent, useEffect, useState } from 'react';
 import useApi from '../../../components/useApi';
 import { EASY_ERP_CUSTOMER_BASE_URL } from '../../../utils/urls';
 import Head from 'next/head';
+import toast from 'react-hot-toast';
 
 export default function Customer() {
     const router = useRouter();
@@ -43,10 +44,15 @@ export default function Customer() {
             api.authAxios
                 .post(`${EASY_ERP_CUSTOMER_BASE_URL}/-1`, customer)
                 .then(() => {
+                    toast.success('Customer created succesfully');
                     // todo push route with article id
-                }); // todo toast;
+                });
         } else {
-            api.authAxios.put(`${EASY_ERP_CUSTOMER_BASE_URL}/${id}`, customer);
+            api.authAxios
+                .put(`${EASY_ERP_CUSTOMER_BASE_URL}/${id}`, customer)
+                .then(() => {
+                    toast.success('Customer updated succesfully');
+                });
         }
     };
 
@@ -66,7 +72,7 @@ export default function Customer() {
                     setBeforeUpdateCustomer(response.data);
                 })
                 .catch(error => {
-                    // todo toast error
+                    toast.error('Error while retrieving customer info');
                 });
         }
     }, [id]);

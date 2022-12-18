@@ -9,6 +9,7 @@ import {
 import SearchAdd from '../../../components/layout/searchAdd';
 import useApi from '../../../components/useApi';
 import CustomerRow from '../../../components/layout/customers/customer/customerRow';
+import toast from 'react-hot-toast';
 
 export default function Customer() {
     const router = useRouter();
@@ -45,7 +46,9 @@ export default function Customer() {
         api.authAxios
             .get(EASY_ERP_CUSTOMERS_BASE_URL)
             .then(response => setCustomers(response.data.results))
-            .catch(() => {});
+            .catch(() => {
+                toast.error('Error while loading customers');
+            });
     };
 
     useEffect(() => {
