@@ -1,18 +1,23 @@
 import SectionTitle from '../../components/layout/sectionTitle';
 import SearchAdd from '../../components/layout/searchAdd';
 import { useRouter } from 'next/router';
-import { EASY_ERP_REPAIRS_URL } from '../../utils/urls';
+import {
+    EASY_ERP_REPAIRS_BASE_URL,
+    EASY_ERP_REPAIRS_URL,
+} from '../../utils/urls';
 import RepairRow from '../../components/layout/repair/repairRow';
 import useApi from '../../components/useApi';
 import Head from 'next/head';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 export default function Repairs() {
     const router = useRouter();
     const api = useApi();
 
+    const [repairs, setRepairs] = useState([]);
+
     const navigateToRepairPage = function (barcode: string) {
-        if (barcode) router.push(`${EASY_ERP_REPAIRS_URL}/${barcode}`);
+        if (barcode) router.push(`${EASY_ERP_REPAIRS_URL}${barcode}`);
     };
     const openNewRepairPage = function () {
         navigateToRepairPage('-1');
@@ -20,19 +25,28 @@ export default function Repairs() {
     const searchRepair = function (input: string) {
         console.log('Searching ', input); // todo
     };
+    const loadRepairs = function () {
+        api.authAxios.get(`${EASY_ERP_REPAIRS_BASE_URL}`).then(response => {
+            setRepairs(response.data.results);
+        });
+    };
     const deleteRepair = function (barcode: string) {
         if (barcode) {
             api.authAxios
                 .delete(`${EASY_ERP_REPAIRS_URL}/${barcode}`)
                 .then(response => {
-                    console.log('Deleted succesfully');
-                    // todo download repairs
+                    loadRepairs();
                 })
                 .catch(error => {
                     // todo error management
                 });
         }
     };
+
+    useEffect(() => {
+        loadRepairs();
+    }, []);
+
     return (
         <>
             <Head>
@@ -43,20 +57,20 @@ export default function Repairs() {
                 addItem={openNewRepairPage}
                 searchItem={searchRepair}
             ></SearchAdd>
-            <RepairRow
-                repair={{
-                    title: 'Aspirapolvere cinese',
-                    delivery_date: new Date(),
-                    barcode: '123456789',
-                    status: {
-                        id: 1,
-                        status: 'DA LAVORARE',
-                        is_active: true,
-                    },
-                }}
-                navigateToRepairPage={navigateToRepairPage}
-                deleteRepair={deleteRepair}
-            ></RepairRow>
+            {repairs.map((repair: any) => (
+                <RepairRow
+                    key={repair.barcode}
+                    repair={{
+                        barcode: repair.barcode,
+                        title: repair.title,
+                        description: repair.description,
+                        delivery_date: repair.delivery_date,
+                        status: repair.status,
+                    }}
+                    navigateToRepairPage={navigateToRepairPage}
+                    deleteRepair={deleteRepair}
+                />
+            ))}
         </>
     );
 }
