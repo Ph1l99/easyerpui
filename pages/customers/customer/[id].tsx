@@ -1,7 +1,10 @@
 import { useRouter } from 'next/router';
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import useApi from '../../../components/useApi';
-import { EASY_ERP_CUSTOMER_BASE_URL } from '../../../utils/urls';
+import {
+    EASY_ERP_CUSTOMER_BASE_URL,
+    EASY_ERP_FIDELITY_CARD_BASE_URL,
+} from '../../../utils/urls';
 import Head from 'next/head';
 import toast from 'react-hot-toast';
 
@@ -16,14 +19,20 @@ export default function Customer() {
         first_name: '',
         last_name: '',
         phone: '',
-        fidelity_card: null,
+        fidelity_card: '',
     });
+    const [fidelityCards, setFidelityCards] = useState([
+        {
+            barcode: '',
+            is_active: true,
+        },
+    ]);
     const [beforeUpdateCustomer, setBeforeUpdateCustomer] = useState(customer);
     const [isEditing, setIsEditing] = useState(false);
     const [isNewCustomer, setIsNewCustomer] = useState(false);
 
     const changeFormValue = function (
-        e: ChangeEvent<HTMLInputElement>,
+        e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
         field: string
     ) {
         setIsEditing(true);
@@ -57,10 +66,18 @@ export default function Customer() {
     };
 
     const loadAllFidelityCards = function () {
-        // todo download fidelity cards and map with customer if not new
+        api.authAxios
+            .get(`${EASY_ERP_FIDELITY_CARD_BASE_URL}?is_active=true`)
+            .then(response => {
+                setFidelityCards(response.data.results);
+            })
+            .catch(() => {
+                toast.error('Error while loading fidelity cards');
+            });
     };
 
     useEffect(() => {
+        loadAllFidelityCards();
         if (id === '-1') {
             setIsNewCustomer(true);
         } else {
@@ -71,7 +88,7 @@ export default function Customer() {
                     setCustomer(response.data);
                     setBeforeUpdateCustomer(response.data);
                 })
-                .catch(error => {
+                .catch(() => {
                     toast.error('Error while retrieving customer info');
                 });
         }
@@ -134,17 +151,25 @@ export default function Customer() {
                         />
                     </div>
                     <div className="flex mt-5 justify-start">
-                        <input
+                        <select
                             id="fidelity_card"
-                            type="text"
                             placeholder="Tessera fedeltà"
                             className="basis-4/12 bg-zinc-200 w-full outline-none p-2 placeholder-black rounded-md"
-                            value={
-                                customer.fidelity_card
-                                    ? customer.fidelity_card
-                                    : ''
-                            }
-                        />
+                            value={customer.fidelity_card}
+                            onChange={e => changeFormValue(e, 'fidelity_card')}
+                        >
+                            <option value="">
+                                Seleziona una carta fedeltà
+                            </option>
+                            {fidelityCards.map(fidelityCard => (
+                                <option
+                                    key={fidelityCard.barcode}
+                                    value={fidelityCard.barcode}
+                                >
+                                    {fidelityCard.barcode}
+                                </option>
+                            ))}
+                        </select>
                     </div>
                 </div>
             </div>
