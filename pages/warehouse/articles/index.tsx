@@ -6,6 +6,7 @@ import SectionTitle from '../../../components/layout/sectionTitle';
 import Head from 'next/head';
 import React, { useEffect, useState } from 'react';
 import useApi from '../../../components/useApi';
+import toast from 'react-hot-toast';
 
 export default function Articles() {
     const router = useRouter();
@@ -30,7 +31,9 @@ export default function Articles() {
         api.authAxios
             .get(EASY_ERP_ARTICLES_URL)
             .then(response => setArticles(response.data.results))
-            .catch(() => {});
+            .catch(() => {
+                toast.error('Error while loading articles');
+            });
     }, []);
 
     return (

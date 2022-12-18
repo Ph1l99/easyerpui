@@ -6,6 +6,7 @@ import { faTag } from '@fortawesome/free-solid-svg-icons';
 import clsx from 'clsx';
 import { EASY_ERP_ARTICLES_URL } from '../../../utils/urls';
 import Head from 'next/head';
+import toast from 'react-hot-toast';
 
 export default function Article() {
     const router = useRouter();
@@ -40,10 +41,21 @@ export default function Article() {
             api.authAxios
                 .post(`${EASY_ERP_ARTICLES_URL}/-1`, article)
                 .then(() => {
+                    toast.success('Article created succesfully');
                     // todo push route with article id
-                }); // todo toast
+                })
+                .catch(() => {
+                    toast.error('Error while creating article');
+                });
         } else {
-            api.authAxios.put(`${EASY_ERP_ARTICLES_URL}/${barcode}`, article); // todo toast
+            api.authAxios
+                .put(`${EASY_ERP_ARTICLES_URL}/${barcode}`, article)
+                .then(() => {
+                    toast.success('Article updated succesfully');
+                })
+                .catch(() => {
+                    toast.error('Error while updating article');
+                });
         }
     };
 
@@ -64,7 +76,7 @@ export default function Article() {
                     setBeforeUpdateArticle(response.data);
                 })
                 .catch(error => {
-                    // todo toast error
+                    toast.error('Error while retrieving article info');
                 });
         }
     }, [barcode]);
