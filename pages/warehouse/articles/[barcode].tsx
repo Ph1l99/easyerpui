@@ -72,10 +72,14 @@ export default function Article() {
     return (
         <>
             <Head>
-                <title>{barcode}</title>
+                <title>
+                    {isNewArticle ? 'Nuovo articolo' : `Articolo: ${barcode}`}
+                </title>
             </Head>
             <div className="flex flex-col p-8 h-full">
-                <div className="basis-1 /12 font-bold text-xl">Articolo</div>
+                <div className="basis-1 /12 font-bold text-xl">
+                    Articolo: {isNewArticle ? '-' : '-1'}
+                </div>
 
                 <div className="basis-1/12 flex justify-end">
                     {isEditing && (
