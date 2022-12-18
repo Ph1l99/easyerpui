@@ -1,10 +1,7 @@
 import { useRouter } from 'next/router';
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import useApi from '../../../components/useApi';
-import {
-    EASY_ERP_CUSTOMER_BASE_URL,
-    EASY_ERP_CUSTOMERS_BASE_URL,
-} from '../../../utils/urls';
+import { EASY_ERP_CUSTOMER_BASE_URL } from '../../../utils/urls';
 import Head from 'next/head';
 
 export default function Customer() {
@@ -51,6 +48,10 @@ export default function Customer() {
         } else {
             api.authAxios.put(`${EASY_ERP_CUSTOMER_BASE_URL}/${id}`, customer);
         }
+    };
+
+    const loadAllFidelityCards = function () {
+        // todo download fidelity cards and map with customer if not new
     };
 
     useEffect(() => {
