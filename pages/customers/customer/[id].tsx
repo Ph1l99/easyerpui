@@ -30,6 +30,8 @@ export default function Customer() {
     const [beforeUpdateCustomer, setBeforeUpdateCustomer] = useState(customer);
     const [isEditing, setIsEditing] = useState(false);
     const [isNewCustomer, setIsNewCustomer] = useState(false);
+    const [assignNewFidelityCard, setAssignNewFidelityCard] = useState(false);
+    const [newFidelityCard, setNewFidelityCard] = useState('');
 
     const changeFormValue = function (
         e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
@@ -49,6 +51,11 @@ export default function Customer() {
     };
 
     const saveCustomer = function () {
+        // If the new fidelity card is being set, I replace the old one with the new one
+        if (newFidelityCard !== '') {
+            customer.fidelity_card = newFidelityCard
+        }
+
         if (isNewCustomer) {
             api.authAxios
                 .post(`${EASY_ERP_CUSTOMER_BASE_URL}/-1`, customer)
@@ -67,7 +74,9 @@ export default function Customer() {
 
     const loadAllFidelityCards = function () {
         api.authAxios
-            .get(`${EASY_ERP_FIDELITY_CARD_BASE_URL}?is_active=true`)
+            .get(
+                `${EASY_ERP_FIDELITY_CARD_BASE_URL}?is_active=true&is_available=true`
+            )
             .then(response => {
                 setFidelityCards(response.data.results);
             })
@@ -151,25 +160,53 @@ export default function Customer() {
                         />
                     </div>
                     <div className="flex mt-5 justify-start">
-                        <select
-                            id="fidelity_card"
+                        <input
+                            id="oldFidelityCard"
+                            type="text"
+                            readOnly
                             placeholder="Tessera fedeltà"
-                            className="basis-4/12 bg-zinc-200 w-full outline-none p-2 placeholder-black rounded-md"
+                            className="basis-4/12 bg-zinc-200 w-full outline-none p-2 placeholder-black rounded-md cursor-not-allowed"
                             value={customer.fidelity_card}
-                            onChange={e => changeFormValue(e, 'fidelity_card')}
-                        >
-                            <option value="">
-                                Seleziona una carta fedeltà
-                            </option>
-                            {fidelityCards.map(fidelityCard => (
-                                <option
-                                    key={fidelityCard.barcode}
-                                    value={fidelityCard.barcode}
-                                >
-                                    {fidelityCard.barcode}
+                        />
+                        <div className="basis-4/12">
+                            <label
+                                htmlFor="isNewFidelityCardCheckbox"
+                                className="pr-2"
+                            >
+                                Assegna nuova tessera fedeltà
+                            </label>
+                            <input
+                                id="isNewFidelityCardCheckbox"
+                                type="checkbox"
+                                checked={assignNewFidelityCard}
+                                onChange={e => {
+                                    setAssignNewFidelityCard(e.target.checked);
+                                }}
+                            />
+                        </div>
+                        {assignNewFidelityCard && (
+                            <select
+                                id="fidelity_card"
+                                placeholder="Nuova tessera fedeltà"
+                                className="basis-4/12 bg-zinc-200 w-full outline-none p-2 placeholder-black rounded-md"
+                                value={newFidelityCard}
+                                onChange={e =>
+                                    setNewFidelityCard(e.target.value)
+                                }
+                            >
+                                <option value="">
+                                    Seleziona una carta fedeltà
                                 </option>
-                            ))}
-                        </select>
+                                {fidelityCards.map(fidelityCard => (
+                                    <option
+                                        key={fidelityCard.barcode}
+                                        value={fidelityCard.barcode}
+                                    >
+                                        {fidelityCard.barcode}
+                                    </option>
+                                ))}
+                            </select>
+                        )}
                     </div>
                 </div>
             </div>
