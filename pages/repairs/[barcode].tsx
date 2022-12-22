@@ -23,7 +23,7 @@ export default function Repair() {
         description: '',
         barcode: '',
         delivery_date: '',
-        customer: 0,
+        customer: -1,
         insert_date_time: '',
         status: '',
     });
@@ -76,7 +76,7 @@ export default function Repair() {
                 .get(`${EASY_ERP_REPAIRS_URL}${barcode}`)
                 .then(response => {
                     setRepair(response.data);
-                    if (repair.customer !== null) loadRepairCustomerInfo();
+                    loadRepairCustomerInfo(response.data.customer);
                 })
                 .catch(() => {
                     toast.error('Error while loading repair info');
@@ -95,9 +95,9 @@ export default function Repair() {
             });
     };
 
-    const loadRepairCustomerInfo = function () {
+    const loadRepairCustomerInfo = function (customer: string) {
         api.authAxios
-            .get(`${EASY_ERP_CUSTOMER_BASE_URL}/${repair.customer}`)
+            .get(`${EASY_ERP_CUSTOMER_BASE_URL}/${customer}`)
             .then(response => {
                 setRepairCustomer(response.data);
             })
@@ -152,8 +152,8 @@ export default function Repair() {
         if (barcode == '-1') {
             setIsNewRepair(true);
         } else if (barcode !== undefined) {
-            setIsNewRepair(false);
             loadRepairInfo();
+            setIsNewRepair(false);
             setBeforeUpdateRepair(repair);
         }
     }, [barcode]);
@@ -265,7 +265,7 @@ export default function Repair() {
                             type="text"
                             placeholder="Cliente"
                             className="basis-3/12 bg-zinc-200 w-full outline-none p-2 placeholder-black rounded-md cursor-pointer"
-                            value={`${repairCustomer.last_name} ${repairCustomer.first_name}`}
+                            value={`${repairCustomer.last_name} ${repairCustomer.first_name}`} // todo open modal
                         />
                         <input
                             type="text"
