@@ -4,6 +4,7 @@ import { faReceipt, faTag } from '@fortawesome/free-solid-svg-icons';
 import Head from 'next/head';
 import clsx from 'clsx';
 import {
+    EASY_ERP_CUSTOMER_BASE_URL,
     EASY_ERP_REPAIR_STATUS_URL,
     EASY_ERP_REPAIRS_URL,
 } from '../../utils/urls';
@@ -22,7 +23,7 @@ export default function Repair() {
         description: '',
         barcode: '',
         delivery_date: '',
-        customer: '',
+        customer: 0,
         insert_date_time: '',
         status: '',
     });
@@ -34,17 +35,39 @@ export default function Repair() {
             class_name: '',
         },
     ]);
+    const [repairCustomer, setRepairCustomer] = useState({
+        id: 0,
+        first_name: '',
+        last_name: '',
+        phone: '',
+    });
     const [beforeUpdateRepair, setBeforeUpdateRepair] = useState(repair);
     const [isEditing, setIsEditing] = useState(false);
     const [isNewRepair, setIsNewRepair] = useState(false);
 
     const printRepairReceipt = function () {
         if (barcode) {
-            api.authAxios.post(`${EASY_ERP_REPAIRS_URL}/${barcode}/receipt`);
+            api.authAxios
+                .post(`${EASY_ERP_REPAIRS_URL}/${barcode}/receipt`)
+                .then(() => {
+                    toast.success('Receipt printed succesfully');
+                })
+                .catch(() => {
+                    toast.error('Error while printing receipt');
+                });
         }
     };
     const printRepairLabel = function () {
-        if (barcode) console.log('PRINTING BARCODE: ', barcode); //todo
+        if (barcode) {
+            api.authAxios
+                .post(`${EASY_ERP_REPAIRS_URL}/${barcode}/receipt`)
+                .then(() => {
+                    toast.success('Label printed succesfully');
+                })
+                .catch(() => {
+                    toast.error('Error while printing label');
+                });
+        }
     };
 
     const loadRepairInfo = function () {
@@ -53,6 +76,7 @@ export default function Repair() {
                 .get(`${EASY_ERP_REPAIRS_URL}${barcode}`)
                 .then(response => {
                     setRepair(response.data);
+                    if (repair.customer !== null) loadRepairCustomerInfo();
                 })
                 .catch(() => {
                     toast.error('Error while loading repair info');
@@ -68,6 +92,17 @@ export default function Repair() {
             })
             .catch(() => {
                 toast.error('Error while loading repair status info');
+            });
+    };
+
+    const loadRepairCustomerInfo = function () {
+        api.authAxios
+            .get(`${EASY_ERP_CUSTOMER_BASE_URL}/${repair.customer}`)
+            .then(response => {
+                setRepairCustomer(response.data);
+            })
+            .catch(() => {
+                toast.error('Error while retrieving repair customer info');
             });
     };
 
@@ -203,14 +238,14 @@ export default function Repair() {
                         <input
                             type="date"
                             placeholder="Data consegna"
-                            className="basis-4/12 bg-zinc-200 w-full outline-none p-2 placeholder-black rounded-md"
+                            className="basis-3/12 bg-zinc-200 w-full outline-none p-2 placeholder-black rounded-md"
                             value={repair.delivery_date}
                             onChange={e => {
                                 changeFormValue(e, 'delivery_date');
                             }}
                         />
                         <select
-                            className="basis-4/12 bg-zinc-200 w-full outline-none p-2 placeholder-black rounded-md cursor-pointer"
+                            className="basis-3/12 bg-zinc-200 w-full outline-none p-2 placeholder-black rounded-md cursor-pointer"
                             value={repair.status}
                             onChange={e => {
                                 changeFormValue(e, 'status');
@@ -229,11 +264,15 @@ export default function Repair() {
                         <input
                             type="text"
                             placeholder="Cliente"
-                            className="basis-4/12 bg-zinc-200 w-full outline-none p-2 placeholder-black rounded-md"
-                            value={repair.customer}
-                            onChange={e => {
-                                changeFormValue(e, 'customer'); //todo replace with customer select
-                            }}
+                            className="basis-3/12 bg-zinc-200 w-full outline-none p-2 placeholder-black rounded-md cursor-pointer"
+                            value={`${repairCustomer.last_name} ${repairCustomer.first_name}`}
+                        />
+                        <input
+                            type="text"
+                            placeholder="Recapito"
+                            readOnly
+                            className="basis-3/12 bg-zinc-200 w-full outline-none p-2 placeholder-black rounded-md cursor-not-allowed"
+                            value={repairCustomer.phone}
                         />
                     </div>
                 </div>
