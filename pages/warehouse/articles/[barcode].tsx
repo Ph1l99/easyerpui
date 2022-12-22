@@ -67,7 +67,7 @@ export default function Article() {
     useEffect(() => {
         if (barcode === '-1') {
             setIsNewArticle(true);
-        } else {
+        } else if (barcode !== undefined) {
             setIsNewArticle(false);
             api.authAxios
                 .get(`${EASY_ERP_ARTICLES_URL}/${barcode}`)

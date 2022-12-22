@@ -116,7 +116,7 @@ export default function Repair() {
         loadRepairStatusInfo();
         if (barcode == '-1') {
             setIsNewRepair(true);
-        } else {
+        } else if (barcode !== undefined) {
             setIsNewRepair(false);
             loadRepairInfo();
             setBeforeUpdateRepair(repair);
