@@ -53,7 +53,7 @@ export default function Customer() {
     const saveCustomer = function () {
         // If the new fidelity card is being set, I replace the old one with the new one
         if (newFidelityCard !== '') {
-            customer.fidelity_card = newFidelityCard
+            customer.fidelity_card = newFidelityCard;
         }
 
         if (isNewCustomer) {
@@ -72,7 +72,7 @@ export default function Customer() {
         }
     };
 
-    const loadAllFidelityCards = function () {
+    const loadAllActiveAndAvailableFidelityCards = function () {
         api.authAxios
             .get(
                 `${EASY_ERP_FIDELITY_CARD_BASE_URL}?is_active=true&is_available=true`
@@ -86,10 +86,10 @@ export default function Customer() {
     };
 
     useEffect(() => {
-        loadAllFidelityCards();
+        loadAllActiveAndAvailableFidelityCards();
         if (id === '-1') {
             setIsNewCustomer(true);
-        } else {
+        } else if (id !== undefined) {
             setIsNewCustomer(false);
             api.authAxios
                 .get(`${EASY_ERP_CUSTOMER_BASE_URL}/${id}`)
@@ -168,7 +168,7 @@ export default function Customer() {
                             className="basis-4/12 bg-zinc-200 w-full outline-none p-2 placeholder-black rounded-md cursor-not-allowed"
                             value={customer.fidelity_card}
                         />
-                        <div className="basis-4/12">
+                        <div className="basis-4/12 flex justify-center text-center items-center">
                             <label
                                 htmlFor="isNewFidelityCardCheckbox"
                                 className="pr-2"
@@ -180,6 +180,9 @@ export default function Customer() {
                                 type="checkbox"
                                 checked={assignNewFidelityCard}
                                 onChange={e => {
+                                    e.target.checked
+                                        ? setIsEditing(true)
+                                        : setIsEditing(false);
                                     setAssignNewFidelityCard(e.target.checked);
                                 }}
                             />
