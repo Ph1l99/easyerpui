@@ -7,6 +7,7 @@ import { useState } from 'react';
 import useApi from '../../../useApi';
 import { EASY_ERP_TRANSACTIONS_URL } from '../../../../utils/urls';
 import toast from 'react-hot-toast';
+import TransactionDetailRow from './transactionDetailRow';
 
 type Transaction = {
     id?: Number;
@@ -19,7 +20,14 @@ export default function TransactionRow({
     transaction: Transaction;
 }) {
     const api = useApi();
-    const [transactionDetails, setTransactionDetails] = useState([]);
+    const [transactionDetails, setTransactionDetails] = useState([
+        {
+            id: -1,
+            quantity: 0,
+            article: {},
+            reference: {},
+        },
+    ]);
     const [isOpenTransactionDetails, setIsOpenTransactionDetails] =
         useState(false);
     const loadTransactionDetails = function () {
@@ -42,14 +50,18 @@ export default function TransactionRow({
                             ? faChevronDown
                             : faChevronRight
                     }
+                    size="lg"
                     onClick={() => {
                         setIsOpenTransactionDetails(!isOpenTransactionDetails);
-                        if (transactionDetails.length == 0) {
+                        if (
+                            transactionDetails.length == 0 ||
+                            transactionDetails[0].id === -1
+                        ) {
                             loadTransactionDetails();
                         }
                     }}
                 ></FontAwesomeIcon>
-                <div className="basis-2/12 text-center">
+                <div className="basis-2/12">
                     Trans. {transaction.id!.toString()}
                 </div>
                 <div className="basis-6/12">
@@ -63,6 +75,18 @@ export default function TransactionRow({
                     <span className="font-bold">{transaction.username}</span>
                 </div>
             </div>
+            {isOpenTransactionDetails &&
+                transactionDetails.map(transactionDetail => (
+                    <TransactionDetailRow
+                        key={transactionDetail.id}
+                        transactionDetail={{
+                            id: transactionDetail.id,
+                            quantity: transactionDetail.quantity,
+                            article: transactionDetail.article,
+                            reference: transactionDetail.reference,
+                        }}
+                    />
+                ))}
         </>
     );
 }
