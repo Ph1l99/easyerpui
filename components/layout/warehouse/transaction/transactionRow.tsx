@@ -55,7 +55,7 @@ export default function TransactionRow({
                 <div className="basis-6/12">
                     Data{' '}
                     <span className="font-bold">
-                        {transaction.date_and_time}
+                        {new Date(transaction.date_and_time!).toLocaleString()}
                     </span>
                 </div>
                 <div className="basis-4/12 font-light text-sm overflow-hidden">
