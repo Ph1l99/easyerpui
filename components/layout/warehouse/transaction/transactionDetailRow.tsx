@@ -26,7 +26,7 @@ export default function TransactionDetailRow({
             <div className="flex px-2 py-2 bg-zinc-200 rounded-lg justify-start items-center h-16 mx-3 mt-2">
                 <FontAwesomeIcon
                     className={clsx(
-                        'basis-1/12 cursor-pointer font-bold',
+                        'basis-1/12 font-bold',
                         transactionDetail.reference?.operation_type === '+'
                             ? 'text-green-600'
                             : 'text-red-600'
