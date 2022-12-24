@@ -99,13 +99,13 @@ export default function Article() {
                             <input
                                 type="button"
                                 value="Salva"
-                                className="basis-1/12 rounded-lg bg-green-600 text-white outline-none mr-4 text-center h-8 cursor-pointer"
+                                className="basis-1/12 py-1 rounded-lg bg-green-600 text-white outline-none mr-4 text-center h-fit cursor-pointer"
                                 onClick={saveArticle}
                             />
                             <input
                                 type="button"
                                 value="Annulla"
-                                className="basis-1/12 rounded-lg bg-red-600 text-white outline-none text-center h-8 cursor-pointer"
+                                className="basis-1/12 py-1 rounded-lg bg-red-600 text-white outline-none text-center h-fit cursor-pointer"
                                 onClick={revertChanges}
                             />
                         </>
