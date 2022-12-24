@@ -20,7 +20,6 @@ export default function TransactionDetailRow({
 }: {
     transactionDetail: TransactionDetail;
 }) {
-    // @ts-ignore
     return (
         <>
             <div className="flex px-2 py-2 bg-zinc-200 rounded-lg justify-start items-center h-16 mx-3 mt-2">
