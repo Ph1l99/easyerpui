@@ -90,7 +90,7 @@ export default function Article() {
             </Head>
             <div className="flex flex-col p-8 h-full">
                 <div className="basis-1 /12 font-bold text-xl">
-                    Articolo: {isNewArticle ? '-' : '-1'}
+                    Articolo: {isNewArticle ? '-' : ''}
                 </div>
 
                 <div className="basis-1/12 flex justify-end">
