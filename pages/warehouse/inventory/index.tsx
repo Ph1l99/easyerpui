@@ -84,7 +84,7 @@ export default function Inventory() {
                     <input
                         type="button"
                         className={clsx(
-                            'p-2 rounded-lg bg-fuchsia-600 text-white outline-none mr-4 h-fit text-center cursor-pointer',
+                            'p-2 rounded-lg bg-fuchsia-600 text-white outline-none mr-4 h-fit text-center cursor-pointer font-bold',
                             !isEnabledInventoryCycleButton
                                 ? 'cursor-not-allowed'
                                 : ''
