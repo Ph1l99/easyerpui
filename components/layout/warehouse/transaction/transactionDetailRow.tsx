@@ -7,7 +7,7 @@ type TransactionDetail = {
     quantity?: Number;
     article?: {
         barcode?: '';
-        description?: '';
+        name?: '';
     };
     reference?: {
         id?: Number;
@@ -38,7 +38,7 @@ export default function TransactionDetailRow({
                     size="lg"
                 ></FontAwesomeIcon>
                 <div className="basis-4/12">
-                    {transactionDetail.article?.description}
+                    {transactionDetail.article?.name}
                 </div>
                 <div className="basis-3/12">
                     Quantità{' '}
