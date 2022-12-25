@@ -3,15 +3,21 @@ import Head from 'next/head';
 import React, { useEffect, useState } from 'react';
 import clsx from 'clsx';
 import useApi from '../../components/useApi';
-import { EASY_ERP_ARTICLES_URL } from '../../utils/urls';
+import {
+    EASY_ERP_ARTICLES_URL,
+    EASY_ERP_TRANSACTIONS_URL,
+} from '../../utils/urls';
 import { Simulate } from 'react-dom/test-utils';
 import error = Simulate.error;
 import toast from 'react-hot-toast';
 import ArticleSellRow from '../../components/layout/selling/articleSellRow';
 import { func } from 'prop-types';
+import { useAuth } from '../../components/useAuth';
+import { TRANSACTION_REFERENCE_ID_SELLING_TO_CUSTOMER } from '../../utils/constants';
 
 export default function Selling() {
     const api = useApi();
+    const auth = useAuth();
 
     const [currentArticle, setCurrentArticle] = useState('');
     const [isEnabledSellButton, setIsEnabledSellButton] = useState(false);
@@ -114,7 +120,38 @@ export default function Selling() {
         setIsEnabledSellButton(false);
     };
 
-    const sellItems = function () {};
+    const sellItems = function () {
+        let sellTransactionDetails: {
+            article: string;
+            quantity: number;
+            reference: number;
+        }[] = [];
+        if (articlesToBeSold.length > 0) {
+            articlesToBeSold.forEach(item => {
+                sellTransactionDetails.push({
+                    article: item.barcode,
+                    quantity: item.quantity,
+                    reference: TRANSACTION_REFERENCE_ID_SELLING_TO_CUSTOMER,
+                });
+            });
+
+            if (!auth.user?.username) auth.getProfileInfo();
+
+            const transactionObject = {
+                username: auth.user?.username,
+                details: sellTransactionDetails,
+            };
+            api.authAxios
+                .post(`${EASY_ERP_TRANSACTIONS_URL}/-1`, transactionObject)
+                .then(() => {
+                    toast.success('Selling transaction correctly registered');
+                    rollbackSelling();
+                })
+                .catch(() => {
+                    toast.error('Error while processing selling transaction');
+                });
+        }
+    };
 
     useEffect(() => {
         setIsEnabledSellButton(
