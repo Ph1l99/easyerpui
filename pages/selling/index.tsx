@@ -31,10 +31,10 @@ export default function Selling() {
                     // Check if current availability is gt 0
                     if (response.data.current_availability > 0) {
                         // Initialize object
-                        let sellingArticle: {
-                            quantity: number;
-                            name: string;
-                            barcode: string;
+                        let sellingArticle = {
+                            quantity: 0,
+                            name: '',
+                            barcode: '',
                         };
                         // Check if current article already exists in the array
                         const alreadyExistingArticleIndex = getArticleIndex(
@@ -42,15 +42,28 @@ export default function Selling() {
                         );
                         // If exists I update the quantity
                         if (alreadyExistingArticleIndex > -1) {
-                            // Create object
-                            sellingArticle = {
-                                barcode: response.data.barcode,
-                                name: response.data.name,
-                                quantity:
-                                    articlesToBeSold[
-                                        alreadyExistingArticleIndex
-                                    ].quantity + 1,
-                            };
+                            if (
+                                articlesToBeSold[alreadyExistingArticleIndex]
+                                    .quantity +
+                                    1 <=
+                                response.data.current_availability
+                            ) {
+                                // Create object
+                                sellingArticle = {
+                                    barcode: response.data.barcode,
+                                    name: response.data.name,
+                                    quantity:
+                                        articlesToBeSold[
+                                            alreadyExistingArticleIndex
+                                        ].quantity + 1,
+                                };
+                                // Finally the article is pushed to the list
+                                pushArticleToList(sellingArticle);
+                            } else {
+                                toast.error(
+                                    'Raggiunto numero massimo parti scaricabili!'
+                                );
+                            }
                         } else {
                             // Otherwise I set it to 1
                             sellingArticle = {
@@ -58,9 +71,9 @@ export default function Selling() {
                                 name: response.data.name,
                                 quantity: 1,
                             };
+                            // Finally the article is pushed to the list
+                            pushArticleToList(sellingArticle);
                         }
-                        // Finally the article is pushed to the list
-                        pushArticleToList(sellingArticle);
                     } else {
                         toast.error('Current availability less than 0');
                     }
@@ -125,7 +138,7 @@ export default function Selling() {
                     />
                     <input
                         type="button"
-                        className="p-2 rounded-lg bg-fuchsia-600 text-white outline-none h-fit text-center cursor-pointer font-bold"
+                        className="p-2 rounded-lg bg-indigo-600 text-white outline-none h-fit text-center cursor-pointer font-bold"
                         value="Chiudi vendita"
                         onClick={sellItems}
                     />
