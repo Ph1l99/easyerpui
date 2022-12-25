@@ -38,11 +38,13 @@ export default function Article() {
 
     const saveArticle = function () {
         if (isNewArticle) {
+            if (article.barcode == '')
+                setArticle(prevState => ({ ...prevState, barcode: '-1' }));
             api.authAxios
                 .post(`${EASY_ERP_ARTICLES_URL}/-1`, article)
-                .then(() => {
+                .then(response => {
                     toast.success('Article created succesfully');
-                    // todo push route with article id
+                    // todo push route with article id in response
                 })
                 .catch(() => {
                     toast.error('Error while creating article');
