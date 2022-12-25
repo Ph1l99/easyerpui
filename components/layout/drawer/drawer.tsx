@@ -4,6 +4,7 @@ import {
     EASY_ERP_FIDELITY_CARD_BASE_URL,
     EASY_ERP_INVENTORY_URL,
     EASY_ERP_REPAIRS_BASE_URL,
+    EASY_ERP_SELLING_BASE_URL,
     EASY_ERP_TRANSACTIONS_URL,
 } from '../../../utils/urls';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -35,6 +36,11 @@ export default function Drawer() {
                 <div className="ml-4 mt-5">
                     <ul className="flex flex-col gap-3">
                         <DrawerMenuItem url="/" description="Home" />
+
+                        <DrawerMenuItem
+                            url={EASY_ERP_SELLING_BASE_URL}
+                            description="Vendita"
+                        ></DrawerMenuItem>
 
                         <DrawerMenuItem
                             url={EASY_ERP_REPAIRS_BASE_URL}
