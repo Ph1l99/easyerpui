@@ -122,9 +122,11 @@ export default function Repair() {
         if (isNewRepair) {
             api.authAxios
                 .post(`${EASY_ERP_REPAIRS_URL}-1`, repair)
-                .then(() => {
+                .then(response => {
                     toast.success('Repair created succesfully');
-                    setIsEditing(false);
+                    router.replace(
+                        `${EASY_ERP_REPAIRS_URL}${response.data.barcode}`
+                    );
                 })
                 .catch(() => {
                     toast.error('Error while creating repair');

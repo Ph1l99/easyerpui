@@ -59,9 +59,11 @@ export default function Customer() {
         if (isNewCustomer) {
             api.authAxios
                 .post(`${EASY_ERP_CUSTOMER_BASE_URL}/-1`, customer)
-                .then(() => {
+                .then(response => {
                     toast.success('Customer created succesfully');
-                    // todo push route with article id
+                    router.replace(
+                        `${EASY_ERP_CUSTOMER_BASE_URL}/${response.data.id}`
+                    );
                 });
         } else {
             api.authAxios
