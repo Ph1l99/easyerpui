@@ -1,4 +1,4 @@
-import { useAuth } from '../useAuth';
+import { useAuth } from '../../useAuth';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-regular-svg-icons';
 import { faBars } from '@fortawesome/free-solid-svg-icons';

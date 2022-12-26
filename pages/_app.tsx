@@ -3,7 +3,7 @@ import type { AppProps } from 'next/app';
 import { AuthProvider } from '../components/useAuth';
 import { config } from '@fortawesome/fontawesome-svg-core';
 import '@fortawesome/fontawesome-svg-core/styles.css';
-import Layout from '../components/layout/layout';
+import Layout from '../components/layout/appLayout/layout';
 import { Toaster } from 'react-hot-toast';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';

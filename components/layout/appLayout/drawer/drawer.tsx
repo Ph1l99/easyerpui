@@ -6,7 +6,7 @@ import {
     EASY_ERP_REPAIRS_BASE_URL,
     EASY_ERP_SELLING_BASE_URL,
     EASY_ERP_TRANSACTIONS_URL,
-} from '../../../utils/urls';
+} from '../../../../utils/urls';
 import clsx from 'clsx';
 import DrawerMenuItem from './drawerMenuItem';
 import { DrawerSubMenuItem } from './drawerSubMenuItem';
