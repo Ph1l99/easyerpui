@@ -9,7 +9,7 @@ export default function InventoryRow({
     inventoryArticle: InventoryArticle;
 }) {
     return (
-        <div className="flex px-4 py-2 bg-zinc-200 rounded-lg justify-start items-center h-16">
+        <div className="flex px-4 py-2 bg-zinc-200 rounded-lg justify-start items-center h-16 mt-3">
             <div className="basis-6/12 font-bold">{inventoryArticle.name}</div>
             <div className="basis-6/12">
                 Giacenza attuale:{' '}
