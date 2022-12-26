@@ -9,7 +9,7 @@ export default function ArticleSellRow({
     sellingArticle: SellingArticle;
 }) {
     return (
-        <div className="flex px-4 py-2 bg-zinc-200 rounded-lg justify-start items-center h-16 mt-5">
+        <div className="flex px-4 py-2 bg-zinc-200 rounded-lg justify-start items-center h-16 mt-3">
             <div className="basis-6/12 font-bold">{sellingArticle.name}</div>
             <div className="basis-6/12">
                 Quantità:{' '}

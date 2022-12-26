@@ -42,7 +42,7 @@ export default function TransactionRow({
     };
     return (
         <>
-            <div className="flex px-2 py-2 bg-zinc-200 rounded-lg justify-start items-center h-16 mt-5">
+            <div className="flex px-2 py-2 bg-zinc-200 rounded-lg justify-start items-center h-16 mt-3">
                 <FontAwesomeIcon
                     className="basis-1/12 cursor-pointer"
                     icon={
