@@ -46,6 +46,8 @@ export default function Customer() {
     };
 
     const revertChanges = function () {
+        if (beforeUpdateCustomer.fidelity_card == customer.fidelity_card)
+            setAssignNewFidelityCard(false);
         setCustomer(beforeUpdateCustomer);
         setIsEditing(false);
     };
