@@ -13,7 +13,7 @@ export default function InventoryRow({
             <div className="basis-6/12 font-bold">{inventoryArticle.name}</div>
             <div className="basis-6/12">
                 Giacenza attuale:{' '}
-                <span className="font-bold">
+                <span className="font-bold text-lg">
                     {inventoryArticle.current_availability!.toString()}
                 </span>
             </div>
