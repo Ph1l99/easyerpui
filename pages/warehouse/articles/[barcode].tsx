@@ -38,13 +38,20 @@ export default function Article() {
 
     const saveArticle = function () {
         if (isNewArticle) {
-            if (article.barcode == '')
-                setArticle(prevState => ({ ...prevState, barcode: '-1' }));
+            let articleToBeSaved = article;
+
+            // If new article and no barcode is provided, set barcode to -1
+            if (article.barcode == '') {
+                articleToBeSaved.barcode = '-1';
+            }
+
             api.authAxios
-                .post(`${EASY_ERP_ARTICLES_URL}/-1`, article)
+                .post(`${EASY_ERP_ARTICLES_URL}/-1`, articleToBeSaved)
                 .then(response => {
                     toast.success('Article created succesfully');
-                    // todo push route with article id in response
+                    router.replace(
+                        `${EASY_ERP_ARTICLES_URL}/${response.data.barcode}`
+                    );
                 })
                 .catch(() => {
                     toast.error('Error while creating article');
@@ -77,7 +84,7 @@ export default function Article() {
                     setArticle(response.data);
                     setBeforeUpdateArticle(response.data);
                 })
-                .catch(error => {
+                .catch(() => {
                     toast.error('Error while retrieving article info');
                 });
         }
