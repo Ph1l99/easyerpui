@@ -15,7 +15,7 @@ export default function Drawer({ isOpen }: { isOpen: boolean }) {
     return (
         <div
             className={clsx(
-                'flex flex-col bg-sky-900 text-white font-light pt-4',
+                'flex flex-col bg-sky-900 text-white font-light',
                 isOpen ? ' h-full' : 'h-0 pt-0'
             )}
         >
