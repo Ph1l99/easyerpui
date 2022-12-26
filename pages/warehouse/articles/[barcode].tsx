@@ -74,6 +74,7 @@ export default function Article() {
     };
 
     useEffect(() => {
+        setIsEditing(false);
         if (barcode === '-1') {
             setIsNewArticle(true);
         } else if (barcode !== undefined) {
@@ -99,7 +100,7 @@ export default function Article() {
             </Head>
             <div className="flex flex-col p-8 h-full">
                 <div className="basis-1 /12 font-bold text-xl">
-                    Articolo: {isNewArticle ? '-' : ''}
+                    Articolo: {isNewArticle ? '-' : `${barcode}`}
                 </div>
 
                 <div className="basis-1/12 flex justify-end">

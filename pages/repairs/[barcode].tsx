@@ -150,6 +150,7 @@ export default function Repair() {
     };
 
     useEffect(() => {
+        setIsEditing(false);
         loadRepairStatusInfo();
         if (barcode == '-1') {
             setIsNewRepair(true);

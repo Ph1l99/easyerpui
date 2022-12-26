@@ -88,6 +88,7 @@ export default function Customer() {
     };
 
     useEffect(() => {
+        setIsEditing(false);
         loadAllActiveAndAvailableFidelityCards();
         if (id === '-1') {
             setIsNewCustomer(true);
