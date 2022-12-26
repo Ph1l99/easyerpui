@@ -20,7 +20,7 @@ export default function ArticleRow({
 }) {
     return (
         <div
-            className="flex px-2 py-2 bg-zinc-200 rounded-lg justify-start items-center cursor-pointer h-16"
+            className="flex px-2 py-2 bg-zinc-200 rounded-lg justify-start items-center cursor-pointer h-16 mt-3"
             onClick={() => navigateToArticlePage(article.barcode)}
         >
             <div className="flex basis-1/12 items-center h-full justify-center rounded-lg bg-white">
