@@ -7,7 +7,7 @@ type Props = {
 
 export default function DrawerMenuItem(props: Props) {
     return (
-        <li>
+        <li className="font-bold">
             {props.url && <Link href={props.url!}>{props.description}</Link>}
             {!props.url && (
                 <p className="cursor-default">{props.description}</p>
