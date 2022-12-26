@@ -14,6 +14,7 @@ import {
     EASY_ERP_SIGNUP_URL,
 } from '../utils/urls';
 import useApi from './useApi';
+import { router } from 'next/client';
 
 type User = {
     firstName?: string;
@@ -123,6 +124,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
             deleteFromLocalStorage(ACCESS_TOKEN_LOCAL_STORAGE_KEY);
             deleteFromLocalStorage(REFRESH_TOKEN_LOCAL_STORAGE_KEY);
         }
+        router.push(`${EASY_ERP_LOGIN_URL}`);
     };
 
     const updatePassword = (password: string) => {
