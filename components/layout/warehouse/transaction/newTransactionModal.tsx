@@ -2,13 +2,16 @@ import useApi from '../../../useApi';
 import Modal from '../../modal';
 import clsx from 'clsx';
 import React from 'react';
+import { TransactionReference } from '../../../../utils/types';
 
 export default function NewTransactionModal({
     isOpen,
     onClose,
+    transactionReferences,
 }: {
     isOpen: boolean;
     onClose: Function;
+    transactionReferences: Array<TransactionReference>;
 }) {
     const api = useApi();
 

@@ -7,6 +7,7 @@ import { EASY_ERP_TRANSACTIONS_URL } from '../../../utils/urls';
 import toast from 'react-hot-toast';
 import TransactionRow from '../../../components/layout/warehouse/transaction/transactionRow';
 import NewTransactionModal from '../../../components/layout/warehouse/transaction/newTransactionModal';
+import { TransactionReference } from '../../../utils/types';
 
 export default function Transactions() {
     const api = useApi();
@@ -18,6 +19,9 @@ export default function Transactions() {
             username: '',
         },
     ]);
+    const [transactionReferences, setTransactionReferences] = useState<
+        TransactionReference[]
+    >([]);
 
     const [isOpenTransactionModal, setIsOpenTransactionModal] = useState(false);
 
@@ -66,6 +70,7 @@ export default function Transactions() {
                     setIsOpenTransactionModal(false);
                     if (refresh) loadTransactions();
                 }}
+                transactionReferences={transactionReferences}
             ></NewTransactionModal>
         </>
     );
