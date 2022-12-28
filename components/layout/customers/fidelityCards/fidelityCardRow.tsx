@@ -15,7 +15,7 @@ export default function FidelityCardRow({
     return (
         <div className="flex px-2 py-2 bg-zinc-200 rounded-lg justify-start items-center h-16 mt-3">
             <div className="flex basis-11/12 justify-start items-center px-4 h-full">
-                <div className="basis-4/12">
+                <div className="basis-7/12">
                     Identificativo tessera:{' '}
                     <span className="font-bold">{fidelityCard.barcode}</span>
                 </div>
