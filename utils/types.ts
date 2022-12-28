@@ -1,10 +1,17 @@
 // Warehouse
+import Article from '../pages/warehouse/articles/[barcode]';
+
 type Article = {
     name?: string;
     description?: string;
     barcode?: string;
     is_active?: boolean;
     reorder_threshold?: number;
+    current_availability?: number;
+};
+type TransactionArticle = Article & {
+    quantity?: number;
+    transaction_reference?: number;
 };
 type TransactionReference = {
     id?: Number;
@@ -15,14 +22,14 @@ type TransactionReference = {
 type InventoryArticle = {
     barcode?: string;
     name?: string;
-    current_availability?: Number;
+    current_availability?: number;
 };
 
 // Selling
 type SellingArticle = {
     barcode?: string;
     name?: string;
-    quantity?: Number;
+    quantity?: number;
 };
 
 // Repairs
@@ -53,6 +60,7 @@ type FidelityCard = {
 
 export type {
     Article,
+    TransactionArticle,
     TransactionReference,
     InventoryArticle,
     SellingArticle,
