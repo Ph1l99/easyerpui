@@ -70,6 +70,7 @@ export default function useApi() {
                     })
                     .catch(() => {
                         router.push(EASY_ERP_LOGIN_URL);
+                        return Promise.reject(error); // todo not sure if its'working or not
                     });
             }
             return Promise.reject(error);
