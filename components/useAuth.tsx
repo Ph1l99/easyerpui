@@ -14,7 +14,7 @@ import {
     EASY_ERP_SIGNUP_URL,
 } from '../utils/urls';
 import useApi from './useApi';
-import { router } from 'next/client';
+import { useRouter } from 'next/router';
 
 type User = {
     firstName?: string;
@@ -57,6 +57,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const [user, setUser] = useState<User | null | undefined>();
 
     const axios = useApi();
+
+    const router = useRouter();
 
     const signup = async (userReg: UserRegistration): Promise<void> => {
         return new Promise((resolve, reject) => {
