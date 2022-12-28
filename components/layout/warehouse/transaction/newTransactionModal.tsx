@@ -23,7 +23,6 @@ export default function NewTransactionModal({
     transactionReferences: Array<TransactionReference>;
 }) {
     const api = useApi();
-    const { user, getProfileInfo } = useAuth();
 
     const [articlesToBeTransacted, setArticlesToBeTransacted] = useState<
         TransactionArticle[]

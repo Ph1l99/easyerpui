@@ -17,7 +17,6 @@ import { TRANSACTION_REFERENCE_ID_SELLING_TO_CUSTOMER } from '../../utils/consta
 
 export default function Selling() {
     const api = useApi();
-    const auth = useAuth();
 
     const [currentArticle, setCurrentArticle] = useState('');
     const [isEnabledSellButton, setIsEnabledSellButton] = useState(false);
@@ -134,15 +133,10 @@ export default function Selling() {
                     reference: TRANSACTION_REFERENCE_ID_SELLING_TO_CUSTOMER,
                 });
             });
-
-            if (!auth.user?.username) await auth.getProfileInfo();
-
-            const transactionObject = {
-                username: auth.user?.username,
-                details: sellTransactionDetails,
-            };
             api.authAxios
-                .post(`${EASY_ERP_TRANSACTIONS_URL}/-1`, transactionObject)
+                .post(`${EASY_ERP_TRANSACTIONS_URL}/-1`, {
+                    details: sellTransactionDetails,
+                })
                 .then(() => {
                     toast.success('Selling transaction correctly registered');
                     rollbackSelling();
