@@ -3,7 +3,10 @@ import Head from 'next/head';
 import React, { useEffect, useState } from 'react';
 import SearchAdd from '../../../components/layout/searchAdd';
 import useApi from '../../../components/useApi';
-import { EASY_ERP_TRANSACTIONS_URL } from '../../../utils/urls';
+import {
+    EASY_ERP_TRANSACTION_REFERENCES_URL,
+    EASY_ERP_TRANSACTIONS_URL,
+} from '../../../utils/urls';
 import toast from 'react-hot-toast';
 import TransactionRow from '../../../components/layout/warehouse/transaction/transactionRow';
 import NewTransactionModal from '../../../components/layout/warehouse/transaction/newTransactionModal';
@@ -41,7 +44,20 @@ export default function Transactions() {
                 toast.error('Error while loading transactions');
             });
     };
+
+    const loadTransactionReferences = function () {
+        api.authAxios
+            .get(`${EASY_ERP_TRANSACTION_REFERENCES_URL}`)
+            .then(response => {
+                setTransactionReferences(response.data);
+            })
+            .catch(() => {
+                toast.error('Error while downloading transaction references');
+            });
+    };
+
     useEffect(() => {
+        loadTransactionReferences();
         loadTransactions();
     }, []);
     return (
@@ -71,7 +87,7 @@ export default function Transactions() {
                     if (refresh) loadTransactions();
                 }}
                 transactionReferences={transactionReferences}
-            ></NewTransactionModal>
+            />
         </>
     );
 }
