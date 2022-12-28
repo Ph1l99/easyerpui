@@ -1,14 +1,8 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTag } from '@fortawesome/free-solid-svg-icons';
 import { faImage } from '@fortawesome/free-regular-svg-icons';
+import { Article } from '../../../../utils/types';
 
-type Article = {
-    name?: string;
-    description?: string;
-    barcode?: string;
-    is_active?: boolean;
-    reorder_threshold?: number;
-};
 export default function ArticleRow({
     article,
     navigateToArticlePage,

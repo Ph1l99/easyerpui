@@ -1,19 +1,8 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import clsx from 'clsx';
+import { Repair } from '../../../utils/types';
 
-type Repair = {
-    barcode?: string;
-    title?: string;
-    description?: string;
-    delivery_date?: string;
-    status?: {
-        id?: number;
-        status?: string;
-        is_active?: boolean;
-        class_name?: string;
-    };
-};
 export default function RepairRow({
     repair,
     navigateToRepairPage,

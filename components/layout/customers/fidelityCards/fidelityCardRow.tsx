@@ -1,10 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
+import { FidelityCard } from '../../../../utils/types';
 
-type FidelityCard = {
-    barcode?: string;
-    is_active?: boolean;
-};
 export default function FidelityCardRow({
     fidelityCard,
     editFidelityCard,

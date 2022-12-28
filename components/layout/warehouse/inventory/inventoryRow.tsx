@@ -1,8 +1,5 @@
-type InventoryArticle = {
-    barcode?: string;
-    name?: string;
-    current_availability?: Number;
-};
+import { InventoryArticle } from '../../../../utils/types';
+
 export default function InventoryRow({
     inventoryArticle,
 }: {

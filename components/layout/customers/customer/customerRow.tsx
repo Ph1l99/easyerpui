@@ -1,12 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
-
-type Customer = {
-    id?: number;
-    first_name?: string;
-    last_name?: string;
-    fidelity_card?: string;
-};
+import { Customer } from '../../../../utils/types';
 
 export default function CustomerRow({
     customer,

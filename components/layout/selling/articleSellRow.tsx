@@ -1,8 +1,5 @@
-type SellingArticle = {
-    barcode?: string;
-    name?: string;
-    quantity?: Number;
-};
+import { SellingArticle } from '../../../utils/types';
+
 export default function ArticleSellRow({
     sellingArticle,
 }: {
