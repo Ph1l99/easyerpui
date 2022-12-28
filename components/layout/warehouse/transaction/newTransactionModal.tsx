@@ -158,31 +158,39 @@ export default function NewTransactionModal({
                                         )
                                     )}
                                 </select>
-                                <div className="basis-3/12">
-                                    <label htmlFor="articleQuantity">
-                                        Quantità
-                                    </label>
-                                    <input
-                                        id="articleQuantity"
-                                        type="number"
-                                        min={1}
-                                        className="border-2 border-solid rounded-md text-right ml-2"
-                                        value={transactedArticle.quantity}
-                                        onChange={e => {
-                                            updateArticleToBeTransacted(
-                                                transactedArticle.barcode!,
-                                                e,
-                                                'quantity'
-                                            );
-                                        }}
-                                    />
-                                </div>
-                                <div className="basis-3/12">
-                                    Disponibile{' '}
-                                    <span className="font-bold">
-                                        {transactedArticle.current_availability}
-                                    </span>
-                                </div>
+                                {transactedArticle.transaction_reference && (
+                                    <>
+                                        <div className="basis-3/12">
+                                            <label htmlFor="articleQuantity">
+                                                Quantità
+                                            </label>
+                                            <input
+                                                id="articleQuantity"
+                                                type="number"
+                                                min={1}
+                                                className="border-2 border-solid rounded-md text-right ml-2"
+                                                value={
+                                                    transactedArticle.quantity
+                                                }
+                                                onChange={e => {
+                                                    updateArticleToBeTransacted(
+                                                        transactedArticle.barcode!,
+                                                        e,
+                                                        'quantity'
+                                                    );
+                                                }}
+                                            />
+                                        </div>
+                                        <div className="basis-3/12">
+                                            Disponibile{' '}
+                                            <span className="font-bold">
+                                                {
+                                                    transactedArticle.current_availability
+                                                }
+                                            </span>
+                                        </div>
+                                    </>
+                                )}
                                 <hr />
                             </div>
                         ))}
