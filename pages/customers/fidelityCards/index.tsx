@@ -52,7 +52,7 @@ export default function FidelityCards() {
             <SectionTitle title="Tessere fedeltà" />
             <SearchAdd
                 searchItem={searchFidelityCard}
-                addItem={openModalFidelityCard}
+                addItem={() => openModalFidelityCard(selectedFidelityCard)}
             ></SearchAdd>
             {fidelityCards.map((fidelityCard: any) => (
                 <FidelityCardRow
