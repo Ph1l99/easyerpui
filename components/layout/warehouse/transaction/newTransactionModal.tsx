@@ -114,6 +114,7 @@ export default function NewTransactionModal({
                     rollbackChanges();
                     closeModal(false);
                 }}
+                width="w-fit"
             >
                 <div className="w-[calc(100vw-25rem)]">
                     <div className="flex flex-col">

@@ -95,6 +95,7 @@ export default function FidelityCardModal({
                         ? 'Aggiunta tessera fedeltà'
                         : 'Tessera fedeltà numero ' + fidelityCard.barcode
                 }
+                width=""
             >
                 <div className="flex flex-row align-middle gap-1">
                     <input
