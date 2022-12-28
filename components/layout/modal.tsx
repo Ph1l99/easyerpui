@@ -1,11 +1,15 @@
 import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 export default function Modal({
     isOpen,
+    title,
     children,
     onClose,
 }: {
     isOpen: boolean;
+    title: string;
     children: React.ReactNode;
     onClose: Function;
 }) {
@@ -18,6 +22,15 @@ export default function Modal({
                     <div className="fixed inset-0 z-10 overflow-y-auto">
                         <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
                             <div className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+                                <div className="basis-1/12 flex flex-row p-4 justify-between">
+                                    <span className="basis-11/12">{title}</span>
+                                    <FontAwesomeIcon
+                                        icon={faTimes}
+                                        className="text-gray-600 cursor-pointer"
+                                        onClick={() => onClose()}
+                                    />
+                                </div>
+                                <hr className="mx-4" />
                                 <div className="bg-white p-4">{children}</div>
                             </div>
                         </div>
