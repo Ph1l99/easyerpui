@@ -6,11 +6,19 @@ import { EASY_ERP_FIDELITY_CARD_BASE_URL } from '../../../utils/urls';
 import FidelityCardRow from '../../../components/layout/customers/fidelityCards/fidelityCardRow';
 import SearchAdd from '../../../components/layout/searchAdd';
 import toast from 'react-hot-toast';
+import Modal from '../../../components/layout/modal';
+import FidelityCardModal from '../../../components/layout/customers/fidelityCards/fidelityCardModal';
 
 export default function FidelityCards() {
     const api = useApi();
 
     const [fidelityCards, setFidelityCards] = useState([]);
+    const [isOpenModalFidelityCard, setIsOpenModalFidelityCard] =
+        useState(false);
+    const [selectedFidelityCard, setSelectedFidelityCard] = useState({
+        barcode: '',
+        is_active: false,
+    });
 
     const loadFidelityCards = function () {
         api.authAxios
@@ -23,8 +31,9 @@ export default function FidelityCards() {
             });
     };
 
-    const openModalFidelityCard = function (barcode: string) {
-        // todo
+    const openModalFidelityCard = function (fidelityCard: any) {
+        setSelectedFidelityCard(fidelityCard);
+        setIsOpenModalFidelityCard(true);
     };
 
     const searchFidelityCard = function (input: string) {
@@ -52,9 +61,18 @@ export default function FidelityCards() {
                         barcode: fidelityCard.barcode,
                         is_active: fidelityCard.is_active,
                     }}
-                    editFidelityCard={openModalFidelityCard}
+                    editFidelityCard={() => openModalFidelityCard(fidelityCard)}
                 ></FidelityCardRow>
             ))}
+            <FidelityCardModal
+                isOpen={isOpenModalFidelityCard}
+                onClose={(refresh: boolean) => {
+                    setIsOpenModalFidelityCard(false);
+                    setSelectedFidelityCard({ barcode: '', is_active: false });
+                    if (refresh) loadFidelityCards();
+                }}
+                fidelityCard={selectedFidelityCard}
+            />
         </>
     );
 }
