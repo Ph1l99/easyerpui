@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import {
     ACCESS_TOKEN_LOCAL_STORAGE_KEY,
+    PROFILE_INFO_LOCAL_STORAGE_KEY,
     REFRESH_TOKEN_LOCAL_STORAGE_KEY,
 } from '../utils/constants';
 import {
@@ -39,7 +40,7 @@ interface IAuthProvider {
     login: (email?: string, password?: string) => Promise<void>;
     logout: () => void;
     updatePassword: (password: string) => void;
-    getProfileInfo: () => Promise<void>;
+    getProfileInfo: () => void;
 }
 
 const AuthContext = React.createContext<IAuthProvider>({
@@ -107,24 +108,30 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     };
 
     const getProfileInfo = async () => {
-        axios.authAxios
-            .get(EASY_ERP_PROFILE_URL)
-            .then(response => {
+        const userProfile = getFromLocalStorage(PROFILE_INFO_LOCAL_STORAGE_KEY);
+
+        if (userProfile) {
+            setUser(JSON.parse(userProfile));
+        } else {
+            axios.authAxios.get(EASY_ERP_PROFILE_URL).then(response => {
                 setUser({
                     firstName: response.data.first_name,
                     lastName: response.data.last_name,
                     username: response.data.username,
                 });
-            })
-            .catch(error => {
-                console.log(error); // todo
+                saveToLocalStorage(
+                    PROFILE_INFO_LOCAL_STORAGE_KEY,
+                    JSON.stringify(response.data)
+                );
             });
+        }
     };
 
     const logout = () => {
         if (getFromLocalStorage(ACCESS_TOKEN_LOCAL_STORAGE_KEY)) {
             deleteFromLocalStorage(ACCESS_TOKEN_LOCAL_STORAGE_KEY);
             deleteFromLocalStorage(REFRESH_TOKEN_LOCAL_STORAGE_KEY);
+            deleteFromLocalStorage(PROFILE_INFO_LOCAL_STORAGE_KEY);
         }
         router.push(`${EASY_ERP_LOGIN_URL}`);
     };
