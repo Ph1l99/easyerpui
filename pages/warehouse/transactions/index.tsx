@@ -6,6 +6,7 @@ import useApi from '../../../components/useApi';
 import { EASY_ERP_TRANSACTIONS_URL } from '../../../utils/urls';
 import toast from 'react-hot-toast';
 import TransactionRow from '../../../components/layout/warehouse/transaction/transactionRow';
+import NewTransactionModal from '../../../components/layout/warehouse/transaction/newTransactionModal';
 
 export default function Transactions() {
     const api = useApi();
@@ -18,9 +19,13 @@ export default function Transactions() {
         },
     ]);
 
+    const [isOpenTransactionModal, setIsOpenTransactionModal] = useState(false);
+
     const searchTransaction = function () {};
 
-    const addNewTransaction = function () {};
+    const addNewTransaction = function () {
+        setIsOpenTransactionModal(true);
+    };
 
     const loadTransactions = function () {
         api.authAxios
@@ -55,6 +60,13 @@ export default function Transactions() {
                     }}
                 />
             ))}
+            <NewTransactionModal
+                isOpen={isOpenTransactionModal}
+                onClose={(refresh: boolean) => {
+                    setIsOpenTransactionModal(false);
+                    if (refresh) loadTransactions();
+                }}
+            ></NewTransactionModal>
         </>
     );
 }
