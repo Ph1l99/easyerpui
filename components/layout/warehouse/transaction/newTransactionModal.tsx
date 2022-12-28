@@ -119,83 +119,85 @@ export default function NewTransactionModal({
                 <div className="w-[calc(100vw-25rem)]">
                     <div className="flex flex-col">
                         {articlesToBeTransacted.map(transactedArticle => (
-                            <div
-                                className="flex flex-row py-4 gap-2"
-                                key={transactedArticle.barcode}
-                            >
-                                <input
-                                    type="text"
-                                    className="basis-4/12 cursor-pointer"
-                                    readOnly
-                                    value={transactedArticle.name}
-                                />
-                                <select
-                                    className="basis-3/12 bg-zinc-200 w-full outline-none p-2 placeholder-black rounded-md cursor-pointer"
-                                    value={
-                                        transactedArticle.transaction_reference
-                                    }
-                                    onChange={e => {
-                                        updateArticleToBeTransacted(
-                                            transactedArticle.barcode!,
-                                            e,
-                                            'transaction_reference'
-                                        );
-                                    }}
+                            <>
+                                <div
+                                    className="flex flex-row py-4 gap-2"
+                                    key={transactedArticle.barcode}
                                 >
-                                    <option value="">
-                                        Seleziona una causale
-                                    </option>
-                                    {transactionReferences.map(
-                                        transactionReference => (
-                                            <option
-                                                key={transactionReference.id!.toString()}
-                                                value={transactionReference.id!.toString()}
-                                            >
-                                                {
-                                                    transactionReference.description
-                                                }
-                                            </option>
-                                        )
+                                    <input
+                                        type="text"
+                                        className="basis-4/12 cursor-pointer"
+                                        readOnly
+                                        value={transactedArticle.name}
+                                    />
+                                    <select
+                                        className="basis-3/12 bg-zinc-200 w-full outline-none p-2 placeholder-black rounded-md cursor-pointer"
+                                        value={
+                                            transactedArticle.transaction_reference
+                                        }
+                                        onChange={e => {
+                                            updateArticleToBeTransacted(
+                                                transactedArticle.barcode!,
+                                                e,
+                                                'transaction_reference'
+                                            );
+                                        }}
+                                    >
+                                        <option value="">
+                                            Seleziona una causale
+                                        </option>
+                                        {transactionReferences.map(
+                                            transactionReference => (
+                                                <option
+                                                    key={transactionReference.id!.toString()}
+                                                    value={transactionReference.id!.toString()}
+                                                >
+                                                    {
+                                                        transactionReference.description
+                                                    }
+                                                </option>
+                                            )
+                                        )}
+                                    </select>
+                                    {transactedArticle.transaction_reference && (
+                                        <>
+                                            <div className="basis-3/12">
+                                                <label htmlFor="articleQuantity">
+                                                    Quantità
+                                                </label>
+                                                <input
+                                                    id="articleQuantity"
+                                                    type="number"
+                                                    min={1}
+                                                    className="border-2 border-solid rounded-md text-right ml-2"
+                                                    value={
+                                                        transactedArticle.quantity
+                                                    }
+                                                    onChange={e => {
+                                                        updateArticleToBeTransacted(
+                                                            transactedArticle.barcode!,
+                                                            e,
+                                                            'quantity'
+                                                        );
+                                                    }}
+                                                />
+                                            </div>
+                                            <div className="basis-3/12">
+                                                Disponibile{' '}
+                                                <span className="font-bold">
+                                                    {
+                                                        transactedArticle.current_availability
+                                                    }
+                                                </span>
+                                            </div>
+                                        </>
                                     )}
-                                </select>
-                                {transactedArticle.transaction_reference && (
-                                    <>
-                                        <div className="basis-3/12">
-                                            <label htmlFor="articleQuantity">
-                                                Quantità
-                                            </label>
-                                            <input
-                                                id="articleQuantity"
-                                                type="number"
-                                                min={1}
-                                                className="border-2 border-solid rounded-md text-right ml-2"
-                                                value={
-                                                    transactedArticle.quantity
-                                                }
-                                                onChange={e => {
-                                                    updateArticleToBeTransacted(
-                                                        transactedArticle.barcode!,
-                                                        e,
-                                                        'quantity'
-                                                    );
-                                                }}
-                                            />
-                                        </div>
-                                        <div className="basis-3/12">
-                                            Disponibile{' '}
-                                            <span className="font-bold">
-                                                {
-                                                    transactedArticle.current_availability
-                                                }
-                                            </span>
-                                        </div>
-                                    </>
-                                )}
+                                </div>
                                 <hr />
-                            </div>
+                            </>
                         ))}
                     </div>
-                    <div className="flex flex-row">
+                    <div className="flex flex-row py-4">
                         <input
                             type="text"
                             value={lastTransactionArticle}
@@ -208,7 +210,7 @@ export default function NewTransactionModal({
                             }}
                         />
                     </div>
-                    <hr className="mt-4" />
+                    <hr />
                     <div className="flex flex-row justify-end mt-4">
                         <input
                             type="button"
