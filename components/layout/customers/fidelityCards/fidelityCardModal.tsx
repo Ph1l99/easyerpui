@@ -59,6 +59,7 @@ export default function FidelityCardModal({
 
     const revertChanges = function () {
         setIsEditing(false);
+        setLocalFidelityCard({ barcode: '', is_active: false });
         closeModal(false);
     };
 
@@ -88,7 +89,7 @@ export default function FidelityCardModal({
         <>
             <Modal
                 isOpen={isOpen}
-                onClose={closeModal}
+                onClose={revertChanges}
                 title={
                     isNewFidelityCard
                         ? 'Aggiunta tessera fedeltà'
