@@ -81,7 +81,7 @@ export default function Selling() {
                             pushArticleToList(sellingArticle);
                         }
                     } else {
-                        toast.error('Current availability less than 0');
+                        toast.error('Current availability equal to 0');
                     }
                 })
                 .catch(error => {
