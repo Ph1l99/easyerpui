@@ -120,7 +120,7 @@ export default function Selling() {
         setIsEnabledSellButton(false);
     };
 
-    const sellItems = function () {
+    const sellItems = async function () {
         let sellTransactionDetails: {
             article: string;
             quantity: number;
@@ -135,7 +135,7 @@ export default function Selling() {
                 });
             });
 
-            if (!auth.user?.username) auth.getProfileInfo();
+            if (!auth.user?.username) await auth.getProfileInfo();
 
             const transactionObject = {
                 username: auth.user?.username,
