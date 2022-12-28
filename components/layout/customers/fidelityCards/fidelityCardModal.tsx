@@ -125,7 +125,7 @@ export default function FidelityCardModal({
                         type="button"
                         value="Salva"
                         className={clsx(
-                            'basis-2/12 py-1 rounded-lg bg-green-600 text-white outline-none mr-4 text-center h-fit font-bold',
+                            'basis-2/12 py-1 px-1 rounded-lg bg-green-600 text-white outline-none mr-4 text-center h-fit font-bold',
                             isEditing ? 'cursor-pointer' : 'cursor-not-allowed'
                         )}
                         disabled={!isEditing}
@@ -134,7 +134,7 @@ export default function FidelityCardModal({
                     <input
                         type="button"
                         value="Annulla"
-                        className="basis-2/12 py-1 rounded-lg bg-red-600 text-white outline-none text-center h-fit cursor-pointer font-bold"
+                        className="basis-2/12 py-1 px-1 rounded-lg bg-red-600 text-white outline-none text-center h-fit cursor-pointer font-bold"
                         onClick={revertChanges}
                     />
                 </div>
