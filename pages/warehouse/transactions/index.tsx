@@ -67,7 +67,11 @@ export default function Transactions() {
                 addItem={addNewTransaction}
             />
 
-            <PaginatedContent items={transactions} loadItems={loadTransactions}>
+            <PaginatedContent
+                next={transactions?.next}
+                previous={transactions?.previous}
+                loadItems={loadTransactions}
+            >
                 {transactions?.results?.map(transaction => (
                     <TransactionRow
                         key={transaction.id}
