@@ -57,6 +57,13 @@ type FidelityCard = {
     is_active?: boolean;
 };
 
+type PaginationResult = {
+    count?: number;
+    next?: string;
+    previous?: string;
+    results?: Array<any>;
+};
+
 export type {
     Article,
     TransactionArticle,
@@ -66,4 +73,5 @@ export type {
     Repair,
     Customer,
     FidelityCard,
+    PaginationResult,
 };
