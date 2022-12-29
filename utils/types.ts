@@ -1,5 +1,4 @@
 // Warehouse
-import Article from '../pages/warehouse/articles/[barcode]';
 
 type Article = {
     name?: string;
