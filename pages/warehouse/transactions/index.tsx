@@ -11,7 +11,7 @@ import toast from 'react-hot-toast';
 import TransactionRow from '../../../components/layout/warehouse/transaction/transactionRow';
 import NewTransactionModal from '../../../components/layout/warehouse/transaction/newTransactionModal';
 import { PaginationResult, TransactionReference } from '../../../utils/types';
-import Pagination from '../../../components/layout/pagination';
+import PaginatedContent from '../../../components/layout/paginatedContent';
 
 export default function Transactions() {
     const api = useApi();
@@ -67,7 +67,7 @@ export default function Transactions() {
                 addItem={addNewTransaction}
             />
 
-            <div className="h-[calc(100vh-18rem)] overflow-y-scroll">
+            <PaginatedContent items={transactions} loadItems={loadTransactions}>
                 {transactions?.results?.map(transaction => (
                     <TransactionRow
                         key={transaction.id}
@@ -78,18 +78,7 @@ export default function Transactions() {
                         }}
                     />
                 ))}
-            </div>
-
-            <Pagination
-                handleNextPage={() =>
-                    loadTransactions(transactions?.next!.slice(4)!)
-                }
-                handlePreviousPage={() =>
-                    loadTransactions(transactions?.previous!.slice(4)!)
-                }
-                hasNextPage={!!transactions?.next}
-                hasPreviousPage={!!transactions?.previous}
-            />
+            </PaginatedContent>
 
             <NewTransactionModal
                 isOpen={isOpenTransactionModal}
