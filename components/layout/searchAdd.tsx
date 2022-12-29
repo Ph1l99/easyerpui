@@ -12,7 +12,7 @@ export default function SearchAdd({
     const inputValueRef = useRef<HTMLInputElement>(null);
 
     return (
-        <div className="py-4 flex justify-between h-15 gap-1.5">
+        <div className="py-4 flex justify-between h-16 gap-1.5">
             <input
                 type="text"
                 className="px-2 py-1 bg-zinc-200 w-full rounded-md outline-none focus:outline focus:outline-offset-2 focus:outline-sky-900"
