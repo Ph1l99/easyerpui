@@ -113,17 +113,20 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         if (userProfile) {
             setUser(JSON.parse(userProfile));
         } else {
-            axios.authAxios.get(EASY_ERP_PROFILE_URL).then(response => {
-                setUser({
-                    firstName: response.data.first_name,
-                    lastName: response.data.last_name,
-                    username: response.data.username,
-                });
-                saveToLocalStorage(
-                    PROFILE_INFO_LOCAL_STORAGE_KEY,
-                    JSON.stringify(response.data)
-                );
-            });
+            axios.authAxios
+                .get(EASY_ERP_PROFILE_URL)
+                .then(response => {
+                    setUser({
+                        firstName: response.data.first_name,
+                        lastName: response.data.last_name,
+                        username: response.data.username,
+                    });
+                    saveToLocalStorage(
+                        PROFILE_INFO_LOCAL_STORAGE_KEY,
+                        JSON.stringify(response.data)
+                    );
+                })
+                .catch(() => {});
         }
     };
 
