@@ -1,12 +1,12 @@
 const EASY_ERP_BASE_URL =
-    process.env.NODE_ENV === 'development' ? 'http://localhost:8000' : '';
+    process.env.NODE_ENV === 'development' ? 'http://localhost:8000/api' : '';
 
 // Base urls
-const EASY_ERP_AUTH_BASE_URL = '/api/auth';
-const EASY_ERP_WAREHOUSE_BASE_URL = '/api/warehouse';
-const EASY_ERP_REPAIRS_BASE_URL = '/api/repairs';
-const EASY_ERP_CUSTOMERS_BASE_URL = '/api/customers';
-const EASY_ERP_SELLING_BASE_URL = '/api/selling';
+const EASY_ERP_AUTH_BASE_URL = '/auth';
+const EASY_ERP_WAREHOUSE_BASE_URL = '/warehouse';
+const EASY_ERP_REPAIRS_BASE_URL = '/repairs';
+const EASY_ERP_CUSTOMERS_BASE_URL = '/customers';
+const EASY_ERP_SELLING_BASE_URL = '/selling';
 
 // Authentication
 const EASY_ERP_LOGIN_URL = EASY_ERP_AUTH_BASE_URL + '/login';

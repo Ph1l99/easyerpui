@@ -81,9 +81,11 @@ export default function Transactions() {
             </div>
 
             <Pagination
-                handleNextPage={() => loadTransactions(transactions?.next!)}
+                handleNextPage={() =>
+                    loadTransactions(transactions?.next!.slice(4)!)
+                }
                 handlePreviousPage={() =>
-                    loadTransactions(transactions?.previous!)
+                    loadTransactions(transactions?.previous!.slice(4)!)
                 }
                 hasNextPage={!!transactions?.next}
                 hasPreviousPage={!!transactions?.previous}
