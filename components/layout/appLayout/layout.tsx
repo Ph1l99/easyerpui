@@ -18,11 +18,11 @@ export default function Layout({ children }: Props) {
                     isOpen={isDrawerOpen}
                 />
             </div>
-            <div className="flex flex-1">
+            <div className="h-[calc(100vh-4rem)] flex">
                 <div className={clsx(isDrawerOpen ? 'w-56' : '')}>
                     <Drawer isOpen={isDrawerOpen} />
                 </div>
-                <div className="flex-1 p-4">{children}</div>
+                <div className="flex-1 p-4 overflow-auto">{children}</div>
             </div>
         </div>
     );
