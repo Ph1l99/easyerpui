@@ -10,18 +10,13 @@ import {
 import toast from 'react-hot-toast';
 import TransactionRow from '../../../components/layout/warehouse/transaction/transactionRow';
 import NewTransactionModal from '../../../components/layout/warehouse/transaction/newTransactionModal';
-import { TransactionReference } from '../../../utils/types';
+import { PaginationResult, TransactionReference } from '../../../utils/types';
+import Pagination from '../../../components/layout/pagination';
 
 export default function Transactions() {
     const api = useApi();
 
-    const [transactions, setTransactions] = useState([
-        {
-            id: -1,
-            date_and_time: '',
-            username: '',
-        },
-    ]);
+    const [transactions, setTransactions] = useState<PaginationResult>();
     const [transactionReferences, setTransactionReferences] = useState<
         TransactionReference[]
     >([]);
@@ -34,11 +29,11 @@ export default function Transactions() {
         setIsOpenTransactionModal(true);
     };
 
-    const loadTransactions = function () {
+    const loadTransactions = function (url: string) {
         api.authAxios
-            .get(`${EASY_ERP_TRANSACTIONS_URL}`)
+            .get(url)
             .then(response => {
-                setTransactions(response.data.results);
+                setTransactions(response.data);
             })
             .catch(() => {
                 toast.error('Error while loading transactions');
@@ -58,20 +53,22 @@ export default function Transactions() {
 
     useEffect(() => {
         loadTransactionReferences();
-        loadTransactions();
+        loadTransactions(`${EASY_ERP_TRANSACTIONS_URL}`);
     }, []);
+
     return (
         <>
             <Head>
                 <title>Movimentazioni</title>
             </Head>
-            <SectionTitle title="Movimentazioni"></SectionTitle>
+            <SectionTitle title="Movimentazioni" />
             <SearchAdd
                 searchItem={searchTransaction}
                 addItem={addNewTransaction}
-            ></SearchAdd>
+            />
+
             <div className="h-[calc(100vh-18rem)] overflow-y-scroll">
-                {transactions.map(transaction => (
+                {transactions?.results?.map(transaction => (
                     <TransactionRow
                         key={transaction.id}
                         transaction={{
@@ -83,11 +80,21 @@ export default function Transactions() {
                 ))}
             </div>
 
+            <Pagination
+                handleNextPage={() => loadTransactions(transactions?.next!)}
+                handlePreviousPage={() =>
+                    loadTransactions(transactions?.previous!)
+                }
+                hasNextPage={!!transactions?.next}
+                hasPreviousPage={!!transactions?.previous}
+            />
+
             <NewTransactionModal
                 isOpen={isOpenTransactionModal}
                 onClose={(refresh: boolean) => {
                     setIsOpenTransactionModal(false);
-                    if (refresh) loadTransactions();
+                    if (refresh)
+                        loadTransactions(`${EASY_ERP_TRANSACTIONS_URL}`);
                 }}
                 transactionReferences={transactionReferences}
             />
