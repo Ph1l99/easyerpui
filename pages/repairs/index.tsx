@@ -10,12 +10,14 @@ import useApi from '../../components/useApi';
 import Head from 'next/head';
 import React, { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
+import PaginatedContent from '../../components/layout/paginatedContent';
+import { PaginationResult, Repair } from '../../utils/types';
 
 export default function Repairs() {
     const router = useRouter();
     const api = useApi();
 
-    const [repairs, setRepairs] = useState([]);
+    const [repairs, setRepairs] = useState<PaginationResult>();
 
     const navigateToRepairPage = function (barcode: string) {
         if (barcode) router.push(`${EASY_ERP_REPAIRS_URL}${barcode}`);
@@ -26,11 +28,11 @@ export default function Repairs() {
     const searchRepair = function (input: string) {
         console.log('Searching ', input); // todo
     };
-    const loadRepairs = function () {
+    const loadRepairs = function (url: string) {
         api.authAxios
-            .get(`${EASY_ERP_REPAIRS_BASE_URL}`)
+            .get(url)
             .then(response => {
-                setRepairs(response.data.results);
+                setRepairs(response.data);
             })
             .catch(() => {
                 toast.error('Error while loading repairs');
@@ -42,7 +44,7 @@ export default function Repairs() {
                 .delete(`${EASY_ERP_REPAIRS_URL}/${barcode}`)
                 .then(() => {
                     toast.success('Repair deleted succesfully');
-                    loadRepairs();
+                    loadRepairs(EASY_ERP_REPAIRS_BASE_URL);
                 })
                 .catch(() => {
                     toast.success('Error while deleting repair');
@@ -51,7 +53,7 @@ export default function Repairs() {
     };
 
     useEffect(() => {
-        loadRepairs();
+        loadRepairs(EASY_ERP_REPAIRS_BASE_URL);
     }, []);
 
     return (
@@ -64,20 +66,27 @@ export default function Repairs() {
                 addItem={openNewRepairPage}
                 searchItem={searchRepair}
             ></SearchAdd>
-            {repairs.map((repair: any) => (
-                <RepairRow
-                    key={repair.barcode}
-                    repair={{
-                        barcode: repair.barcode,
-                        title: repair.title,
-                        description: repair.description,
-                        delivery_date: repair.delivery_date,
-                        status: repair.status,
-                    }}
-                    navigateToRepairPage={navigateToRepairPage}
-                    deleteRepair={deleteRepair}
-                />
-            ))}
+
+            <PaginatedContent
+                next={repairs?.next}
+                previous={repairs?.previous}
+                loadItems={loadRepairs}
+            >
+                {repairs?.results?.map((repair: Repair) => (
+                    <RepairRow
+                        key={repair.barcode}
+                        repair={{
+                            barcode: repair.barcode,
+                            title: repair.title,
+                            description: repair.description,
+                            delivery_date: repair.delivery_date,
+                            status: repair.status,
+                        }}
+                        navigateToRepairPage={navigateToRepairPage}
+                        deleteRepair={deleteRepair}
+                    />
+                ))}
+            </PaginatedContent>
         </>
     );
 }
