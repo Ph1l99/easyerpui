@@ -11,6 +11,8 @@ import {
 import toast from 'react-hot-toast';
 import clsx from 'clsx';
 import InventoryRow from '../../../components/layout/warehouse/inventory/inventoryRow';
+import PaginatedContent from '../../../components/layout/paginatedContent';
+import { PaginationResult } from '../../../utils/types';
 
 export default function Inventory() {
     const api = useApi();
@@ -21,13 +23,7 @@ export default function Inventory() {
     });
     const [isEnabledInventoryCycleButton, setIsEnabledInventoryCycleButton] =
         useState(false);
-    const [inventory, setInventory] = useState([
-        {
-            barcode: '',
-            name: '',
-            current_availability: 0,
-        },
-    ]);
+    const [inventory, setInventory] = useState<PaginationResult>();
 
     const loadInventoryCycleDetails = function () {
         api.authAxios
@@ -40,11 +36,11 @@ export default function Inventory() {
             });
     };
 
-    const loadInventory = function () {
+    const loadInventory = function (url: string) {
         api.authAxios
-            .get(`${EASY_ERP_ARTICLES_URL}`)
+            .get(url)
             .then(response => {
-                setInventory(response.data.results);
+                setInventory(response.data);
             })
             .catch(() => {
                 toast.error('Error while loading inventory');
@@ -75,7 +71,7 @@ export default function Inventory() {
 
     useEffect(() => {
         loadInventoryCycleDetails();
-        loadInventory();
+        loadInventory(`${EASY_ERP_ARTICLES_URL}`);
     }, []);
 
     useEffect(() => {
@@ -113,17 +109,23 @@ export default function Inventory() {
                     onClick={executeInventoryCycle}
                 />
             </div>
-            {inventory.map(inventoryItem => (
-                <InventoryRow
-                    key={inventoryItem.barcode}
-                    inventoryArticle={{
-                        barcode: inventoryItem.barcode,
-                        name: inventoryItem.name,
-                        current_availability:
-                            inventoryItem.current_availability,
-                    }}
-                />
-            ))}
+            <PaginatedContent
+                next={inventory?.next}
+                previous={inventory?.previous}
+                loadItems={loadInventory}
+            >
+                {inventory?.results!.map(inventoryItem => (
+                    <InventoryRow
+                        key={inventoryItem.barcode}
+                        inventoryArticle={{
+                            barcode: inventoryItem.barcode,
+                            name: inventoryItem.name,
+                            current_availability:
+                                inventoryItem.current_availability,
+                        }}
+                    />
+                ))}
+            </PaginatedContent>
         </>
     );
 }
