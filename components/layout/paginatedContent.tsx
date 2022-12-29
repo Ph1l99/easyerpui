@@ -1,15 +1,16 @@
 import Pagination from './pagination';
 import React from 'react';
-import { PaginationResult } from '../../utils/types';
 
 type Props = {
     children?: React.ReactNode;
-    items?: PaginationResult;
+    next?: string;
+    previous?: string;
     loadItems: Function;
 };
 export default function PaginatedContent({
     children,
-    items,
+    next,
+    previous,
     loadItems,
 }: Props) {
     return (
@@ -19,10 +20,10 @@ export default function PaginatedContent({
             </div>
 
             <Pagination
-                handleNextPage={() => loadItems(items?.next!.slice(4)!)}
-                handlePreviousPage={() => loadItems(items?.previous!.slice(4)!)}
-                hasNextPage={!!items?.next}
-                hasPreviousPage={!!items?.previous}
+                handleNextPage={() => loadItems(next!.slice(4)!)}
+                handlePreviousPage={() => loadItems(previous!.slice(4)!)}
+                hasNextPage={!!next}
+                hasPreviousPage={!!previous}
             />
         </>
     );
