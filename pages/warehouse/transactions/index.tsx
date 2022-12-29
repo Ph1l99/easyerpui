@@ -70,16 +70,19 @@ export default function Transactions() {
                 searchItem={searchTransaction}
                 addItem={addNewTransaction}
             ></SearchAdd>
-            {transactions.map(transaction => (
-                <TransactionRow
-                    key={transaction.id}
-                    transaction={{
-                        id: transaction.id,
-                        date_and_time: transaction.date_and_time,
-                        username: transaction.username,
-                    }}
-                />
-            ))}
+            <div className="h-[calc(100vh-18rem)] overflow-y-scroll">
+                {transactions.map(transaction => (
+                    <TransactionRow
+                        key={transaction.id}
+                        transaction={{
+                            id: transaction.id,
+                            date_and_time: transaction.date_and_time,
+                            username: transaction.username,
+                        }}
+                    />
+                ))}
+            </div>
+
             <NewTransactionModal
                 isOpen={isOpenTransactionModal}
                 onClose={(refresh: boolean) => {
