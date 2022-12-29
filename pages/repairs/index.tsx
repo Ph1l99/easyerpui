@@ -12,10 +12,12 @@ import React, { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import PaginatedContent from '../../components/layout/paginatedContent';
 import { PaginationResult, Repair } from '../../utils/types';
+import clsx from 'clsx';
 
 export default function Repairs() {
     const router = useRouter();
     const api = useApi();
+    const [filters, setFilters] = useState({});
 
     const [repairs, setRepairs] = useState<PaginationResult>();
 
@@ -67,6 +69,22 @@ export default function Repairs() {
                 searchItem={searchRepair}
             ></SearchAdd>
 
+            <div className="flex gap-4 text-white">
+                <span className="text-black font-semibold">Filtra per:</span>
+                <p
+                    className={clsx(
+                        'uppercase px-3 bg-indigo-600 rounded-md cursor-pointer'
+                    )}
+                >
+                    Da consegnare
+                </p>
+                <p className="uppercase px-3 bg-red-600 rounded-md cursor-pointer outline outline-red-600 outline-offset-2">
+                    Da consegnare
+                </p>
+                <p className="uppercase px-3 bg-green-600 rounded-md cursor-pointer outline outline-green-600 outline-offset-2">
+                    Da consegnare
+                </p>
+            </div>
             <PaginatedContent
                 next={repairs?.next}
                 previous={repairs?.previous}
