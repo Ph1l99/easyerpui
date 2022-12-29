@@ -111,7 +111,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         const userProfile = getFromLocalStorage(PROFILE_INFO_LOCAL_STORAGE_KEY);
 
         if (userProfile) {
-            setUser(JSON.parse(userProfile));
+            const userObj = JSON.parse(userProfile);
+            setUser({
+                firstName: userObj.first_name,
+                lastName: userObj.last_name,
+                username: userObj.username,
+            });
         } else {
             axios.authAxios
                 .get(EASY_ERP_PROFILE_URL)
