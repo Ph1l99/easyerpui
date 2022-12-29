@@ -8,11 +8,13 @@ import SearchAdd from '../../../components/layout/searchAdd';
 import toast from 'react-hot-toast';
 import Modal from '../../../components/layout/modal';
 import FidelityCardModal from '../../../components/layout/customers/fidelityCards/fidelityCardModal';
+import PaginatedContent from '../../../components/layout/paginatedContent';
+import { PaginationResult } from '../../../utils/types';
 
 export default function FidelityCards() {
     const api = useApi();
 
-    const [fidelityCards, setFidelityCards] = useState([]);
+    const [fidelityCards, setFidelityCards] = useState<PaginationResult>();
     const [isOpenModalFidelityCard, setIsOpenModalFidelityCard] =
         useState(false);
     const [selectedFidelityCard, setSelectedFidelityCard] = useState({
@@ -20,9 +22,9 @@ export default function FidelityCards() {
         is_active: false,
     });
 
-    const loadFidelityCards = function () {
+    const loadFidelityCards = function (url: string) {
         api.authAxios
-            .get(EASY_ERP_FIDELITY_CARD_BASE_URL)
+            .get(url)
             .then(response => {
                 setFidelityCards(response.data.results);
             })
@@ -41,7 +43,7 @@ export default function FidelityCards() {
     };
 
     useEffect(() => {
-        loadFidelityCards();
+        loadFidelityCards(`${EASY_ERP_FIDELITY_CARD_BASE_URL}`);
     }, []);
 
     return (
@@ -54,22 +56,31 @@ export default function FidelityCards() {
                 searchItem={searchFidelityCard}
                 addItem={() => openModalFidelityCard(selectedFidelityCard)}
             ></SearchAdd>
-            {fidelityCards.map((fidelityCard: any) => (
-                <FidelityCardRow
-                    key={fidelityCard.barcode}
-                    fidelityCard={{
-                        barcode: fidelityCard.barcode,
-                        is_active: fidelityCard.is_active,
-                    }}
-                    editFidelityCard={() => openModalFidelityCard(fidelityCard)}
-                ></FidelityCardRow>
-            ))}
+            <PaginatedContent
+                next={fidelityCards?.next}
+                previous={fidelityCards?.previous}
+                loadItems={loadFidelityCards}
+            >
+                {fidelityCards?.results!.map((fidelityCard: any) => (
+                    <FidelityCardRow
+                        key={fidelityCard.barcode}
+                        fidelityCard={{
+                            barcode: fidelityCard.barcode,
+                            is_active: fidelityCard.is_active,
+                        }}
+                        editFidelityCard={() =>
+                            openModalFidelityCard(fidelityCard)
+                        }
+                    ></FidelityCardRow>
+                ))}
+            </PaginatedContent>
             <FidelityCardModal
                 isOpen={isOpenModalFidelityCard}
                 onClose={(refresh: boolean) => {
                     setIsOpenModalFidelityCard(false);
                     setSelectedFidelityCard({ barcode: '', is_active: false });
-                    if (refresh) loadFidelityCards();
+                    if (refresh)
+                        loadFidelityCards(`${EASY_ERP_FIDELITY_CARD_BASE_URL}`);
                 }}
                 fidelityCard={selectedFidelityCard}
             />
