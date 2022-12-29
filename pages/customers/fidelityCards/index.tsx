@@ -26,7 +26,7 @@ export default function FidelityCards() {
         api.authAxios
             .get(url)
             .then(response => {
-                setFidelityCards(response.data.results);
+                setFidelityCards(response.data);
             })
             .catch(() => {
                 toast.error('Error while retrieving fidelity cards');
