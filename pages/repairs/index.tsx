@@ -31,7 +31,11 @@ export default function Repairs() {
         navigateToRepairPage('-1');
     };
     const searchRepair = function (input: string) {
-        console.log('Searching ', input); // todo
+        // 1) cerco tutte le riparazione con input
+        // 2) verifica se ci sono risultati
+        // 3) se è solo uno, apre la riparazione
+        // 4) se ci sono piu articoli, li mostra
+        console.log('Searching ', input); // todo save filters local storage
     };
     const searchRepairFromFilters = function (values: Array<string>) {
         let url = values.join('&status=');
