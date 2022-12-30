@@ -2,6 +2,7 @@ import SectionTitle from '../../components/layout/sectionTitle';
 import SearchAdd from '../../components/layout/searchAdd';
 import { useRouter } from 'next/router';
 import {
+    EASY_ERP_REPAIR_STATUS_URL,
     EASY_ERP_REPAIRS_BASE_URL,
     EASY_ERP_REPAIRS_URL,
 } from '../../utils/urls';
@@ -10,16 +11,17 @@ import useApi from '../../components/useApi';
 import Head from 'next/head';
 import React, { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
-import PaginatedContent from '../../components/layout/paginatedContent';
+import PaginatedContent from '../../components/layout/pagination/paginatedContent';
 import { PaginationResult, Repair } from '../../utils/types';
 import clsx from 'clsx';
+import FilterBoxGroup from '../../components/layout/filtering/filterBoxGroup';
 
 export default function Repairs() {
     const router = useRouter();
     const api = useApi();
-    const [filters, setFilters] = useState({});
 
     const [repairs, setRepairs] = useState<PaginationResult>();
+    const [repairStatuses, setRepairStatuses] = useState<any>([]);
 
     const navigateToRepairPage = function (barcode: string) {
         if (barcode) router.push(`${EASY_ERP_REPAIRS_URL}${barcode}`);
@@ -29,6 +31,22 @@ export default function Repairs() {
     };
     const searchRepair = function (input: string) {
         console.log('Searching ', input); // todo
+    };
+    const loadRepairStatuses = function () {
+        api.authAxios
+            .get(EASY_ERP_REPAIR_STATUS_URL)
+            .then(response => {
+                setRepairStatuses(
+                    response.data.map((x: any) => ({
+                        value: x.id,
+                        label: x.status,
+                        color: x.class_name,
+                    }))
+                );
+            })
+            .catch(() => {
+                toast.error('Error while loading repair status info');
+            });
     };
     const loadRepairs = function (url: string) {
         api.authAxios
@@ -55,6 +73,7 @@ export default function Repairs() {
     };
 
     useEffect(() => {
+        loadRepairStatuses();
         loadRepairs(EASY_ERP_REPAIRS_BASE_URL);
     }, []);
 
@@ -71,19 +90,7 @@ export default function Repairs() {
 
             <div className="flex gap-4 text-white">
                 <span className="text-black font-semibold">Filtra per:</span>
-                <p
-                    className={clsx(
-                        'uppercase px-3 bg-indigo-600 rounded-md cursor-pointer'
-                    )}
-                >
-                    Da consegnare
-                </p>
-                <p className="uppercase px-3 bg-red-600 rounded-md cursor-pointer outline outline-red-600 outline-offset-2">
-                    Da consegnare
-                </p>
-                <p className="uppercase px-3 bg-green-600 rounded-md cursor-pointer outline outline-green-600 outline-offset-2">
-                    Da consegnare
-                </p>
+                <FilterBoxGroup items={repairStatuses} search={() => {}} />
             </div>
             <PaginatedContent
                 next={repairs?.next}

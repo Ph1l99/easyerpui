@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import FilterBox, { FilterBoxProps } from './filterBox';
 
 type Props = {
@@ -9,9 +9,7 @@ type Props = {
 type FilterBoxGroupProps = { value: string; label: string; color: string };
 
 export default function FilterBoxGroup({ items, search }: Props) {
-    const [filterBoxes, setFilterBoxes] = useState<FilterBoxProps[]>(
-        items.map(item => ({ isActive: false, search: Function, ...item }))
-    );
+    const [filterBoxes, setFilterBoxes] = useState<FilterBoxProps[]>([]);
 
     const handleFilterChange = function (value: string) {
         const updatedFilterBoxes = filterBoxes.map(filterBox => {
@@ -31,11 +29,21 @@ export default function FilterBoxGroup({ items, search }: Props) {
         );
     };
 
-    return filterBoxes?.map(filterBox => (
-        <FilterBox
-            key={filterBox.value}
-            {...filterBox}
-            search={handleFilterChange}
-        />
-    ));
+    useEffect(() => {
+        setFilterBoxes(
+            items.map(item => ({ isActive: false, search: search, ...item }))
+        );
+    }, [items]);
+
+    return (
+        <>
+            {filterBoxes?.map(filterBox => (
+                <FilterBox
+                    key={filterBox.value}
+                    {...filterBox}
+                    search={handleFilterChange}
+                />
+            ))}
+        </>
+    );
 }
