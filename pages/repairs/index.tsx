@@ -15,6 +15,7 @@ import PaginatedContent from '../../components/layout/pagination/paginatedConten
 import { PaginationResult, Repair } from '../../utils/types';
 import clsx from 'clsx';
 import FilterBoxGroup from '../../components/layout/filtering/filterBoxGroup';
+import { func } from 'prop-types';
 
 export default function Repairs() {
     const router = useRouter();
@@ -31,6 +32,15 @@ export default function Repairs() {
     };
     const searchRepair = function (input: string) {
         console.log('Searching ', input); // todo
+    };
+    const searchRepairFromFilters = function (values: Array<string>) {
+        let url = values.join('&status=');
+
+        if (values.length >= 1) {
+            url = `?status=${url}`;
+        }
+
+        loadRepairs(`${EASY_ERP_REPAIRS_BASE_URL}${url}`);
     };
     const loadRepairStatuses = function () {
         api.authAxios
@@ -90,7 +100,10 @@ export default function Repairs() {
 
             <div className="flex gap-4 text-white">
                 <span className="text-black font-semibold">Filtra per:</span>
-                <FilterBoxGroup items={repairStatuses} search={() => {}} />
+                <FilterBoxGroup
+                    items={repairStatuses}
+                    search={searchRepairFromFilters}
+                />
             </div>
             <PaginatedContent
                 next={repairs?.next}

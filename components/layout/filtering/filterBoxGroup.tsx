@@ -19,14 +19,6 @@ export default function FilterBoxGroup({ items, search }: Props) {
             return filterBox;
         });
         setFilterBoxes(updatedFilterBoxes);
-
-        search(
-            filterBoxes.map(x => {
-                if (x.isActive) {
-                    return x.value;
-                }
-            })
-        );
     };
 
     useEffect(() => {
@@ -34,6 +26,10 @@ export default function FilterBoxGroup({ items, search }: Props) {
             items.map(item => ({ isActive: false, search: search, ...item }))
         );
     }, [items]);
+
+    useEffect(() => {
+        search(filterBoxes.filter(x => x.isActive).map(x => x.value));
+    }, [filterBoxes]);
 
     return (
         <>
