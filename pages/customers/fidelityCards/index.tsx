@@ -8,7 +8,7 @@ import SearchAdd from '../../../components/layout/searchAdd';
 import toast from 'react-hot-toast';
 import Modal from '../../../components/layout/modal';
 import FidelityCardModal from '../../../components/layout/customers/fidelityCards/fidelityCardModal';
-import PaginatedContent from '../../../components/layout/paginatedContent';
+import PaginatedContent from '../../../components/layout/pagination/paginatedContent';
 import { PaginationResult } from '../../../utils/types';
 
 export default function FidelityCards() {

@@ -10,7 +10,7 @@ import SearchAdd from '../../../components/layout/searchAdd';
 import useApi from '../../../components/useApi';
 import CustomerRow from '../../../components/layout/customers/customer/customerRow';
 import toast from 'react-hot-toast';
-import PaginatedContent from '../../../components/layout/paginatedContent';
+import PaginatedContent from '../../../components/layout/pagination/paginatedContent';
 import { PaginationResult } from '../../../utils/types';
 
 export default function Customer() {

@@ -7,7 +7,7 @@ import Head from 'next/head';
 import React, { useEffect, useState } from 'react';
 import useApi from '../../../components/useApi';
 import toast from 'react-hot-toast';
-import PaginatedContent from '../../../components/layout/paginatedContent';
+import PaginatedContent from '../../../components/layout/pagination/paginatedContent';
 import { PaginationResult } from '../../../utils/types';
 
 export default function Articles() {

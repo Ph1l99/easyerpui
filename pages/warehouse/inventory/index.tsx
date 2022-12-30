@@ -11,7 +11,7 @@ import {
 import toast from 'react-hot-toast';
 import clsx from 'clsx';
 import InventoryRow from '../../../components/layout/warehouse/inventory/inventoryRow';
-import PaginatedContent from '../../../components/layout/paginatedContent';
+import PaginatedContent from '../../../components/layout/pagination/paginatedContent';
 import { PaginationResult } from '../../../utils/types';
 
 export default function Inventory() {

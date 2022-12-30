@@ -11,7 +11,7 @@ import toast from 'react-hot-toast';
 import TransactionRow from '../../../components/layout/warehouse/transaction/transactionRow';
 import NewTransactionModal from '../../../components/layout/warehouse/transaction/newTransactionModal';
 import { PaginationResult, TransactionReference } from '../../../utils/types';
-import PaginatedContent from '../../../components/layout/paginatedContent';
+import PaginatedContent from '../../../components/layout/pagination/paginatedContent';
 
 export default function Transactions() {
     const api = useApi();
