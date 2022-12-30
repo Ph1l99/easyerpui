@@ -24,7 +24,7 @@ export default function RepairRow({
                         className={clsx(
                             'w-6/12 font-bold text-white text-center rounded-lg capitalize',
                             repair.status?.class_name
-                                ? repair.status.class_name
+                                ? `bg-${repair.status.class_name}`
                                 : 'bg-sky-900'
                         )}
                     >
