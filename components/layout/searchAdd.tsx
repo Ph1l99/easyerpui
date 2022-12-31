@@ -1,7 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
-import { useEffect, useState } from 'react';
-import useDebounce from '../useDebounce';
+import { useState } from 'react';
 
 export default function SearchAdd({
     searchItem,
@@ -11,11 +10,11 @@ export default function SearchAdd({
     addItem: Function;
 }) {
     const [value, setValue] = useState<string>('');
-    const debouncedValue = useDebounce<string>(value, 500);
+    // const debouncedValue = useDebounce<string>(value, 500);
 
-    useEffect(() => {
-        searchItem(debouncedValue);
-    }, [debouncedValue]);
+    // useEffect(() => {
+    //     searchItem(debouncedValue);
+    // }, [debouncedValue]);
 
     return (
         <div className="py-4 flex justify-between h-16 gap-1.5">
