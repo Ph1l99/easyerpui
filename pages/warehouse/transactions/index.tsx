@@ -63,7 +63,7 @@ export default function Transactions() {
                 <title>Movimentazioni</title>
             </Head>
             <SectionTitle title="Movimentazioni" />
-            <div className="flex justify-end h-7 mb-3">
+            <div className="py-2 flex justify-end h-11 gap-1.5">
                 <AddButton
                     addItem={addNewTransaction}
                     buttonTitle="Nuova movimentazione"
