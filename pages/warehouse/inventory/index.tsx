@@ -13,11 +13,9 @@ import InventoryRow from '../../../components/layout/warehouse/inventory/invento
 import PaginatedContent from '../../../components/layout/appLayout/pagination/paginatedContent';
 import { PaginationResult } from '../../../utils/types';
 import Search from '../../../components/layout/appLayout/search/search';
-import { useRouter } from 'next/router';
 
 export default function Inventory() {
     const api = useApi();
-    const router = useRouter();
 
     const [nextInventoryCycleDetails, setNextInventoryCycleDetails] = useState({
         last_inventory_cycle: '',
