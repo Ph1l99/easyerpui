@@ -1,6 +1,6 @@
 // Warehouse
 
-type Article = {
+type ArticleDetail = {
     name?: string;
     description?: string;
     barcode?: string;
@@ -8,7 +8,7 @@ type Article = {
     reorder_threshold?: number;
     current_availability?: number;
 };
-type TransactionArticle = Article & {
+type TransactionArticle = ArticleDetail & {
     quantity?: number;
     transaction_reference?: number;
 };
@@ -69,7 +69,7 @@ type PaginationResult = {
 };
 
 export type {
-    Article,
+    ArticleDetail,
     TransactionArticle,
     TransactionReference,
     InventoryArticle,

@@ -7,20 +7,16 @@ import clsx from 'clsx';
 import { EASY_ERP_ARTICLES_URL } from '../../../utils/urls';
 import Head from 'next/head';
 import toast from 'react-hot-toast';
+import { ArticleDetail } from '../../../utils/types';
 
 export default function Article() {
     const router = useRouter();
     const api = useApi();
 
     const { barcode } = router.query;
-    const [article, setArticle] = useState({
-        name: '',
-        description: '',
-        barcode: '',
-        is_active: true,
-        reorder_threshold: 0,
-    });
-    const [beforeUpdateArticle, setBeforeUpdateArticle] = useState(article);
+    const [article, setArticle] = useState<ArticleDetail>({});
+    const [beforeUpdateArticle, setBeforeUpdateArticle] =
+        useState<ArticleDetail>(article);
     const [isEditing, setIsEditing] = useState(false);
     const [isNewArticle, setIsNewArticle] = useState(false);
 

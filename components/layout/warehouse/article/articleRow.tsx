@@ -1,14 +1,14 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTag } from '@fortawesome/free-solid-svg-icons';
 import { faImage } from '@fortawesome/free-regular-svg-icons';
-import { Article } from '../../../../utils/types';
+import { ArticleDetail } from '../../../../utils/types';
 
 export default function ArticleRow({
     article,
     navigateToArticlePage,
     printArticleLabel,
 }: {
-    article: Article;
+    article: ArticleDetail;
     navigateToArticlePage: Function;
     printArticleLabel: Function;
 }) {
