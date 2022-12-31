@@ -41,7 +41,6 @@ export default function Repairs() {
             .catch(() => {
                 toast.error('Repair does not exist');
             });
-        console.log('Searching ', input);
     };
     const searchRepairFromFilters = function (values: Array<string>) {
         // todo save filters local storage
