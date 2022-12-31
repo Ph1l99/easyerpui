@@ -4,6 +4,7 @@ import clsx from 'clsx';
 import useApi from '../../../useApi';
 import { EASY_ERP_FIDELITY_CARD_BASE_URL } from '../../../../utils/urls';
 import toast from 'react-hot-toast';
+import { FidelityCard } from '../../../../utils/types';
 
 export default function FidelityCardModal({
     isOpen,
@@ -12,10 +13,7 @@ export default function FidelityCardModal({
 }: {
     isOpen: boolean;
     onClose: Function;
-    fidelityCard: {
-        barcode: string;
-        is_active: boolean;
-    };
+    fidelityCard: FidelityCard;
 }) {
     const api = useApi();
 
