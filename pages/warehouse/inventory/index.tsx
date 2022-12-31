@@ -90,7 +90,7 @@ export default function Inventory() {
                 <title>Inventario</title>
             </Head>
             <SectionTitle title="Inventario"></SectionTitle>
-            <div className="py-4 flex justify-between h-17 gap-1.5">
+            <div className="py-2 flex justify-between h-17 gap-1.5">
                 <Search searchItem={searchArticle} />
                 <input
                     type="button"
