@@ -30,7 +30,7 @@ export default function Customer() {
     };
 
     const searchCustomer = function (input: string) {
-        // todo
+        loadCustomers(`${EASY_ERP_CUSTOMERS_BASE_URL}?search=${input}`);
     };
 
     const deleteCustomer = function (id: Number) {
@@ -38,6 +38,7 @@ export default function Customer() {
             api.authAxios
                 .delete(`${EASY_ERP_CUSTOMER_BASE_URL}/${id}`)
                 .then(() => {
+                    toast.success('Customer deleted succesfully');
                     loadCustomers(`${EASY_ERP_CUSTOMERS_BASE_URL}`);
                 })
                 .catch(() => {});

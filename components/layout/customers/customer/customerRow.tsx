@@ -1,13 +1,13 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
-import { Customer } from '../../../../utils/types';
+import { ListCustomer } from '../../../../utils/types';
 
 export default function CustomerRow({
     customer,
     navigateToCustomerPage,
     deleteCustomer,
 }: {
-    customer: Customer;
+    customer: ListCustomer;
     navigateToCustomerPage: Function;
     deleteCustomer: Function;
 }) {

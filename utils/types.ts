@@ -46,12 +46,16 @@ type Repair = {
 };
 
 // Customers
-type Customer = {
+type ListCustomer = {
     id?: number;
     first_name?: string;
     last_name?: string;
     fidelity_card?: string;
 };
+type CustomerDetail = ListCustomer & {
+    phone?: string;
+};
+
 type FidelityCard = {
     barcode?: string;
     is_active?: boolean;
@@ -71,7 +75,8 @@ export type {
     InventoryArticle,
     SellingArticle,
     Repair,
-    Customer,
+    ListCustomer,
+    CustomerDetail,
     FidelityCard,
     PaginationResult,
 };

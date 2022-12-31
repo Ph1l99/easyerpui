@@ -7,6 +7,7 @@ import {
 } from '../../../utils/urls';
 import Head from 'next/head';
 import toast from 'react-hot-toast';
+import { CustomerDetail } from '../../../utils/types';
 
 export default function Customer() {
     const router = useRouter();
@@ -14,20 +15,15 @@ export default function Customer() {
 
     const { id } = router.query;
 
-    const [customer, setCustomer] = useState({
-        id: '-1',
-        first_name: '',
-        last_name: '',
-        phone: '',
-        fidelity_card: '',
-    });
+    const [customer, setCustomer] = useState<CustomerDetail>({});
     const [fidelityCards, setFidelityCards] = useState([
         {
             barcode: '',
             is_active: true,
         },
     ]);
-    const [beforeUpdateCustomer, setBeforeUpdateCustomer] = useState(customer);
+    const [beforeUpdateCustomer, setBeforeUpdateCustomer] =
+        useState<CustomerDetail>(customer);
     const [isEditing, setIsEditing] = useState(false);
     const [isNewCustomer, setIsNewCustomer] = useState(false);
     const [assignNewFidelityCard, setAssignNewFidelityCard] = useState(false);
@@ -46,7 +42,7 @@ export default function Customer() {
     };
 
     const revertChanges = function () {
-        if (beforeUpdateCustomer.fidelity_card == customer.fidelity_card)
+        if (beforeUpdateCustomer.fidelity_card == customer!.fidelity_card)
             setAssignNewFidelityCard(false);
         setCustomer(beforeUpdateCustomer);
         setIsEditing(false);
@@ -55,12 +51,14 @@ export default function Customer() {
     const saveCustomer = function () {
         // If the new fidelity card is being set, I replace the old one with the new one
         if (newFidelityCard !== '') {
-            customer.fidelity_card = newFidelityCard;
+            customer!.fidelity_card = newFidelityCard;
         }
 
         if (isNewCustomer) {
+            let newCustomer = customer;
+            delete newCustomer.id;
             api.authAxios
-                .post(`${EASY_ERP_CUSTOMER_BASE_URL}/-1`, customer)
+                .post(`${EASY_ERP_CUSTOMER_BASE_URL}/-1`, newCustomer)
                 .then(response => {
                     toast.success('Customer created succesfully');
                     router.replace(
@@ -144,7 +142,7 @@ export default function Customer() {
                             type="text"
                             placeholder="Nome"
                             className="basis-4/12 bg-zinc-200 w-full outline-none p-2 placeholder-black rounded-md"
-                            value={customer.first_name}
+                            value={customer?.first_name}
                             onChange={e => changeFormValue(e, 'first_name')}
                         />
                         <input
@@ -152,7 +150,7 @@ export default function Customer() {
                             type="text"
                             placeholder="Cognome"
                             className="basis-4/12 bg-zinc-200 w-full outline-none p-2 placeholder-black rounded-md"
-                            value={customer.last_name}
+                            value={customer?.last_name}
                             onChange={e => changeFormValue(e, 'last_name')}
                         />
                         <input
@@ -160,7 +158,7 @@ export default function Customer() {
                             type="text"
                             placeholder="Recapito"
                             className="basis-4/12 bg-zinc-200 w-full outline-none p-2 placeholder-black rounded-md"
-                            value={customer.phone}
+                            value={customer?.phone}
                             onChange={e => changeFormValue(e, 'phone')}
                         />
                     </div>
@@ -171,7 +169,7 @@ export default function Customer() {
                             readOnly
                             placeholder="Tessera fedeltà"
                             className="basis-4/12 bg-zinc-200 w-full outline-none p-2 placeholder-black rounded-md cursor-not-allowed"
-                            value={customer.fidelity_card}
+                            value={customer?.fidelity_card}
                         />
                         <div className="basis-4/12 flex justify-center text-center items-center">
                             <label
