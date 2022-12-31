@@ -7,7 +7,7 @@ import {
 } from '../../../utils/urls';
 import Head from 'next/head';
 import toast from 'react-hot-toast';
-import { CustomerDetail } from '../../../utils/types';
+import { CustomerDetail, FidelityCard } from '../../../utils/types';
 
 export default function Customer() {
     const router = useRouter();
@@ -16,12 +16,7 @@ export default function Customer() {
     const { id } = router.query;
 
     const [customer, setCustomer] = useState<CustomerDetail>({});
-    const [fidelityCards, setFidelityCards] = useState([
-        {
-            barcode: '',
-            is_active: true,
-        },
-    ]);
+    const [fidelityCards, setFidelityCards] = useState<FidelityCard[]>([]);
     const [beforeUpdateCustomer, setBeforeUpdateCustomer] =
         useState<CustomerDetail>(customer);
     const [isEditing, setIsEditing] = useState(false);
@@ -203,7 +198,7 @@ export default function Customer() {
                                 <option value="">
                                     Seleziona una carta fedeltà
                                 </option>
-                                {fidelityCards.map(fidelityCard => (
+                                {fidelityCards!.map(fidelityCard => (
                                     <option
                                         key={fidelityCard.barcode}
                                         value={fidelityCard.barcode}
