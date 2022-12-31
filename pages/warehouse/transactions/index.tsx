@@ -12,6 +12,7 @@ import TransactionRow from '../../../components/layout/warehouse/transaction/tra
 import NewTransactionModal from '../../../components/layout/warehouse/transaction/newTransactionModal';
 import { PaginationResult, TransactionReference } from '../../../utils/types';
 import PaginatedContent from '../../../components/layout/appLayout/pagination/paginatedContent';
+import AddButton from '../../../components/layout/appLayout/search/addButton';
 
 export default function Transactions() {
     const api = useApi();
@@ -62,10 +63,12 @@ export default function Transactions() {
                 <title>Movimentazioni</title>
             </Head>
             <SectionTitle title="Movimentazioni" />
-            <SearchAdd
-                searchItem={searchTransaction}
-                addItem={addNewTransaction}
-            />
+            <div className="flex justify-end h-7 mb-3">
+                <AddButton
+                    addItem={addNewTransaction}
+                    buttonTitle="Nuova movimentazione"
+                />
+            </div>
 
             <PaginatedContent
                 next={transactions?.next}
