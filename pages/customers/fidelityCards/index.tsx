@@ -9,7 +9,8 @@ import toast from 'react-hot-toast';
 import Modal from '../../../components/layout/modal';
 import FidelityCardModal from '../../../components/layout/customers/fidelityCards/fidelityCardModal';
 import PaginatedContent from '../../../components/layout/appLayout/pagination/paginatedContent';
-import { PaginationResult } from '../../../utils/types';
+import { FidelityCard, PaginationResult } from '../../../utils/types';
+import FilterBoxGroup from '../../../components/layout/appLayout/filtering/filterBoxGroup';
 
 export default function FidelityCards() {
     const api = useApi();
@@ -17,10 +18,16 @@ export default function FidelityCards() {
     const [fidelityCards, setFidelityCards] = useState<PaginationResult>();
     const [isOpenModalFidelityCard, setIsOpenModalFidelityCard] =
         useState(false);
-    const [selectedFidelityCard, setSelectedFidelityCard] = useState({
-        barcode: '',
-        is_active: false,
-    });
+    const [selectedFidelityCard, setSelectedFidelityCard] =
+        useState<FidelityCard>({});
+
+    const [fidelityCardFilters, setFidelityCardFilters] = useState([
+        {
+            value: 'true',
+            label: 'Attive',
+            color: 'pink-400',
+        },
+    ]);
 
     const loadFidelityCards = function (url: string) {
         api.authAxios
@@ -42,6 +49,15 @@ export default function FidelityCards() {
         loadFidelityCards(`${EASY_ERP_FIDELITY_CARD_BASE_URL}?search=${input}`);
     };
 
+    const searchFidelityCardFromFilters = function (values: Array<string>) {
+        let url = values.join('&is_active=');
+
+        if (values.length >= 1) {
+            url = `?is_active=${url}`;
+        }
+        loadFidelityCards(`${EASY_ERP_FIDELITY_CARD_BASE_URL}${url}`);
+    };
+
     useEffect(() => {
         loadFidelityCards(`${EASY_ERP_FIDELITY_CARD_BASE_URL}`);
     }, []);
@@ -57,6 +73,13 @@ export default function FidelityCards() {
                 addItem={() => openModalFidelityCard(selectedFidelityCard)}
                 buttonTitle="Nuova tessera fedeltà"
             ></SearchAdd>
+            <div className="flex gap-4 text-white">
+                <span className="text-black font-semibold">Filtra per:</span>
+                <FilterBoxGroup
+                    items={fidelityCardFilters}
+                    search={searchFidelityCardFromFilters}
+                />
+            </div>
             <PaginatedContent
                 next={fidelityCards?.next}
                 previous={fidelityCards?.previous}
