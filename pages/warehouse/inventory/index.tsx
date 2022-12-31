@@ -6,16 +6,18 @@ import {
     EASY_ERP_ARTICLES_URL,
     EASY_ERP_INVENTORY_CYCLE_NEXT_URL,
     EASY_ERP_INVENTORY_CYCLE_URL,
-    EASY_ERP_INVENTORY_URL,
 } from '../../../utils/urls';
 import toast from 'react-hot-toast';
 import clsx from 'clsx';
 import InventoryRow from '../../../components/layout/warehouse/inventory/inventoryRow';
 import PaginatedContent from '../../../components/layout/appLayout/pagination/paginatedContent';
 import { PaginationResult } from '../../../utils/types';
+import Search from '../../../components/layout/appLayout/search/search';
+import { useRouter } from 'next/router';
 
 export default function Inventory() {
     const api = useApi();
+    const router = useRouter();
 
     const [nextInventoryCycleDetails, setNextInventoryCycleDetails] = useState({
         last_inventory_cycle: '',
@@ -69,6 +71,10 @@ export default function Inventory() {
             });
     };
 
+    const searchArticle = function (input: string) {
+        loadInventory(`${EASY_ERP_ARTICLES_URL}?search=${input}`);
+    };
+
     useEffect(() => {
         loadInventoryCycleDetails();
         loadInventory(`${EASY_ERP_ARTICLES_URL}`);
@@ -84,7 +90,8 @@ export default function Inventory() {
                 <title>Inventario</title>
             </Head>
             <SectionTitle title="Inventario"></SectionTitle>
-            <div className="basis-1/12 flex justify-end -mt-5 py-4">
+            <div className="flex gap-1.5">
+                <Search searchItem={searchArticle} />
                 <input
                     type="button"
                     className={clsx(
