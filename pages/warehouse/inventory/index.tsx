@@ -90,12 +90,12 @@ export default function Inventory() {
                 <title>Inventario</title>
             </Head>
             <SectionTitle title="Inventario"></SectionTitle>
-            <div className="flex gap-1.5">
+            <div className="py-4 flex justify-between h-17 gap-1.5">
                 <Search searchItem={searchArticle} />
                 <input
                     type="button"
                     className={clsx(
-                        'p-2 rounded-lg bg-fuchsia-600 text-white outline-none h-fit text-center cursor-pointer font-bold',
+                        'p-2 rounded-lg bg-fuchsia-600 text-white outline-none text-center cursor-pointer font-bold',
                         !isEnabledInventoryCycleButton
                             ? 'cursor-not-allowed'
                             : ''
