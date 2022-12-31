@@ -35,7 +35,7 @@ export default function Repairs() {
             .get(`${EASY_ERP_REPAIRS_URL}${input}`)
             .then(response => {
                 if (response.data) {
-                    router.push(`${EASY_ERP_REPAIRS_URL}${input}`);
+                    router.push(`${EASY_ERP_REPAIRS_URL}/${input}`);
                 }
             })
             .catch(() => {
@@ -50,7 +50,7 @@ export default function Repairs() {
             url = `?status=${url}`;
         }
 
-        loadRepairs(`${EASY_ERP_REPAIRS_BASE_URL}${url}`);
+        loadRepairs(`${EASY_ERP_REPAIRS_URL}${url}`);
     };
     const loadRepairStatuses = function () {
         api.authAxios
@@ -81,7 +81,7 @@ export default function Repairs() {
     const deleteRepair = function (barcode: string) {
         if (barcode) {
             api.authAxios
-                .delete(`${EASY_ERP_REPAIRS_URL}/${barcode}`)
+                .delete(`${EASY_ERP_REPAIRS_URL}${barcode}`)
                 .then(() => {
                     toast.success('Repair deleted succesfully');
                     loadRepairs(EASY_ERP_REPAIRS_BASE_URL);
