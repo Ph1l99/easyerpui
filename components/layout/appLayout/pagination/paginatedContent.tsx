@@ -15,7 +15,7 @@ export default function PaginatedContent({
 }: Props) {
     return (
         <>
-            <div className="h-[calc(100vh-18rem)] overflow-y-scroll">
+            <div className="h-[calc(100vh-19rem)] overflow-y-scroll">
                 {children}
             </div>
 
