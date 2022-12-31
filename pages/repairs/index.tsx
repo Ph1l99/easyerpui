@@ -31,13 +31,20 @@ export default function Repairs() {
         navigateToRepairPage('-1');
     };
     const searchRepair = function (input: string) {
-        // 1) cerco tutte le riparazione con input
-        // 2) verifica se ci sono risultati
-        // 3) se è solo uno, apre la riparazione
-        // 4) se ci sono piu articoli, li mostra
-        console.log('Searching ', input); // todo save filters local storage
+        api.authAxios
+            .get(`${EASY_ERP_REPAIRS_URL}${input}`)
+            .then(response => {
+                if (response.data) {
+                    router.push(`${EASY_ERP_REPAIRS_URL}${input}`);
+                }
+            })
+            .catch(() => {
+                toast.error('Repair does not exist');
+            });
+        console.log('Searching ', input);
     };
     const searchRepairFromFilters = function (values: Array<string>) {
+        // todo save filters local storage
         let url = values.join('&status=');
 
         if (values.length >= 1) {
