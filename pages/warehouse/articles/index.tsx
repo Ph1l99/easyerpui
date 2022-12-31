@@ -9,12 +9,20 @@ import useApi from '../../../components/useApi';
 import toast from 'react-hot-toast';
 import PaginatedContent from '../../../components/layout/appLayout/pagination/paginatedContent';
 import { PaginationResult } from '../../../utils/types';
+import FilterBoxGroup from '../../../components/layout/appLayout/filtering/filterBoxGroup';
 
 export default function Articles() {
     const router = useRouter();
     const api = useApi();
 
     const [articles, setArticles] = useState<PaginationResult>();
+    const [articleFilters, setArticleFilters] = useState([
+        {
+            value: 'true',
+            label: 'Attivi',
+            color: 'pink-400',
+        },
+    ]);
 
     const navigateToArticlePage = function (barcode: string) {
         if (barcode) router.push(`${EASY_ERP_ARTICLES_URL}/${barcode}`);
@@ -25,8 +33,16 @@ export default function Articles() {
     const openNewArticlePage = function () {
         navigateToArticlePage('-1');
     };
+    const searchArticleFromFilters = function (values: Array<string>) {
+        let url = values.join('&is_active=');
+
+        if (values.length >= 1) {
+            url = `?is_active=${url}`;
+        }
+        loadArticles(`${EASY_ERP_ARTICLES_URL}${url}`);
+    };
     const searchArticle = function (input: string) {
-        console.log('Searching ', input); // todo
+        loadArticles(`${EASY_ERP_ARTICLES_URL}?search=${input}`);
     };
 
     const loadArticles = function (url: string) {
@@ -53,6 +69,13 @@ export default function Articles() {
                 searchItem={searchArticle}
                 buttonTitle="Nuovo articolo"
             />
+            <div className="flex gap-4 text-white">
+                <span className="text-black font-semibold">Filtra per:</span>
+                <FilterBoxGroup
+                    items={articleFilters}
+                    search={searchArticleFromFilters}
+                />
+            </div>
             <PaginatedContent
                 next={articles?.next}
                 previous={articles?.previous}
