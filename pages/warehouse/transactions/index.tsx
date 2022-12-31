@@ -24,8 +24,6 @@ export default function Transactions() {
 
     const [isOpenTransactionModal, setIsOpenTransactionModal] = useState(false);
 
-    const searchTransaction = function () {};
-
     const addNewTransaction = function () {
         setIsOpenTransactionModal(true);
     };

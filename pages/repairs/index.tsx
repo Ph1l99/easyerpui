@@ -84,7 +84,7 @@ export default function Repairs() {
                 .delete(`${EASY_ERP_REPAIRS_URL}${barcode}`)
                 .then(() => {
                     toast.success('Repair deleted succesfully');
-                    loadRepairs(EASY_ERP_REPAIRS_BASE_URL);
+                    loadRepairs(`${EASY_ERP_REPAIRS_BASE_URL}`);
                 })
                 .catch(() => {
                     toast.success('Error while deleting repair');
@@ -94,7 +94,7 @@ export default function Repairs() {
 
     useEffect(() => {
         loadRepairStatuses();
-        loadRepairs(EASY_ERP_REPAIRS_BASE_URL);
+        loadRepairs(`${EASY_ERP_REPAIRS_BASE_URL}`);
     }, []);
 
     return (
