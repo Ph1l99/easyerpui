@@ -6,11 +6,11 @@ import {
     EASY_ERP_CUSTOMER_BASE_URL,
     EASY_ERP_CUSTOMERS_BASE_URL,
 } from '../../../utils/urls';
-import SearchAdd from '../../../components/layout/searchAdd';
+import SearchAdd from '../../../components/layout/appLayout/search/searchAdd';
 import useApi from '../../../components/useApi';
 import CustomerRow from '../../../components/layout/customers/customer/customerRow';
 import toast from 'react-hot-toast';
-import PaginatedContent from '../../../components/layout/pagination/paginatedContent';
+import PaginatedContent from '../../../components/layout/appLayout/pagination/paginatedContent';
 import { PaginationResult } from '../../../utils/types';
 
 export default function Customer() {

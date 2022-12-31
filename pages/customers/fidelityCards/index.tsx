@@ -4,11 +4,11 @@ import React, { useEffect, useState } from 'react';
 import useApi from '../../../components/useApi';
 import { EASY_ERP_FIDELITY_CARD_BASE_URL } from '../../../utils/urls';
 import FidelityCardRow from '../../../components/layout/customers/fidelityCards/fidelityCardRow';
-import SearchAdd from '../../../components/layout/searchAdd';
+import SearchAdd from '../../../components/layout/appLayout/search/searchAdd';
 import toast from 'react-hot-toast';
 import Modal from '../../../components/layout/modal';
 import FidelityCardModal from '../../../components/layout/customers/fidelityCards/fidelityCardModal';
-import PaginatedContent from '../../../components/layout/pagination/paginatedContent';
+import PaginatedContent from '../../../components/layout/appLayout/pagination/paginatedContent';
 import { PaginationResult } from '../../../utils/types';
 
 export default function FidelityCards() {

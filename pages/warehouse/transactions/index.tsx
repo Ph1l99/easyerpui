@@ -1,7 +1,7 @@
 import SectionTitle from '../../../components/layout/sectionTitle';
 import Head from 'next/head';
 import React, { useEffect, useState } from 'react';
-import SearchAdd from '../../../components/layout/searchAdd';
+import SearchAdd from '../../../components/layout/appLayout/search/searchAdd';
 import useApi from '../../../components/useApi';
 import {
     EASY_ERP_TRANSACTION_REFERENCES_URL,
@@ -11,7 +11,7 @@ import toast from 'react-hot-toast';
 import TransactionRow from '../../../components/layout/warehouse/transaction/transactionRow';
 import NewTransactionModal from '../../../components/layout/warehouse/transaction/newTransactionModal';
 import { PaginationResult, TransactionReference } from '../../../utils/types';
-import PaginatedContent from '../../../components/layout/pagination/paginatedContent';
+import PaginatedContent from '../../../components/layout/appLayout/pagination/paginatedContent';
 
 export default function Transactions() {
     const api = useApi();

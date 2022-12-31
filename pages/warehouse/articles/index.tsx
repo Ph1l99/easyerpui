@@ -1,13 +1,13 @@
 import ArticleRow from '../../../components/layout/warehouse/article/articleRow';
 import { useRouter } from 'next/router';
 import { EASY_ERP_ARTICLES_URL } from '../../../utils/urls';
-import SearchAdd from '../../../components/layout/searchAdd';
+import SearchAdd from '../../../components/layout/appLayout/search/searchAdd';
 import SectionTitle from '../../../components/layout/sectionTitle';
 import Head from 'next/head';
 import React, { useEffect, useState } from 'react';
 import useApi from '../../../components/useApi';
 import toast from 'react-hot-toast';
-import PaginatedContent from '../../../components/layout/pagination/paginatedContent';
+import PaginatedContent from '../../../components/layout/appLayout/pagination/paginatedContent';
 import { PaginationResult } from '../../../utils/types';
 
 export default function Articles() {

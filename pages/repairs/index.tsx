@@ -1,5 +1,5 @@
 import SectionTitle from '../../components/layout/sectionTitle';
-import SearchAdd from '../../components/layout/searchAdd';
+import SearchAdd from '../../components/layout/appLayout/search/searchAdd';
 import { useRouter } from 'next/router';
 import {
     EASY_ERP_REPAIR_STATUS_URL,
@@ -11,10 +11,10 @@ import useApi from '../../components/useApi';
 import Head from 'next/head';
 import React, { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
-import PaginatedContent from '../../components/layout/pagination/paginatedContent';
+import PaginatedContent from '../../components/layout/appLayout/pagination/paginatedContent';
 import { PaginationResult, Repair } from '../../utils/types';
 import clsx from 'clsx';
-import FilterBoxGroup from '../../components/layout/filtering/filterBoxGroup';
+import FilterBoxGroup from '../../components/layout/appLayout/filtering/filterBoxGroup';
 import { func } from 'prop-types';
 
 export default function Repairs() {
