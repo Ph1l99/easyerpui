@@ -39,7 +39,7 @@ export default function FidelityCards() {
     };
 
     const searchFidelityCard = function (input: string) {
-        // todo
+        loadFidelityCards(`${EASY_ERP_FIDELITY_CARD_BASE_URL}?search=${input}`);
     };
 
     useEffect(() => {
