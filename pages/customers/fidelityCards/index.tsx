@@ -55,6 +55,7 @@ export default function FidelityCards() {
             <SearchAdd
                 searchItem={searchFidelityCard}
                 addItem={() => openModalFidelityCard(selectedFidelityCard)}
+                buttonTitle="Nuova tessera fedeltà"
             ></SearchAdd>
             <PaginatedContent
                 next={fidelityCards?.next}

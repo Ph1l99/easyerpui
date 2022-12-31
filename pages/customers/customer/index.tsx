@@ -66,6 +66,7 @@ export default function Customer() {
             <SearchAdd
                 addItem={addNewCustomer}
                 searchItem={searchCustomer}
+                buttonTitle="Nuovo cliente"
             ></SearchAdd>
             <PaginatedContent
                 next={customers?.next}

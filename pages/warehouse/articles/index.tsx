@@ -51,6 +51,7 @@ export default function Articles() {
             <SearchAdd
                 addItem={openNewArticlePage}
                 searchItem={searchArticle}
+                buttonTitle="Nuovo articolo"
             />
             <PaginatedContent
                 next={articles?.next}

@@ -107,6 +107,7 @@ export default function Repairs() {
             <SearchAdd
                 addItem={openNewRepairPage}
                 searchItem={searchRepair}
+                buttonTitle="Nuova riparazione"
             ></SearchAdd>
 
             <div className="flex gap-4 text-white">
