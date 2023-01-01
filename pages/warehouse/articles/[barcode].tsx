@@ -69,6 +69,19 @@ export default function Article() {
         setIsEditing(false);
     };
 
+    const printArticleLabel = function () {
+        if (barcode) {
+            api.authAxios
+                .post(`${EASY_ERP_ARTICLES_URL}/${barcode}/label`)
+                .then(() => {
+                    toast.success('Label printed succesfully');
+                })
+                .catch(() => {
+                    toast.error('Error while printing label');
+                });
+        }
+    };
+
     useEffect(() => {
         setIsEditing(false);
         if (barcode === '-1') {
@@ -122,6 +135,7 @@ export default function Article() {
                         className="mx-2 fa-xl cursor-pointer"
                         icon={faTag}
                         title="Stampa etichetta"
+                        onClick={printArticleLabel}
                     ></FontAwesomeIcon>
                 </div>
                 <div className="basis-9/12">

@@ -28,7 +28,16 @@ export default function Articles() {
         if (barcode) router.push(`${EASY_ERP_ARTICLES_URL}/${barcode}`);
     };
     const printArticleLabel = function (barcode: string) {
-        if (barcode) console.log('PRINTING BARCODE: ', barcode); //todo
+        if (barcode) {
+            api.authAxios
+                .post(`${EASY_ERP_ARTICLES_URL}/${barcode}/label`)
+                .then(() => {
+                    toast.success('Label printed succesfully');
+                })
+                .catch(() => {
+                    toast.error('Error while printing label');
+                });
+        }
     };
     const openNewArticlePage = function () {
         navigateToArticlePage('-1');
