@@ -12,7 +12,7 @@ import Head from 'next/head';
 import React, { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import PaginatedContent from '../../components/layout/appLayout/pagination/paginatedContent';
-import { PaginationResult, Repair } from '../../utils/types';
+import { PaginationResult, RepairDetail } from '../../utils/types';
 import clsx from 'clsx';
 import FilterBoxGroup from '../../components/layout/appLayout/filtering/filterBoxGroup';
 import { func } from 'prop-types';
@@ -121,7 +121,7 @@ export default function Repairs() {
                 previous={repairs?.previous}
                 loadItems={loadRepairs}
             >
-                {repairs?.results?.map((repair: Repair) => (
+                {repairs?.results?.map((repair: RepairDetail) => (
                     <RepairRow
                         key={repair.barcode}
                         repair={{

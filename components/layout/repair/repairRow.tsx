@@ -1,14 +1,14 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import clsx from 'clsx';
-import { Repair } from '../../../utils/types';
+import { RepairDetail } from '../../../utils/types';
 
 export default function RepairRow({
     repair,
     navigateToRepairPage,
     deleteRepair,
 }: {
-    repair: Repair;
+    repair: RepairDetail;
     navigateToRepairPage: Function;
     deleteRepair: Function;
 }) {

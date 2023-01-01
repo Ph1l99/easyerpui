@@ -32,7 +32,7 @@ type SellingArticle = {
 };
 
 // Repairs
-type Repair = {
+type RepairDetail = {
     barcode?: string;
     title?: string;
     description?: string;
@@ -74,7 +74,7 @@ export type {
     TransactionReference,
     InventoryArticle,
     SellingArticle,
-    Repair,
+    RepairDetail,
     ListCustomer,
     CustomerDetail,
     FidelityCard,
