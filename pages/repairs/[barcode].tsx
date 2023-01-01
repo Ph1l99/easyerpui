@@ -60,7 +60,7 @@ export default function Repair() {
     const printRepairLabel = function () {
         if (barcode) {
             api.authAxios
-                .post(`${EASY_ERP_REPAIRS_URL}/${barcode}/receipt`)
+                .post(`${EASY_ERP_REPAIRS_URL}/${barcode}/label`)
                 .then(() => {
                     toast.success('Label printed succesfully');
                 })
