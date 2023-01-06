@@ -11,7 +11,8 @@ import {
 import useApi from '../../components/useApi';
 import { useRouter } from 'next/router';
 import toast from 'react-hot-toast';
-import { RepairStatus } from '../../utils/types';
+import { CustomerDetail, RepairStatus } from '../../utils/types';
+import CustomerRepairModal from '../../components/layout/customers/customer/customerRepairModal';
 
 export default function Repair() {
     const router = useRouter();
@@ -29,15 +30,11 @@ export default function Repair() {
         status: '',
     });
     const [repairStatuses, setRepairStatuses] = useState<RepairStatus[]>([]);
-    const [repairCustomer, setRepairCustomer] = useState({
-        id: 0,
-        first_name: '',
-        last_name: '',
-        phone: '',
-    });
+    const [repairCustomer, setRepairCustomer] = useState<CustomerDetail>({});
     const [beforeUpdateRepair, setBeforeUpdateRepair] = useState(repair);
     const [isEditing, setIsEditing] = useState(false);
     const [isNewRepair, setIsNewRepair] = useState(false);
+    const [isCustomerModalOpen, setIsCustomerModalOpen] = useState(false);
 
     const printRepairReceipt = function () {
         if (barcode) {
@@ -70,6 +67,7 @@ export default function Repair() {
                 .get(`${EASY_ERP_REPAIRS_URL}${barcode}`)
                 .then(response => {
                     setRepair(response.data);
+                    setBeforeUpdateRepair(response.data);
                     loadRepairCustomerInfo(response.data.customer);
                 })
                 .catch(() => {
@@ -138,6 +136,11 @@ export default function Repair() {
         }
     };
 
+    const closeCustomerModal = function (customer: CustomerDetail) {
+        setIsCustomerModalOpen(false);
+        setRepairCustomer(customer);
+    };
+
     const revertChanges = function () {
         setRepair(beforeUpdateRepair);
         setIsEditing(false);
@@ -151,7 +154,6 @@ export default function Repair() {
         } else if (barcode !== undefined) {
             loadRepairInfo();
             setIsNewRepair(false);
-            setBeforeUpdateRepair(repair);
         }
     }, [barcode]);
 
@@ -261,8 +263,12 @@ export default function Repair() {
                         <input
                             type="text"
                             placeholder="Cliente"
+                            readOnly
                             className="basis-3/12 bg-zinc-200 w-full outline-none p-2 placeholder-black rounded-md cursor-pointer"
-                            value={`${repairCustomer.last_name} ${repairCustomer.first_name}`} // todo open modal
+                            value={`${repairCustomer.last_name} ${repairCustomer.first_name}`}
+                            onClick={() => {
+                                setIsCustomerModalOpen(true);
+                            }}
                         />
                         <input
                             type="text"
@@ -274,6 +280,11 @@ export default function Repair() {
                     </div>
                 </div>
             </div>
+            <CustomerRepairModal
+                customer={repairCustomer}
+                isOpen={isCustomerModalOpen}
+                onClose={closeCustomerModal}
+            />
         </>
     );
 }
