@@ -10,15 +10,22 @@ import {
     EASY_ERP_LOGIN_URL,
     EASY_ERP_REFRESH_TOKEN_URL,
 } from '../utils/urls';
+import { useEffect, useState } from 'react';
 
 export default function useApi() {
     const router = useRouter();
+
+    const [language, setLanguage] = useState('');
+
+    useEffect(() => {
+        setLanguage(navigator.language);
+    }, []);
 
     const authenticated = axios.create({
         baseURL: EASY_ERP_BASE_URL,
         headers: {
             'Content-Type': 'application/json',
-            'Accept-Language': navigator.language,
+            'Accept-Language': language,
         },
     });
 
@@ -26,7 +33,7 @@ export default function useApi() {
         baseURL: EASY_ERP_BASE_URL,
         headers: {
             'Content-Type': 'application/json',
-            'Accept-Language': navigator.language,
+            'Accept-Language': language,
         },
     });
 
