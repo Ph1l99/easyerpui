@@ -18,6 +18,7 @@ export default function useApi() {
         baseURL: EASY_ERP_BASE_URL,
         headers: {
             'Content-Type': 'application/json',
+            'Accept-Language': navigator.language,
         },
     });
 
@@ -25,6 +26,7 @@ export default function useApi() {
         baseURL: EASY_ERP_BASE_URL,
         headers: {
             'Content-Type': 'application/json',
+            'Accept-Language': navigator.language,
         },
     });
 
