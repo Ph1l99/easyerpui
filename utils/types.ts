@@ -37,12 +37,13 @@ type RepairDetail = {
     title?: string;
     description?: string;
     delivery_date?: string;
-    status?: {
-        id?: number;
-        status?: string;
-        is_active?: boolean;
-        class_name?: string;
-    };
+    status?: RepairStatus;
+};
+type RepairStatus = {
+    id?: number;
+    status?: string;
+    is_active?: boolean;
+    class_name?: string;
 };
 
 // Customers
@@ -75,6 +76,7 @@ export type {
     InventoryArticle,
     SellingArticle,
     RepairDetail,
+    RepairStatus,
     ListCustomer,
     CustomerDetail,
     FidelityCard,

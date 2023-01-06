@@ -11,6 +11,7 @@ import {
 import useApi from '../../components/useApi';
 import { useRouter } from 'next/router';
 import toast from 'react-hot-toast';
+import { RepairStatus } from '../../utils/types';
 
 export default function Repair() {
     const router = useRouter();
@@ -27,14 +28,7 @@ export default function Repair() {
         insert_date_time: '',
         status: '',
     });
-    const [repairStatuses, setRepairStatuses] = useState([
-        {
-            id: 0,
-            status: '',
-            is_active: true,
-            class_name: '',
-        },
-    ]);
+    const [repairStatuses, setRepairStatuses] = useState<RepairStatus[]>([]);
     const [repairCustomer, setRepairCustomer] = useState({
         id: 0,
         first_name: '',
