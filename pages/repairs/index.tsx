@@ -13,9 +13,7 @@ import React, { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import PaginatedContent from '../../components/layout/appLayout/pagination/paginatedContent';
 import { PaginationResult, RepairDetail } from '../../utils/types';
-import clsx from 'clsx';
 import FilterBoxGroup from '../../components/layout/appLayout/filtering/filterBoxGroup';
-import { func } from 'prop-types';
 
 export default function Repairs() {
     const router = useRouter();
