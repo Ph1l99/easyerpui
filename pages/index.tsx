@@ -65,7 +65,7 @@ export default function Home() {
 
             <div className="flex flex-col px-2 h-[calc(100vh-19rem)]">
                 <div className="basis-4/12">
-                    <div className="basis-1/12 py-2 text-bold text-xl">
+                    <div className="basis-1/12 py-2 font-bold text-xl">
                         Riparazioni
                     </div>
                     <div className="flex flex-row w-full gap-2.5 mt-3">
@@ -89,7 +89,7 @@ export default function Home() {
                     </div>
                 </div>
                 <div className="basis-4/12">
-                    <div className="basis-1/12 py-2 text-bold text-xl">
+                    <div className="basis-1/12 py-2 font-bold text-xl">
                         Articoli
                     </div>
                     <div className="flex flex-row w-full gap-2.5 mt-3">
