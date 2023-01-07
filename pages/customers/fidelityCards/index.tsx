@@ -95,7 +95,7 @@ export default function FidelityCards() {
                         editFidelityCard={() =>
                             openModalFidelityCard(fidelityCard)
                         }
-                    ></FidelityCardRow>
+                    />
                 ))}
             </PaginatedContent>
             <FidelityCardModal
