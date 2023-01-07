@@ -96,7 +96,7 @@ export default function Home() {
                         {articlesDashboard.dashboard?.map(
                             (articleDashboard: ArticleDashboardDetail) => (
                                 <div
-                                    className="bg-red-400 w-1/3 flex rounded-lg text-white text-xl uppercase justify-around p-2.5 h-fit"
+                                    className="bg-red-400 w-1/4 flex rounded-lg text-white text-xl uppercase justify-around p-2.5 h-fit"
                                     key={articleDashboard.label}
                                 >
                                     <div className="font-bold">
