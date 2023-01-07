@@ -1,4 +1,8 @@
-import { getFromLocalStorage, saveToLocalStorage } from '../utils/localStorage';
+import {
+    deleteFromLocalStorage,
+    getFromLocalStorage,
+    saveToLocalStorage,
+} from '../utils/localStorage';
 import {
     ACCESS_TOKEN_LOCAL_STORAGE_KEY,
     REFRESH_TOKEN_LOCAL_STORAGE_KEY,
@@ -55,33 +59,35 @@ export default function useApi() {
 
     // Attach interceptor to all responses
     authenticated.interceptors.response.use(
-        response => {
-            return response;
-        },
-        // If we get a 403 Forbidden result, then the token needs to be refreshed
+        response => response,
         async error => {
-            if (error.response.status === 403) {
-                await unauthenticated
-                    .post(EASY_ERP_REFRESH_TOKEN_URL, {
+            const { response, config } = error;
+
+            if (response.status === 403 && !config._retry) {
+                config._retry = true;
+                return await unauthenticated
+                    .post(`${EASY_ERP_REFRESH_TOKEN_URL}`, {
                         refresh: getFromLocalStorage(
                             REFRESH_TOKEN_LOCAL_STORAGE_KEY
                         ),
                     })
-                    .then(response => {
-                        // Save token if the refresh operation has succedeed and retry the previous call
-                        if (response.status === 200) {
+                    .then(tokenResponse => {
+                        if (tokenResponse.status === 200) {
                             saveToLocalStorage(
                                 ACCESS_TOKEN_LOCAL_STORAGE_KEY,
-                                response.data.access
+                                tokenResponse.data.access
                             );
-                            return authenticated(error.config);
+                            config.headers['Authorization'] =
+                                'Bearer ' + tokenResponse.data.access;
+                            return authenticated(config);
                         }
                     })
                     .catch(() => {
-                        router.push(EASY_ERP_LOGIN_URL);
+                        router.push(`${EASY_ERP_LOGIN_URL}`);
                     });
+            } else {
+                return Promise.reject(error);
             }
-            return Promise.reject(error);
         }
     );
     return { authAxios: authenticated, publicAxios: unauthenticated };
