@@ -8,6 +8,7 @@ import {
 import Head from 'next/head';
 import toast from 'react-hot-toast';
 import { CustomerDetail, FidelityCard } from '../../../utils/types';
+import { toastOnErrorApiResponse } from '../../../utils/toast';
 
 export default function Customer() {
     const router = useRouter();
@@ -59,6 +60,9 @@ export default function Customer() {
                     router.replace(
                         `${EASY_ERP_CUSTOMER_BASE_URL}/${response.data.id}`
                     );
+                })
+                .catch(error => {
+                    toastOnErrorApiResponse(error);
                 });
         } else {
             api.authAxios
