@@ -136,9 +136,19 @@ export default function Repair() {
         }
     };
 
-    const closeCustomerModal = function (customer: CustomerDetail) {
+    const closeCustomerModal = function (
+        customer: CustomerDetail,
+        updated: boolean
+    ) {
         setIsCustomerModalOpen(false);
-        setRepairCustomer(customer);
+        if (updated) {
+            setRepairCustomer(customer);
+            setRepair(prevState => ({
+                ...prevState,
+                customer: customer.id!,
+            }));
+            setIsEditing(true);
+        }
     };
 
     const revertChanges = function () {

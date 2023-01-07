@@ -1,7 +1,6 @@
 import { CustomerDetail, PaginationResult } from '../../../../utils/types';
 import Modal from '../../modal';
 import React, { useEffect, useState } from 'react';
-import clsx from 'clsx';
 import useApi from '../../../useApi';
 import { EASY_ERP_CUSTOMERS_BASE_URL } from '../../../../utils/urls';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -19,15 +18,14 @@ export default function CustomerRepairModal({
     const api = useApi();
 
     const [isNewAssignment, setIsNewAssignment] = useState(false);
-    const [isEditing, setIsEditing] = useState(false);
     const [localSelectedCustomer, setLocalSelectedCustomer] =
         useState(customer);
     const [availableCustomers, setAvailableCustomers] =
         useState<PaginationResult>({});
 
-    const closeModal = function (customer: CustomerDetail) {
+    const closeModal = function (customer: CustomerDetail, updated: boolean) {
         setLocalSelectedCustomer({});
-        onClose(customer);
+        onClose(customer, updated);
     };
 
     const loadCustomers = function () {
@@ -37,14 +35,15 @@ export default function CustomerRepairModal({
     };
 
     const revertChanges = function () {
-        setIsEditing(false);
         setLocalSelectedCustomer({});
-        closeModal(customer);
+        closeModal(customer, false);
     };
 
     const saveCustomerAssignment = function () {
-        // todo check if different
-        closeModal(localSelectedCustomer);
+        closeModal(
+            localSelectedCustomer,
+            customer.id !== localSelectedCustomer.id
+        );
     };
 
     useEffect(() => {
@@ -56,7 +55,6 @@ export default function CustomerRepairModal({
             setIsNewAssignment(false);
             setLocalSelectedCustomer(customer);
         }
-        setIsEditing(false);
     }, [isOpen]);
 
     return (
@@ -64,7 +62,7 @@ export default function CustomerRepairModal({
             <Modal
                 isOpen={isOpen}
                 onClose={() => {
-                    closeModal(customer);
+                    closeModal(customer, false);
                 }}
                 title={
                     isNewAssignment
@@ -74,44 +72,41 @@ export default function CustomerRepairModal({
                 width=""
             >
                 <div className="flex flex-row">
-                    Cliente selezionato: {customer.last_name}{' '}
-                    {customer.first_name}
+                    Cliente selezionato: {localSelectedCustomer.last_name}{' '}
+                    {localSelectedCustomer.first_name}
                 </div>
                 <hr className="mt-4" />
                 <div className="flex flex-col">
-                    {/*{availableCustomers &&*/}
-                    {/*    availableCustomers.results!.map(*/}
-                    {/*        (customer: CustomerDetail) => (*/}
-                    {/*            <div*/}
-                    {/*                className="flex w-full justify-between p-2"*/}
-                    {/*                key={customer.id}*/}
-                    {/*            >*/}
-                    {/*                <span>{customer.last_name}</span>*/}
-                    {/*                <span>{customer.first_name}</span>*/}
-                    {/*                <FontAwesomeIcon*/}
-                    {/*                    icon={faCheck}*/}
-                    {/*                    className="text-gray-600 cursor-pointer"*/}
-                    {/*                    title="Seleziona"*/}
-                    {/*                    onClick={() => {*/}
-                    {/*                        setLocalSelectedCustomer(customer);*/}
-                    {/*                    }}*/}
-                    {/*                />*/}
-                    {/*            </div>*/}
-                    {/*        )*/}
-                    {/*    )}*/}
-                    <></>
-                    {/*todo does not work*/}
+                    {availableCustomers.results?.map(
+                        (customer: CustomerDetail) => (
+                            <div
+                                className="flex w-full justify-between p-2"
+                                key={customer.id}
+                            >
+                                <div className="w-1/3">
+                                    {customer.last_name}
+                                </div>
+                                <div className="w-1/3">
+                                    {customer.first_name}
+                                </div>
+                                <FontAwesomeIcon
+                                    icon={faCheck}
+                                    className="text-gray-600 cursor-pointer"
+                                    title="Seleziona"
+                                    onClick={() => {
+                                        setLocalSelectedCustomer(customer);
+                                    }}
+                                />
+                            </div>
+                        )
+                    )}
                 </div>
                 <hr className="mt-4" />
                 <div className="flex flex-row justify-end mt-4">
                     <input
                         type="button"
                         value="Salva"
-                        className={clsx(
-                            'basis-2/12 py-1 px-1 rounded-lg bg-green-600 text-white outline-none mr-4 text-center h-fit font-bold',
-                            isEditing ? 'cursor-pointer' : 'cursor-not-allowed'
-                        )}
-                        disabled={!isEditing}
+                        className="basis-2/12 py-1 px-1 rounded-lg bg-green-600 text-white outline-none mr-4 text-center h-fit font-bold cursor-pointer"
                         onClick={saveCustomerAssignment}
                     />
                     <input
