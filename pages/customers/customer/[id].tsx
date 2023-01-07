@@ -69,6 +69,7 @@ export default function Customer() {
                 .put(`${EASY_ERP_CUSTOMER_BASE_URL}/${id}`, customer)
                 .then(() => {
                     toast.success('Customer updated succesfully');
+                    setIsEditing(false);
                 });
         }
     };
