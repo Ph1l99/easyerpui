@@ -5,6 +5,7 @@ import useApi from '../../../useApi';
 import { EASY_ERP_CUSTOMERS_BASE_URL } from '../../../../utils/urls';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
+import Pagination from '../../appLayout/pagination/pagination';
 
 export default function CustomerRepairModal({
     isOpen,
@@ -28,8 +29,8 @@ export default function CustomerRepairModal({
         onClose(customer, updated);
     };
 
-    const loadCustomers = function () {
-        api.authAxios.get(`${EASY_ERP_CUSTOMERS_BASE_URL}/`).then(response => {
+    const loadCustomers = function (url: string) {
+        api.authAxios.get(url).then(response => {
             setAvailableCustomers(response.data);
         });
     };
@@ -47,7 +48,7 @@ export default function CustomerRepairModal({
     };
 
     useEffect(() => {
-        loadCustomers();
+        loadCustomers(`${EASY_ERP_CUSTOMERS_BASE_URL}/`);
         if (customer.id === -1) {
             setIsNewAssignment(true);
             setLocalSelectedCustomer({});
@@ -101,7 +102,17 @@ export default function CustomerRepairModal({
                         )
                     )}
                 </div>
-                <hr className="mt-4" />
+                <Pagination
+                    handleNextPage={() =>
+                        loadCustomers(availableCustomers.next!.slice(4)!)
+                    }
+                    handlePreviousPage={() =>
+                        loadCustomers(availableCustomers.previous!.slice(4)!)
+                    }
+                    hasNextPage={!!availableCustomers.next}
+                    hasPreviousPage={!!availableCustomers.previous}
+                />
+                <hr />
                 <div className="flex flex-row justify-end mt-4">
                     <input
                         type="button"
