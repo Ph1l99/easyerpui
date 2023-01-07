@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import SectionTitle from '../components/layout/sectionTitle';
 import {
     ArticleDashboard,
+    ArticleDashboardDetail,
     RepairDashboard,
     RepairDashboardDetail,
 } from '../utils/types';
@@ -62,26 +63,48 @@ export default function Home() {
                 <SectionTitle title={`Benvenuto, ${user?.firstName}`} />
             </main>
 
-            <div className="flex flex-col px-2">
-                <div className="basis-6/12">
+            <div className="flex flex-col px-2 h-[calc(100vh-19rem)]">
+                <div className="basis-4/12">
                     <div className="basis-1/12 py-2 text-bold text-xl">
                         Riparazioni
                     </div>
-                    <div className="flex flex-row w-full gap-2.5">
+                    <div className="flex flex-row w-full gap-2.5 mt-3">
                         {repairsDashboard.dashboard?.map(
                             (repairDashboardDetail: RepairDashboardDetail) => (
                                 <div
                                     className={clsx(
                                         'bg-' +
                                             repairDashboardDetail.status_class,
-                                        'w-1/4 flex rounded-lg text-white text-xl text-center capitalize justify-items-center justify-around p-2.5 h-fit'
+                                        'w-1/4 flex rounded-lg text-white text-xl text-center uppercase justify-around p-2.5 h-fit'
                                     )}
                                     key={repairDashboardDetail.status_id}
                                 >
-                                    <span className="font-bold">
+                                    <div className="font-bold">
                                         {repairDashboardDetail.total_repairs}
-                                    </span>
-                                    <span>{repairDashboardDetail.status}</span>
+                                    </div>
+                                    <div>{repairDashboardDetail.status}</div>
+                                </div>
+                            )
+                        )}
+                    </div>
+                </div>
+                <div className="basis-4/12">
+                    <div className="basis-1/12 py-2 text-bold text-xl">
+                        Articoli
+                    </div>
+                    <div className="flex flex-row w-full gap-2.5 mt-3">
+                        {articlesDashboard.dashboard?.map(
+                            (articleDashboard: ArticleDashboardDetail) => (
+                                <div
+                                    className="bg-red-400 w-1/3 flex rounded-lg text-white text-xl uppercase justify-around p-2.5 h-fit"
+                                    key={articleDashboard.label}
+                                >
+                                    <div className="font-bold">
+                                        {articleDashboard.value}
+                                    </div>
+                                    <div className="text-left">
+                                        {articleDashboard.label}
+                                    </div>
                                 </div>
                             )
                         )}
