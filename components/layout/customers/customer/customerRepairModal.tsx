@@ -70,7 +70,6 @@ export default function CustomerRepairModal({
                         ? 'Assegna cliente riparazione'
                         : 'Modifica cliente riparazione'
                 }
-                width=""
             >
                 <div className="flex flex-row">
                     Cliente selezionato: {localSelectedCustomer.last_name}{' '}
