@@ -23,6 +23,13 @@ type InventoryArticle = {
     name?: string;
     current_availability?: number;
 };
+type ArticleDashboardDetail = {
+    label?: string;
+    value?: number;
+};
+type ArticleDashboard = {
+    dashboard?: Array<ArticleDashboardDetail>;
+};
 
 // Selling
 type SellingArticle = {
@@ -44,6 +51,15 @@ type RepairStatus = {
     status?: string;
     is_active?: boolean;
     class_name?: string;
+};
+type RepairDashboardDetail = {
+    status_id?: number;
+    status?: string;
+    status_class?: string;
+    total_repairs?: number;
+};
+type RepairDashboard = {
+    dashboard?: Array<RepairDashboardDetail>;
 };
 
 // Customers
@@ -75,8 +91,12 @@ export type {
     TransactionReference,
     InventoryArticle,
     SellingArticle,
+    ArticleDashboardDetail,
+    ArticleDashboard,
     RepairDetail,
     RepairStatus,
+    RepairDashboardDetail,
+    RepairDashboard,
     ListCustomer,
     CustomerDetail,
     FidelityCard,
