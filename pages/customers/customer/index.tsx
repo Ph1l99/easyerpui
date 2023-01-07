@@ -55,7 +55,7 @@ export default function Customer() {
     };
 
     useEffect(() => {
-        loadCustomers(`${EASY_ERP_CUSTOMERS_BASE_URL}`);
+        loadCustomers(`${EASY_ERP_CUSTOMERS_BASE_URL}/`);
     }, []);
 
     return (
