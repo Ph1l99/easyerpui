@@ -68,7 +68,7 @@ export default function Customer() {
                 addItem={addNewCustomer}
                 searchItem={searchCustomer}
                 buttonTitle="Nuovo cliente"
-            ></SearchAdd>
+            />
             <PaginatedContent
                 next={customers?.next}
                 previous={customers?.previous}
@@ -85,7 +85,7 @@ export default function Customer() {
                         }}
                         deleteCustomer={deleteCustomer}
                         navigateToCustomerPage={navigateToCustomer}
-                    ></CustomerRow>
+                    />
                 ))}
             </PaginatedContent>
         </>
