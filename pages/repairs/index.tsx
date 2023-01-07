@@ -92,7 +92,7 @@ export default function Repairs() {
 
     useEffect(() => {
         loadRepairStatuses();
-        loadRepairs(`${EASY_ERP_REPAIRS_BASE_URL}`);
+        loadRepairs(`${EASY_ERP_REPAIRS_BASE_URL}/`);
     }, []);
 
     return (
