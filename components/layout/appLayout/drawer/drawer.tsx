@@ -10,8 +10,10 @@ import {
 import clsx from 'clsx';
 import DrawerMenuItem from './drawerMenuItem';
 import { DrawerSubMenuItem } from './drawerSubMenuItem';
+import useTranslation from '../../../useTranslation';
 
 export default function Drawer({ isOpen }: { isOpen: boolean }) {
+    const { t } = useTranslation();
     return (
         <div
             className={clsx(
@@ -22,43 +24,49 @@ export default function Drawer({ isOpen }: { isOpen: boolean }) {
             {isOpen && (
                 <div className="ml-4 mt-5">
                     <ul className="flex flex-col gap-3">
-                        <DrawerMenuItem url="/" description="Home" />
+                        <DrawerMenuItem url="/" description={t.drawer.home} />
 
                         <DrawerMenuItem
                             url={EASY_ERP_SELLING_BASE_URL}
-                            description="Vendita"
+                            description={t.drawer.selling}
                         ></DrawerMenuItem>
 
                         <DrawerMenuItem
                             url={EASY_ERP_REPAIRS_BASE_URL}
-                            description="Riparazioni"
+                            description={t.drawer.repairs}
                         />
 
-                        <DrawerMenuItem description="Magazzino" />
+                        <DrawerMenuItem
+                            description={t.drawer.warehouse.warehouse}
+                        />
                         <ul className="flex flex-col gap-2">
                             <DrawerSubMenuItem
                                 url={EASY_ERP_INVENTORY_URL}
-                                description="Inventario"
+                                description={t.drawer.warehouse.inventory}
                             />
                             <DrawerSubMenuItem
                                 url={EASY_ERP_TRANSACTIONS_URL}
-                                description="Movimentazioni"
+                                description={t.drawer.warehouse.transactions}
                             />
                             <DrawerSubMenuItem
                                 url={EASY_ERP_ARTICLES_URL}
-                                description="Articoli"
+                                description={t.drawer.warehouse.articles}
                             />
                         </ul>
 
-                        <DrawerMenuItem description="Clienti" />
+                        <DrawerMenuItem
+                            description={t.drawer.customer.customers}
+                        />
                         <ul className="flex flex-col gap-2">
                             <DrawerSubMenuItem
                                 url={EASY_ERP_CUSTOMER_BASE_URL}
-                                description="Gestione clienti"
+                                description={
+                                    t.drawer.customer.customerManagement
+                                }
                             />
                             <DrawerSubMenuItem
                                 url={EASY_ERP_FIDELITY_CARD_BASE_URL}
-                                description="Tessere fedeltà"
+                                description={t.drawer.customer.fidelityCards}
                             />
                         </ul>
                     </ul>
