@@ -4,14 +4,22 @@ import useApi from '../../../components/useApi';
 import {
     EASY_ERP_CUSTOMER_BASE_URL,
     EASY_ERP_FIDELITY_CARD_BASE_URL,
+    EASY_ERP_REPAIRS_URL,
 } from '../../../utils/urls';
 import Head from 'next/head';
-import { CustomerDetail, FidelityCard } from '../../../utils/types';
+import {
+    CustomerDetail,
+    FidelityCard,
+    PaginationResult,
+    RepairDetail,
+} from '../../../utils/types';
 import {
     toastOnErrorApiResponse,
     toastOnSuccessApiResponse,
 } from '../../../utils/toast';
 import useTranslation from '../../../components/useTranslation';
+import Pagination from '../../../components/layout/appLayout/pagination/pagination';
+import { func } from 'prop-types';
 
 export default function Customer() {
     const router = useRouter();
@@ -27,6 +35,8 @@ export default function Customer() {
     const [isNewCustomer, setIsNewCustomer] = useState(false);
     const [assignNewFidelityCard, setAssignNewFidelityCard] = useState(false);
     const [newFidelityCard, setNewFidelityCard] = useState('');
+    const [repairsForCustomer, setRepairsForCustomer] =
+        useState<PaginationResult>({});
 
     const changeFormValue = function (
         e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
@@ -112,6 +122,12 @@ export default function Customer() {
             });
     };
 
+    const loadRepairsForCustomer = function (url: string) {
+        authAxios.get(url).then(response => {
+            setRepairsForCustomer(response.data);
+        });
+    };
+
     useEffect(() => {
         setIsEditing(false);
         loadAllActiveAndAvailableFidelityCards();
@@ -124,6 +140,9 @@ export default function Customer() {
                 .then(response => {
                     setCustomer(response.data);
                     setBeforeUpdateCustomer(response.data);
+                    loadRepairsForCustomer(
+                        `${EASY_ERP_REPAIRS_URL}?customer=${id}`
+                    );
                 })
                 .catch(error => {
                     toastOnErrorApiResponse(
@@ -144,7 +163,7 @@ export default function Customer() {
                 </title>
             </Head>
             <div className="flex flex-col p-8 h-full">
-                <div className="basis-1 /12 font-bold text-xl">
+                <div className="basis-1/12 font-bold text-xl">
                     {t.customers.customer.detail.pageTitle.customer}:{' '}
                     {isNewCustomer ? '-' : id}
                 </div>
@@ -167,7 +186,7 @@ export default function Customer() {
                         </>
                     )}
                 </div>
-                <div className="basis-11/12">
+                <div className="basis-3/12">
                     <div className="flex mt-5 text-center items-center gap-1">
                         <input
                             id="first_name"
@@ -253,6 +272,32 @@ export default function Customer() {
                             </select>
                         )}
                     </div>
+                </div>
+                <div className="basis-1/12 font-bold">
+                    {t.customers.customer.detail.customerRepairs}
+                </div>
+                <div className="basis-6/12 flex flex-col justify-between">
+                    {repairsForCustomer.results?.map(
+                        (repairForCustomer: RepairDetail) => (
+                            <div key={repairForCustomer.barcode}>
+                                {repairForCustomer.title}
+                            </div>
+                        )
+                    )}
+                    <Pagination
+                        hasPreviousPage={!!repairsForCustomer.previous}
+                        hasNextPage={!!repairsForCustomer.next}
+                        handlePreviousPage={() => {
+                            loadRepairsForCustomer(
+                                repairsForCustomer.previous!.slice(4)!
+                            );
+                        }}
+                        handleNextPage={() => {
+                            loadRepairsForCustomer(
+                                repairsForCustomer.next!.slice(4)!
+                            );
+                        }}
+                    />
                 </div>
             </div>
         </>
