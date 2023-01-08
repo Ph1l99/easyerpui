@@ -9,9 +9,11 @@ import {
 import toast from 'react-hot-toast';
 import ArticleSellRow from '../../components/layout/selling/articleSellRow';
 import { TRANSACTION_REFERENCE_ID_SELLING_TO_CUSTOMER } from '../../utils/constants';
+import useTranslation from '../../components/useTranslation';
 
 export default function Selling() {
     const api = useApi();
+    const { t } = useTranslation();
 
     const [currentArticle, setCurrentArticle] = useState('');
     const [isEnabledSellButton, setIsEnabledSellButton] = useState(false);
@@ -151,21 +153,21 @@ export default function Selling() {
     return (
         <>
             <Head>
-                <title>Vendita</title>
+                <title>{t.selling.pageTitle}</title>
             </Head>
-            <SectionTitle title="Vendita"></SectionTitle>
+            <SectionTitle title={t.selling.pageTitle}></SectionTitle>
             {isEnabledSellButton && (
                 <div className="flex justify-end -mt-5 py-4 gap-1.5">
                     <input
                         type="button"
                         className="p-2 rounded-lg bg-red-600 text-white outline-none h-fit text-center cursor-pointer font-bold"
-                        value="Annulla vendita"
+                        value={t.selling.buttons.cancel}
                         onClick={rollbackSelling}
                     />
                     <input
                         type="button"
                         className="p-2 rounded-lg bg-indigo-600 text-white outline-none h-fit text-center cursor-pointer font-bold"
-                        value="Chiudi vendita"
+                        value={t.selling.buttons.save}
                         onClick={sellItems}
                     />
                 </div>
