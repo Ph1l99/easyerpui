@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import clsx from 'clsx';
 import { RepairDetail } from '../../../utils/types';
+import useTranslation from '../../useTranslation';
 
 export default function RepairRow({
     repair,
@@ -12,6 +13,7 @@ export default function RepairRow({
     navigateToRepairPage: Function;
     deleteRepair: Function;
 }) {
+    const { t } = useTranslation();
     return (
         <div
             className="flex px-2 py-2 bg-zinc-200 rounded-lg justify-start items-center cursor-pointer h-16 mt-3"
@@ -32,7 +34,9 @@ export default function RepairRow({
                     </div>
                 </div>
                 <div className="basis-3/12 font-bold">
-                    <span className="font-normal">Consegna: </span>
+                    <span className="font-normal">
+                        `${t.repairs.row.delivery}: `
+                    </span>
                     {repair.delivery_date}
                 </div>
             </div>
@@ -40,12 +44,12 @@ export default function RepairRow({
                 <FontAwesomeIcon
                     className="mx-2 fa-lg text-red-600"
                     icon={faTrash}
-                    title="Elimina riparazione"
+                    title={t.repairs.row.deleteButton}
                     onClick={e => {
                         e.stopPropagation();
                         deleteRepair(repair.barcode);
                     }}
-                ></FontAwesomeIcon>
+                />
             </div>
         </div>
     );

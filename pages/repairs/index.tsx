@@ -14,10 +14,12 @@ import toast from 'react-hot-toast';
 import PaginatedContent from '../../components/layout/appLayout/pagination/paginatedContent';
 import { PaginationResult, RepairDetail } from '../../utils/types';
 import FilterBoxGroup from '../../components/layout/appLayout/filtering/filterBoxGroup';
+import useTranslation from '../../components/useTranslation';
 
 export default function Repairs() {
     const router = useRouter();
     const api = useApi();
+    const { t } = useTranslation();
 
     const [repairs, setRepairs] = useState<PaginationResult>();
     const [repairStatuses, setRepairStatuses] = useState<any>([]);
@@ -98,17 +100,19 @@ export default function Repairs() {
     return (
         <>
             <Head>
-                <title>Riparazioni</title>
+                <title>{t.repairs.pageTitle}</title>
             </Head>
-            <SectionTitle title="Riparazioni"></SectionTitle>
+            <SectionTitle title={t.repairs.pageTitle} />
             <SearchAdd
                 addItem={openNewRepairPage}
                 searchItem={searchRepair}
-                buttonTitle="Nuova riparazione"
-            ></SearchAdd>
+                buttonTitle={t.repairs.buttonAdd}
+            />
 
             <div className="flex gap-4 text-white">
-                <span className="text-black font-semibold">Filtra per:</span>
+                <span className="text-black font-semibold">
+                    `${t.repairs.filter.title}`
+                </span>
                 <FilterBoxGroup
                     items={repairStatuses}
                     search={searchRepairFromFilters}
