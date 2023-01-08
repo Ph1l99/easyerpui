@@ -13,7 +13,7 @@ import useTranslation from '../../../components/useTranslation';
 import { toastOnErrorApiResponse } from '../../../utils/toast';
 
 export default function FidelityCards() {
-    const api = useApi();
+    const { authAxios } = useApi();
     const { t } = useTranslation();
 
     const [fidelityCards, setFidelityCards] = useState<PaginationResult>();
@@ -31,7 +31,7 @@ export default function FidelityCards() {
     ]);
 
     const loadFidelityCards = function (url: string) {
-        api.authAxios
+        authAxios
             .get(url)
             .then(response => {
                 setFidelityCards(response.data);
@@ -76,7 +76,7 @@ export default function FidelityCards() {
                 searchItem={searchFidelityCard}
                 addItem={() => openModalFidelityCard(selectedFidelityCard)}
                 buttonTitle={t.customers.fidelityCards.buttonAdd}
-            ></SearchAdd>
+            />
             <div className="flex gap-4 text-white">
                 <span className="text-black font-semibold">
                     {`${t.customers.fidelityCards.filter.title}:`}
