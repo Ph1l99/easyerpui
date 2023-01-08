@@ -7,16 +7,19 @@ import {
     EASY_ERP_INVENTORY_CYCLE_NEXT_URL,
     EASY_ERP_INVENTORY_CYCLE_URL,
 } from '../../../utils/urls';
-import toast from 'react-hot-toast';
 import clsx from 'clsx';
 import InventoryRow from '../../../components/layout/warehouse/inventory/inventoryRow';
 import PaginatedContent from '../../../components/layout/appLayout/pagination/paginatedContent';
 import { PaginationResult } from '../../../utils/types';
 import Search from '../../../components/layout/appLayout/search/search';
 import useTranslation from '../../../components/useTranslation';
+import {
+    toastOnErrorApiResponse,
+    toastOnSuccessApiResponse,
+} from '../../../utils/toast';
 
 export default function Inventory() {
-    const api = useApi();
+    const { authAxios } = useApi();
     const { t } = useTranslation();
 
     const [nextInventoryCycleDetails, setNextInventoryCycleDetails] = useState({
@@ -28,24 +31,30 @@ export default function Inventory() {
     const [inventory, setInventory] = useState<PaginationResult>();
 
     const loadInventoryCycleDetails = function () {
-        api.authAxios
+        authAxios
             .get(`${EASY_ERP_INVENTORY_CYCLE_NEXT_URL}`)
             .then(response => {
                 setNextInventoryCycleDetails(response.data);
             })
-            .catch(() => {
-                toast.error('Error while loading inventory cycle details');
+            .catch(error => {
+                toastOnErrorApiResponse(
+                    error,
+                    t.warehouse.inventory.api.getInventoryCycleError
+                );
             });
     };
 
     const loadInventory = function (url: string) {
-        api.authAxios
+        authAxios
             .get(url)
             .then(response => {
                 setInventory(response.data);
             })
-            .catch(() => {
-                toast.error('Error while loading inventory');
+            .catch(error => {
+                toastOnErrorApiResponse(
+                    error,
+                    t.warehouse.inventory.api.getInventoryError
+                );
             });
     };
 
@@ -60,14 +69,20 @@ export default function Inventory() {
     };
 
     const executeInventoryCycle = function () {
-        api.authAxios
+        authAxios
             .post(`${EASY_ERP_INVENTORY_CYCLE_URL}`)
             .then(response => {
-                toast.success('Inventory cycle executed succesfully');
+                toastOnSuccessApiResponse(
+                    response,
+                    t.warehouse.inventory.api.createInventoryCycleSuccess
+                );
                 loadInventoryCycleDetails();
             })
-            .catch(() => {
-                toast.error('Error while computing inventory cycle');
+            .catch(error => {
+                toastOnErrorApiResponse(
+                    error,
+                    t.warehouse.inventory.api.createInventoryCycleError
+                );
             });
     };
 

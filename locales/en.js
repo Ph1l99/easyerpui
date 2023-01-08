@@ -251,6 +251,13 @@ export const en = {
             row: {
                 currentAvailability: 'Current availability',
             },
+            api: {
+                getInventoryCycleError: 'Erroe while loading inventory cycle',
+                getInventoryError: 'Error while loading inventory',
+                createInventoryCycleSuccess: 'Inventory cycle created',
+                createInventoryCycleError:
+                    'Error while creating inventory cycle',
+            },
         },
         transactions: {
             pageTitle: 'Transactions',
