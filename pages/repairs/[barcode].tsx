@@ -13,10 +13,12 @@ import { useRouter } from 'next/router';
 import toast from 'react-hot-toast';
 import { CustomerDetail, RepairStatus } from '../../utils/types';
 import CustomerRepairModal from '../../components/layout/customers/customer/customerRepairModal';
+import useTranslation from '../../components/useTranslation';
 
 export default function Repair() {
     const router = useRouter();
     const api = useApi();
+    const { t } = useTranslation();
 
     const { barcode } = router.query;
 
@@ -172,26 +174,27 @@ export default function Repair() {
             <Head>
                 <title>
                     {isNewRepair
-                        ? 'Nuova riparazione'
-                        : `Riparazione ${barcode}`}
+                        ? `${t.repairs.detail.pageTitle.newRepair}`
+                        : `${t.repairs.detail.pageTitle.repair} ${barcode}`}
                 </title>
             </Head>
             <div className="flex flex-col p-8 h-full">
                 <div className="basis-1 /12 font-bold text-xl">
-                    Dettaglio riparazione - {isNewRepair ? '' : repair.barcode}
+                    `${t.repairs.detail.pageTitle.repair} - `
+                    {isNewRepair ? '' : repair.barcode}
                 </div>
                 <div className="basis-1/12 flex justify-end">
                     {isEditing && (
                         <>
                             <input
                                 type="button"
-                                value="Salva"
+                                value={t.genericComponents.buttons.save}
                                 className="basis-1/12 py-1 rounded-lg bg-green-600 text-white outline-none mr-4 text-center h-fit cursor-pointer font-bold"
                                 onClick={saveRepair}
                             />
                             <input
                                 type="button"
-                                value="Annulla"
+                                value={t.genericComponents.buttons.cancel}
                                 className="basis-1/12 py-1 rounded-lg bg-red-600 text-white outline-none text-center h-fit cursor-pointer font-bold"
                                 onClick={revertChanges}
                             />
@@ -207,7 +210,7 @@ export default function Repair() {
                                 : ' cursor-pointer'
                         )}
                         icon={faReceipt}
-                        title="Stampa ricevuta"
+                        title={t.repairs.detail.print.receipt}
                         onClick={printRepairReceipt}
                     ></FontAwesomeIcon>
                     <FontAwesomeIcon
@@ -218,14 +221,14 @@ export default function Repair() {
                                 : ' cursor-pointer'
                         )}
                         icon={faTag}
-                        title="Stampa etichetta"
+                        title={t.repairs.detail.print.label}
                         onClick={printRepairLabel}
                     ></FontAwesomeIcon>
                 </div>
                 <div className="basis-9/12">
                     <input
                         type="text"
-                        placeholder="Titolo"
+                        placeholder={t.repairs.detail.title}
                         className="bg-zinc-200 w-full outline-none p-2 placeholder-black align-middle rounded-md"
                         maxLength={100}
                         value={repair.title}
@@ -235,7 +238,7 @@ export default function Repair() {
                     />
                     <input
                         type="text"
-                        placeholder="Descrizione"
+                        placeholder={t.repairs.detail.description}
                         className="mt-5 bg-zinc-200 w-full outline-none p-2 placeholder-black h-40 rounded-md"
                         maxLength={250}
                         value={repair.description}
@@ -246,7 +249,7 @@ export default function Repair() {
                     <div className="flex mt-5 gap-6 justify-start">
                         <input
                             type="date"
-                            placeholder="Data consegna"
+                            placeholder={t.repairs.detail.deliveryDate}
                             className="basis-3/12 bg-zinc-200 w-full outline-none p-2 placeholder-black rounded-md"
                             value={repair.delivery_date}
                             onChange={e => {
@@ -260,7 +263,7 @@ export default function Repair() {
                                 changeFormValue(e, 'status');
                             }}
                         >
-                            <option value="">Seleziona uno stato</option>
+                            <option value="">{t.repairs.detail.status}</option>
                             {repairStatuses.map(statusItem => (
                                 <option
                                     key={statusItem.id}
@@ -272,7 +275,7 @@ export default function Repair() {
                         </select>
                         <input
                             type="text"
-                            placeholder="Cliente"
+                            placeholder={t.repairs.detail.customer}
                             readOnly
                             className="basis-3/12 bg-zinc-200 w-full outline-none p-2 placeholder-black rounded-md cursor-pointer"
                             value={`${repairCustomer.last_name} ${repairCustomer.first_name}`}
@@ -282,7 +285,7 @@ export default function Repair() {
                         />
                         <input
                             type="text"
-                            placeholder="Recapito"
+                            placeholder={t.repairs.detail.customerPhone}
                             readOnly
                             className="basis-3/12 bg-zinc-200 w-full outline-none p-2 placeholder-black rounded-md cursor-not-allowed"
                             value={repairCustomer.phone}
