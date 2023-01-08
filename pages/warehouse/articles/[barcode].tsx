@@ -8,12 +8,14 @@ import { EASY_ERP_ARTICLES_URL } from '../../../utils/urls';
 import Head from 'next/head';
 import toast from 'react-hot-toast';
 import { ArticleDetail } from '../../../utils/types';
+import useTranslation from '../../../components/useTranslation';
 
 export default function Article() {
     const router = useRouter();
     const api = useApi();
-
+    const { t } = useTranslation();
     const { barcode } = router.query;
+
     const [article, setArticle] = useState<ArticleDetail>({});
     const [beforeUpdateArticle, setBeforeUpdateArticle] =
         useState<ArticleDetail>(article);
@@ -104,12 +106,15 @@ export default function Article() {
         <>
             <Head>
                 <title>
-                    {isNewArticle ? 'Nuovo articolo' : `Articolo: ${barcode}`}
+                    {isNewArticle
+                        ? `${t.warehouse.articles.detail.pageTitle.newArticle}`
+                        : `${t.warehouse.articles.detail.pageTitle.article}: ${barcode}`}
                 </title>
             </Head>
             <div className="flex flex-col p-8 h-full">
                 <div className="basis-1 /12 font-bold text-xl">
-                    Articolo: {isNewArticle ? '-' : `${barcode}`}
+                    `${t.warehouse.articles.detail.pageTitle.article}: `
+                    {isNewArticle ? '-' : `${barcode}`}
                 </div>
 
                 <div className="basis-1/12 flex justify-end">
@@ -117,13 +122,13 @@ export default function Article() {
                         <>
                             <input
                                 type="button"
-                                value="Salva"
+                                value={t.genericComponents.buttons.save}
                                 className="basis-1/12 py-1 rounded-lg bg-green-600 text-white outline-none mr-4 text-center h-fit cursor-pointer font-bold"
                                 onClick={saveArticle}
                             />
                             <input
                                 type="button"
-                                value="Annulla"
+                                value={t.genericComponents.buttons.cancel}
                                 className="basis-1/12 py-1 rounded-lg bg-red-600 text-white outline-none text-center h-fit cursor-pointer font-bold"
                                 onClick={revertChanges}
                             />
@@ -134,14 +139,14 @@ export default function Article() {
                     <FontAwesomeIcon
                         className="mx-2 fa-xl cursor-pointer"
                         icon={faTag}
-                        title="Stampa etichetta"
+                        title={t.warehouse.articles.detail.print.label}
                         onClick={printArticleLabel}
-                    ></FontAwesomeIcon>
+                    />
                 </div>
                 <div className="basis-9/12">
                     <input
                         type="text"
-                        placeholder="Titolo"
+                        placeholder={t.warehouse.articles.detail.title}
                         className="bg-zinc-200 w-full outline-none p-2 placeholder-black align-middle rounded-md"
                         maxLength={100}
                         value={article.name}
@@ -149,7 +154,7 @@ export default function Article() {
                     />
                     <input
                         type="text"
-                        placeholder="Descrizione"
+                        placeholder={t.warehouse.articles.detail.description}
                         className="mt-5 bg-zinc-200 w-full outline-none p-2 placeholder-black h-40 rounded-md"
                         maxLength={250}
                         value={article.description}
@@ -159,7 +164,7 @@ export default function Article() {
                         <input
                             type="text"
                             readOnly={!isNewArticle}
-                            placeholder="Barcode"
+                            placeholder={t.warehouse.articles.detail.barcode}
                             className={clsx(
                                 'basis-4/12 bg-zinc-200 w-full outline-none p-2 placeholder-black rounded-md',
                                 !isNewArticle ? 'cursor-not-allowed' : ''
@@ -169,7 +174,7 @@ export default function Article() {
                         />
                         <div className="basis-4/12">
                             <label htmlFor="isActiveCheckbox" className="pr-2">
-                                Attivo
+                                {t.warehouse.articles.detail.active}
                             </label>
                             <input
                                 id="isActiveCheckbox"
@@ -180,7 +185,7 @@ export default function Article() {
                         </div>
                         <div className="basis-4/12">
                             <label htmlFor="reorderThreshold" className="pr-2">
-                                Soglia riordino
+                                {t.warehouse.articles.detail.reorderThreshold}
                             </label>
                             <input
                                 id="reorderThreshold"
