@@ -6,11 +6,11 @@ export default function Search({ searchItem }: { searchItem: Function }) {
     const [value, setValue] = useState<string>('');
 
     return (
-        <>
+        <div className="flex px-2 py-1 bg-zinc-200 w-full rounded-md outline-none focus-within:outline focus-within:outline-offset-2 focus-within:outline-sky-900">
             <input
                 type="text"
                 id="search-bar"
-                className="px-2 py-1 bg-zinc-200 w-full rounded-md outline-none focus:outline focus:outline-offset-2 focus:outline-sky-900"
+                className="bg-zinc-200 w-full outline-none"
                 autoFocus
                 value={value}
                 onChange={e => setValue(e.target.value)}
@@ -24,7 +24,7 @@ export default function Search({ searchItem }: { searchItem: Function }) {
                 <FontAwesomeIcon
                     icon={faCircleXmark}
                     size="lg"
-                    className="relative -left-9 top-1.5 pb-0.5 cursor-pointer"
+                    className="pt-0.5 text-gray-600 cursor-pointer  "
                     onClick={() => {
                         setValue('');
                         searchItem('');
@@ -32,6 +32,6 @@ export default function Search({ searchItem }: { searchItem: Function }) {
                     }}
                 />
             )}
-        </>
+        </div>
     );
 }
