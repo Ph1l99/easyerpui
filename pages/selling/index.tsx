@@ -155,7 +155,7 @@ export default function Selling() {
             <Head>
                 <title>{t.selling.pageTitle}</title>
             </Head>
-            <SectionTitle title={t.selling.pageTitle}></SectionTitle>
+            <SectionTitle title={t.selling.pageTitle} />
             {isEnabledSellButton && (
                 <div className="flex justify-end -mt-5 py-4 gap-1.5">
                     <input
