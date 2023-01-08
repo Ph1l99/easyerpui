@@ -135,6 +135,36 @@ export const en = {
             quantity: 'Quantity',
         },
     },
+    warehouse: {
+        articles: {
+            pageTitle: 'Articles',
+            buttonAdd: 'New article',
+            filter: {
+                filter: 'Filter',
+            },
+            row: {
+                print: {
+                    label: 'Print label',
+                },
+            },
+            detail: {
+                pageTitle: {
+                    newArticle: 'New article',
+                    article: 'Article',
+                },
+                print: {
+                    label: 'Print label',
+                },
+                title: 'Title',
+                description: 'Description',
+                barcode: 'Barcode',
+                active: 'Active',
+                reorderThreshold: 'Reorder threshold',
+            },
+        },
+        inventory: {},
+        transactions: {},
+    },
     genericComponents: {
         buttons: {
             save: 'Save',
