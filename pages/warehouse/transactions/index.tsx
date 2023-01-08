@@ -1,7 +1,6 @@
 import SectionTitle from '../../../components/layout/sectionTitle';
 import Head from 'next/head';
 import React, { useEffect, useState } from 'react';
-import SearchAdd from '../../../components/layout/appLayout/search/searchAdd';
 import useApi from '../../../components/useApi';
 import {
     EASY_ERP_TRANSACTION_REFERENCES_URL,
@@ -13,9 +12,11 @@ import NewTransactionModal from '../../../components/layout/warehouse/transactio
 import { PaginationResult, TransactionReference } from '../../../utils/types';
 import PaginatedContent from '../../../components/layout/appLayout/pagination/paginatedContent';
 import AddButton from '../../../components/layout/appLayout/search/addButton';
+import useTranslation from '../../../components/useTranslation';
 
 export default function Transactions() {
     const api = useApi();
+    const { t } = useTranslation();
 
     const [transactions, setTransactions] = useState<PaginationResult>();
     const [transactionReferences, setTransactionReferences] = useState<
@@ -58,13 +59,13 @@ export default function Transactions() {
     return (
         <>
             <Head>
-                <title>Movimentazioni</title>
+                <title>{t.warehouse.transactions.pageTitle}</title>
             </Head>
-            <SectionTitle title="Movimentazioni" />
+            <SectionTitle title={t.warehouse.transactions.pageTitle} />
             <div className="py-2 flex justify-end h-11 gap-1.5">
                 <AddButton
                     addItem={addNewTransaction}
-                    buttonTitle="Nuova movimentazione"
+                    buttonTitle={t.warehouse.transactions.buttonAdd}
                 />
             </div>
 
