@@ -125,6 +125,16 @@ export const en = {
             selectCustomer: 'Select',
         },
     },
+    selling: {
+        pageTitle: 'Selling',
+        buttons: {
+            save: 'Save selling',
+            cancel: 'Cancel selling',
+        },
+        row: {
+            quantity: 'Quantity',
+        },
+    },
     genericComponents: {
         buttons: {
             save: 'Save',
