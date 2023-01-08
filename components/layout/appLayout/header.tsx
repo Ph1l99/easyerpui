@@ -8,6 +8,7 @@ import {
     faRightFromBracket,
 } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
+import useTranslation from '../../useTranslation';
 
 export default function Header({
     isOpen,
@@ -17,6 +18,7 @@ export default function Header({
     onOpenStateChange: Function;
 }) {
     const { user, logout } = useAuth();
+    const { t } = useTranslation();
     const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
 
     return (
@@ -66,7 +68,9 @@ export default function Header({
                                     icon={faRightFromBracket}
                                     className="text-red-600"
                                 />
-                                <span className="h-full pl-2">Logout</span>
+                                <span className="h-full pl-2">
+                                    {t.header.profile.logout}
+                                </span>
                             </li>
                         </ul>
                     </div>
