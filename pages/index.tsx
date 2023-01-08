@@ -10,13 +10,13 @@ import {
 } from '../utils/types';
 import useApi from '../components/useApi';
 import { EASY_ERP_ARTICLES_URL, EASY_ERP_REPAIRS_URL } from '../utils/urls';
-import toast from 'react-hot-toast';
 import clsx from 'clsx';
 import useTranslation from '../components/useTranslation';
+import { toastOnErrorApiResponse } from '../utils/toast';
 
 export default function Home() {
     const { user, getProfileInfo } = useAuth();
-    const api = useApi();
+    const { authAxios } = useApi();
     const { t } = useTranslation();
 
     const [articlesDashboard, setArticlesDashboard] =
@@ -26,24 +26,30 @@ export default function Home() {
     );
 
     const loadArticlesDashboard = function () {
-        api.authAxios
+        authAxios
             .get(`${EASY_ERP_ARTICLES_URL}/dashboard`)
             .then(response => {
                 setArticlesDashboard(response.data);
             })
-            .catch(() => {
-                toast.error('Error'); // todo internationalization
+            .catch(error => {
+                toastOnErrorApiResponse(
+                    error,
+                    t.home.api.getArticleDashboardError
+                );
             });
     };
 
     const loadRepairsDashboard = function () {
-        api.authAxios
+        authAxios
             .get(`${EASY_ERP_REPAIRS_URL}dashboard`)
             .then(response => {
                 setRepairsDashboard(response.data);
             })
-            .catch(() => {
-                toast.error('Error'); // todo internationalization
+            .catch(error => {
+                toastOnErrorApiResponse(
+                    error,
+                    t.home.api.getRepairDashboardError
+                );
             });
     };
 

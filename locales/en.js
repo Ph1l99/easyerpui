@@ -3,6 +3,10 @@ export const en = {
         welcome: 'Welcome',
         repairs: 'Repairs',
         articles: 'Articles',
+        api: {
+            getArticleDashboardError: '',
+            getRepairDashboardError: '',
+        },
     },
     drawer: {
         home: 'Home',
