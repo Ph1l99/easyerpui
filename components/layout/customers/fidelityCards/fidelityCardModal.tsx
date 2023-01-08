@@ -5,6 +5,7 @@ import useApi from '../../../useApi';
 import { EASY_ERP_FIDELITY_CARD_BASE_URL } from '../../../../utils/urls';
 import toast from 'react-hot-toast';
 import { FidelityCard } from '../../../../utils/types';
+import useTranslation from '../../../useTranslation';
 
 export default function FidelityCardModal({
     isOpen,
@@ -16,6 +17,7 @@ export default function FidelityCardModal({
     fidelityCard: FidelityCard;
 }) {
     const api = useApi();
+    const { t } = useTranslation();
 
     const [isNewFidelityCard, setIsNewFidelityCard] = useState(false);
     const [localFidelityCard, setLocalFidelityCard] = useState(fidelityCard);
@@ -90,15 +92,16 @@ export default function FidelityCardModal({
                 onClose={revertChanges}
                 title={
                     isNewFidelityCard
-                        ? 'Aggiunta tessera fedeltà'
-                        : 'Tessera fedeltà numero ' + fidelityCard.barcode
+                        ? `${t.customers.fidelityCards.modal.title.newFidelityCard}`
+                        : `${t.customers.fidelityCards.modal.title.fidelityCard} ` +
+                          fidelityCard.barcode
                 }
             >
                 <div className="flex flex-row align-middle gap-1">
                     <input
                         type="text"
                         value={localFidelityCard.barcode}
-                        placeholder="Barcode"
+                        placeholder={t.customers.fidelityCards.modal.barcode}
                         readOnly={!isNewFidelityCard}
                         className={clsx(
                             'basis-8/12 bg-zinc-200 w-full outline-none p-2 placeholder-black rounded-md',
@@ -107,7 +110,9 @@ export default function FidelityCardModal({
                         onChange={e => changeFormValue(e, 'barcode')}
                     />
                     <div className="basis-4/12 p-2">
-                        <label htmlFor="isActiveCheckbox">Attiva</label>
+                        <label htmlFor="isActiveCheckbox">
+                            {t.customers.fidelityCards.modal.active}
+                        </label>
                         <input
                             id="isActiveCheckbox"
                             type="checkbox"
@@ -121,7 +126,7 @@ export default function FidelityCardModal({
                 <div className="flex flex-row justify-end mt-4">
                     <input
                         type="button"
-                        value="Salva"
+                        value={t.genericComponents.buttons.save}
                         className={clsx(
                             'basis-2/12 py-1 px-1 rounded-lg bg-green-600 text-white outline-none mr-4 text-center h-fit font-bold',
                             isEditing ? 'cursor-pointer' : 'cursor-not-allowed'
@@ -131,7 +136,7 @@ export default function FidelityCardModal({
                     />
                     <input
                         type="button"
-                        value="Annulla"
+                        value={t.genericComponents.buttons.cancel}
                         className="basis-2/12 py-1 px-1 rounded-lg bg-red-600 text-white outline-none text-center h-fit cursor-pointer font-bold"
                         onClick={revertChanges}
                     />
