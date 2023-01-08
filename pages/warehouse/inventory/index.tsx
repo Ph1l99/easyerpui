@@ -13,9 +13,11 @@ import InventoryRow from '../../../components/layout/warehouse/inventory/invento
 import PaginatedContent from '../../../components/layout/appLayout/pagination/paginatedContent';
 import { PaginationResult } from '../../../utils/types';
 import Search from '../../../components/layout/appLayout/search/search';
+import useTranslation from '../../../components/useTranslation';
 
 export default function Inventory() {
     const api = useApi();
+    const { t } = useTranslation();
 
     const [nextInventoryCycleDetails, setNextInventoryCycleDetails] = useState({
         last_inventory_cycle: '',
@@ -85,9 +87,9 @@ export default function Inventory() {
     return (
         <>
             <Head>
-                <title>Inventario</title>
+                <title>{t.warehouse.inventory.pageTitle}</title>
             </Head>
-            <SectionTitle title="Inventario"></SectionTitle>
+            <SectionTitle title={t.warehouse.inventory.pageTitle} />
             <div className="py-2 flex justify-between gap-1.5">
                 <Search searchItem={searchArticle} />
                 <input
@@ -98,15 +100,16 @@ export default function Inventory() {
                             ? 'cursor-not-allowed'
                             : ''
                     )}
-                    value="Storicizza inventario"
+                    value={t.warehouse.inventory.buttonCycle.title}
                     readOnly={!isEnabledInventoryCycleButton}
                     disabled={!isEnabledInventoryCycleButton}
                     title={
-                        'Ultima storicizzazione: ' +
+                        `${t.warehouse.inventory.buttonCycle.lastCycle}: ` +
                         new Date(
                             nextInventoryCycleDetails.last_inventory_cycle
                         ).toLocaleDateString() +
-                        '\nProssima storicizzazione: ' +
+                        '\n' +
+                        `${t.warehouse.inventory.buttonCycle.nextCycle}: ` +
                         new Date(
                             nextInventoryCycleDetails.next_inventory_cycle
                         ).toLocaleDateString()
