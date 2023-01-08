@@ -77,7 +77,7 @@ export default function FidelityCards() {
             ></SearchAdd>
             <div className="flex gap-4 text-white">
                 <span className="text-black font-semibold">
-                    `${t.customers.fidelityCards.filter.title}:`
+                    {`${t.customers.fidelityCards.filter.title}:`}
                 </span>
                 <FilterBoxGroup
                     items={fidelityCardFilters}

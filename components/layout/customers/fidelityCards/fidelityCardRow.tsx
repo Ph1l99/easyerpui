@@ -15,7 +15,7 @@ export default function FidelityCardRow({
         <div className="flex px-2 py-2 bg-zinc-200 rounded-lg justify-start items-center h-16 mt-3">
             <div className="flex basis-11/12 justify-start items-center px-4 h-full">
                 <div className="basis-7/12">
-                    `${t.customers.fidelityCards.row.cardIdentifier}: `
+                    {`${t.customers.fidelityCards.row.cardIdentifier}: `}
                     <span className="font-bold">{fidelityCard.barcode}</span>
                 </div>
                 <div className="basis-3/12">
