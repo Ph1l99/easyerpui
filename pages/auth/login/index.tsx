@@ -6,6 +6,7 @@ import { useAuth } from '../../../components/useAuth';
 import Head from 'next/head';
 import toast from 'react-hot-toast';
 import useTranslation from '../../../components/useTranslation';
+import { toastOnErrorApiResponse } from '../../../utils/toast';
 
 export default function Login() {
     const router = useRouter();
@@ -23,8 +24,8 @@ export default function Login() {
             .then(() => {
                 router.push('/');
             })
-            .catch(() => {
-                toast.error('Error while authenticating');
+            .catch(error => {
+                toastOnErrorApiResponse(error, t.auth.login.api.loginError);
             });
     };
 

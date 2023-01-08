@@ -6,6 +6,9 @@ import { EASY_ERP_LOGIN_URL } from '../../../utils/urls';
 import { useRouter } from 'next/router';
 import toast from 'react-hot-toast';
 import useTranslation from '../../../components/useTranslation';
+import { toastOnErrorApiResponse } from '../../../utils/toast';
+import { Simulate } from 'react-dom/test-utils';
+import error = Simulate.error;
 
 export default function Signup() {
     const router = useRouter();
@@ -39,8 +42,8 @@ export default function Signup() {
             .then(() => {
                 router.push(EASY_ERP_LOGIN_URL);
             })
-            .catch(() => {
-                toast.error('Error while registering to EasyErp');
+            .catch(error => {
+                toastOnErrorApiResponse(error, t.auth.signup.api.signupError);
             });
     };
 

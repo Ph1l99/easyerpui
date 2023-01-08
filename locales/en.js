@@ -33,6 +33,9 @@ export const en = {
             login: 'Login',
             signupMessage: "You don't have an account?",
             signup: 'Signup!',
+            api: {
+                loginError: 'Error during login',
+            },
         },
         signup: {
             pageTitle: 'Signup',
@@ -42,6 +45,9 @@ export const en = {
             email: 'Email',
             password: 'Password',
             signup: 'Signup',
+            api: {
+                signupError: 'Error during signup to EasyErp',
+            },
         },
     },
     customers: {
