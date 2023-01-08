@@ -11,9 +11,11 @@ import FidelityCardModal from '../../../components/layout/customers/fidelityCard
 import PaginatedContent from '../../../components/layout/appLayout/pagination/paginatedContent';
 import { FidelityCard, PaginationResult } from '../../../utils/types';
 import FilterBoxGroup from '../../../components/layout/appLayout/filtering/filterBoxGroup';
+import useTranslation from '../../../components/useTranslation';
 
 export default function FidelityCards() {
     const api = useApi();
+    const { t } = useTranslation();
 
     const [fidelityCards, setFidelityCards] = useState<PaginationResult>();
     const [isOpenModalFidelityCard, setIsOpenModalFidelityCard] =
@@ -65,16 +67,18 @@ export default function FidelityCards() {
     return (
         <>
             <Head>
-                <title>Tessere Fedeltà</title>
+                <title>{t.customers.fidelityCards.pageTitle}</title>
             </Head>
-            <SectionTitle title="Tessere fedeltà" />
+            <SectionTitle title={t.customers.fidelityCards.pageTitle} />
             <SearchAdd
                 searchItem={searchFidelityCard}
                 addItem={() => openModalFidelityCard(selectedFidelityCard)}
-                buttonTitle="Nuova tessera fedeltà"
+                buttonTitle={t.customers.fidelityCards.buttonAdd}
             ></SearchAdd>
             <div className="flex gap-4 text-white">
-                <span className="text-black font-semibold">Filtra per:</span>
+                <span className="text-black font-semibold">
+                    `${t.customers.fidelityCards.filter.title}:`
+                </span>
                 <FilterBoxGroup
                     items={fidelityCardFilters}
                     search={searchFidelityCardFromFilters}
