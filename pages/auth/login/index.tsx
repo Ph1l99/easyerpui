@@ -35,7 +35,7 @@ export default function Login() {
     return (
         <>
             <Head>
-                <title>Login</title>
+                <title>{t.auth.login.pageTitle}</title>
             </Head>
             <div className="flex flex-col items-center justify-center h-screen gap-4">
                 <h1 className="text-upper text-sky-900 font-bold text-3xl">
