@@ -35,7 +35,7 @@ export default function RepairRow({
                 </div>
                 <div className="basis-3/12 font-bold">
                     <span className="font-normal">
-                        `${t.repairs.row.delivery}: `
+                        {`${t.repairs.row.delivery}: `}
                     </span>
                     {repair.delivery_date}
                 </div>
