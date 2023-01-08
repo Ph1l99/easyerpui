@@ -111,7 +111,7 @@ export default function Repairs() {
 
             <div className="flex gap-4 text-white">
                 <span className="text-black font-semibold">
-                    {t.repairs.filter.title}
+                    {`${t.repairs.filter.title}: `}
                 </span>
                 <FilterBoxGroup
                     items={repairStatuses}

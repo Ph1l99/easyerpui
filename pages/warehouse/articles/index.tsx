@@ -82,7 +82,7 @@ export default function Articles() {
             />
             <div className="flex gap-4 text-white">
                 <span className="text-black font-semibold">
-                    {t.warehouse.articles.filter.filter}
+                    {`${t.warehouse.articles.filter.filter}: `}
                 </span>
                 <FilterBoxGroup
                     items={articleFilters}
