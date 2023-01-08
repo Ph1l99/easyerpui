@@ -263,5 +263,9 @@ export const en = {
             save: 'Save',
             cancel: 'Cancel',
         },
+        pagination: {
+            nextPage: 'Next page',
+            previousPage: 'Previous page',
+        },
     },
 };

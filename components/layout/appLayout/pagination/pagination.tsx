@@ -5,6 +5,7 @@ import {
     faChevronRight,
 } from '@fortawesome/free-solid-svg-icons';
 import clsx from 'clsx';
+import useTranslation from '../../../useTranslation';
 
 type Props = {
     hasPreviousPage: boolean;
@@ -19,6 +20,8 @@ export default function Pagination({
     handlePreviousPage,
     handleNextPage,
 }: Props) {
+    const { t } = useTranslation();
+
     const [currentPage, setCurrentPage] = useState(1);
 
     const goToPreviousPage = function () {
@@ -34,13 +37,12 @@ export default function Pagination({
         }
     };
 
-    // prime tre pagine e ultime tre pagine da dove mi trovo in questo momento, se presenti
     return (
         <div className="flex justify-center items-center p-4 gap-3">
             <FontAwesomeIcon
                 icon={faChevronLeft}
                 size="lg"
-                title="Pagina precedente"
+                title={t.genericComponents.pagination.previousPage}
                 className={clsx(
                     hasPreviousPage
                         ? 'cursor-pointer'
@@ -52,7 +54,7 @@ export default function Pagination({
             <FontAwesomeIcon
                 icon={faChevronRight}
                 size="lg"
-                title="Pagina successiva"
+                title={t.genericComponents.pagination.nextPage}
                 className={clsx(
                     hasNextPage
                         ? 'cursor-pointer'
