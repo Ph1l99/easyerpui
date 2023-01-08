@@ -283,6 +283,13 @@ export const en = {
                 selectReference: 'Select reference',
                 quantity: 'Quantity',
                 available: 'Available',
+                articleAlreadyAddedMessage:
+                    'Article already added to the transaction',
+                api: {
+                    getArticleError: 'Unable to retrieve article info',
+                    createTransactionSuccess: '',
+                    createTransactionError: '',
+                },
             },
             api: {
                 getTransactionsError: 'Error while loading transactions',

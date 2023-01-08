@@ -11,8 +11,11 @@ import {
     EASY_ERP_TRANSACTIONS_URL,
 } from '../../../../utils/urls';
 import toast from 'react-hot-toast';
-import { useAuth } from '../../../useAuth';
 import useTranslation from '../../../useTranslation';
+import {
+    toastOnErrorApiResponse,
+    toastOnSuccessApiResponse,
+} from '../../../../utils/toast';
 
 export default function NewTransactionModal({
     isOpen,
@@ -23,7 +26,7 @@ export default function NewTransactionModal({
     onClose: Function;
     transactionReferences: Array<TransactionReference>;
 }) {
-    const api = useApi();
+    const { authAxios } = useApi();
     const { t } = useTranslation();
 
     const [articlesToBeTransacted, setArticlesToBeTransacted] = useState<
@@ -68,23 +71,29 @@ export default function NewTransactionModal({
             });
         });
 
-        api.authAxios
+        authAxios
             .post(`${EASY_ERP_TRANSACTIONS_URL}/-1`, {
                 details: transactionDetails,
             })
-            .then(() => {
-                toast.success('Transaction created succesfully');
+            .then(response => {
+                toastOnSuccessApiResponse(
+                    response,
+                    t.warehouse.transactions.modal.api.createTransactionSuccess
+                );
                 rollbackChanges();
                 closeModal(true);
             })
-            .catch(() => {
-                toast.error('Error wile creating transaction');
+            .catch(error => {
+                toastOnErrorApiResponse(
+                    error,
+                    t.warehouse.transactions.modal.api.createTransactionError
+                );
             });
     };
 
     const manageArticle = function () {
         if (lastTransactionArticle !== '') {
-            api.authAxios
+            authAxios
                 .get(`${EASY_ERP_ARTICLES_URL}/${lastTransactionArticle}`)
                 .then(response => {
                     if (
@@ -92,7 +101,10 @@ export default function NewTransactionModal({
                             return article.barcode === response.data.barcode;
                         }).length > 0
                     ) {
-                        toast.error('Article already added to transaction!');
+                        toast.error(
+                            t.warehouse.transactions.modal
+                                .articleAlreadyAddedMessage
+                        );
                     } else {
                         setArticlesToBeTransacted(prevState => [
                             ...prevState,
@@ -101,8 +113,11 @@ export default function NewTransactionModal({
                     }
                     setLastTransactionArticle('');
                 })
-                .catch(() => {
-                    toast.error('Unable to retrieve article info');
+                .catch(error => {
+                    toastOnErrorApiResponse(
+                        error,
+                        t.warehouse.transactions.modal.api.getArticleError
+                    );
                 });
         }
     };
