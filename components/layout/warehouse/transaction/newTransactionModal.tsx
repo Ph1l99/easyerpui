@@ -12,6 +12,7 @@ import {
 } from '../../../../utils/urls';
 import toast from 'react-hot-toast';
 import { useAuth } from '../../../useAuth';
+import useTranslation from '../../../useTranslation';
 
 export default function NewTransactionModal({
     isOpen,
@@ -23,6 +24,7 @@ export default function NewTransactionModal({
     transactionReferences: Array<TransactionReference>;
 }) {
     const api = useApi();
+    const { t } = useTranslation();
 
     const [articlesToBeTransacted, setArticlesToBeTransacted] = useState<
         TransactionArticle[]
@@ -108,7 +110,7 @@ export default function NewTransactionModal({
     return (
         <>
             <Modal
-                title="Nuova movimentazione"
+                title={t.warehouse.transactions.modal.title}
                 isOpen={isOpen}
                 onClose={() => {
                     rollbackChanges();
@@ -144,7 +146,10 @@ export default function NewTransactionModal({
                                         }}
                                     >
                                         <option value="">
-                                            Seleziona una causale
+                                            {
+                                                t.warehouse.transactions.modal
+                                                    .selectReference
+                                            }
                                         </option>
                                         {transactionReferences.map(
                                             transactionReference => (
@@ -163,7 +168,10 @@ export default function NewTransactionModal({
                                         <>
                                             <div className="basis-3/12">
                                                 <label htmlFor="articleQuantity">
-                                                    Quantità
+                                                    {
+                                                        t.warehouse.transactions
+                                                            .modal.quantity
+                                                    }
                                                 </label>
                                                 <input
                                                     id="articleQuantity"
@@ -183,7 +191,7 @@ export default function NewTransactionModal({
                                                 />
                                             </div>
                                             <div className="basis-3/12">
-                                                Disponibile{' '}
+                                                {`${t.warehouse.transactions.modal.available} `}
                                                 <span className="font-bold">
                                                     {
                                                         transactedArticle.current_availability
