@@ -70,6 +70,19 @@ export const en = {
                 assignFidelityCard: 'Assign new fidelity card',
                 newFidelityCard: 'New fidelity card',
                 selectNewFidelityCard: 'Select new fidelity card',
+                api: {
+                    createCustomerSuccess: '',
+                    createCustomerError: '',
+                    updateCustomerSuccess: '',
+                    updateCustomerError: '',
+                    getFidelityCardError: 'Error while loading fidelity cards',
+                    getCustomerInfoError: '',
+                },
+            },
+            api: {
+                deleteCustomerSuccess: 'Deleted customer',
+                deleteCustomerError: 'Error while deleting customer',
+                getCustomersError: 'Error while loading customers',
             },
         },
         fidelityCards: {

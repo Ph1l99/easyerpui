@@ -23,7 +23,7 @@ export default function CustomerRow({
                 <div className="basis-3/12">{customer.last_name}</div>
                 <div className="basis-3/12">{customer.first_name}</div>
                 <div className="basis-3/12">
-                    {t.customers.customer.row.fidelityCard}:{' '}
+                    {`${t.customers.customer.row.fidelityCard}: `}
                     <span className="font-bold">
                         {customer.fidelity_card ? customer.fidelity_card : '-'}
                     </span>
@@ -38,7 +38,7 @@ export default function CustomerRow({
                         e.stopPropagation();
                         deleteCustomer(customer.id);
                     }}
-                ></FontAwesomeIcon>
+                />
             </div>
         </div>
     );

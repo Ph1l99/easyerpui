@@ -9,14 +9,17 @@ import {
 import SearchAdd from '../../../components/layout/appLayout/search/searchAdd';
 import useApi from '../../../components/useApi';
 import CustomerRow from '../../../components/layout/customers/customer/customerRow';
-import toast from 'react-hot-toast';
 import PaginatedContent from '../../../components/layout/appLayout/pagination/paginatedContent';
 import { PaginationResult } from '../../../utils/types';
 import useTranslation from '../../../components/useTranslation';
+import {
+    toastOnErrorApiResponse,
+    toastOnSuccessApiResponse,
+} from '../../../utils/toast';
 
 export default function Customer() {
     const router = useRouter();
-    const api = useApi();
+    const { authAxios } = useApi();
     const { t } = useTranslation();
 
     const [customers, setCustomers] = useState<PaginationResult>();
@@ -37,22 +40,33 @@ export default function Customer() {
 
     const deleteCustomer = function (id: Number) {
         if (id) {
-            api.authAxios
+            authAxios
                 .delete(`${EASY_ERP_CUSTOMER_BASE_URL}/${id}`)
-                .then(() => {
-                    toast.success('Customer deleted succesfully');
+                .then(response => {
+                    toastOnSuccessApiResponse(
+                        response,
+                        t.customers.customer.api.deleteCustomerSuccess
+                    );
                     loadCustomers(`${EASY_ERP_CUSTOMERS_BASE_URL}`);
                 })
-                .catch(() => {});
+                .catch(error => {
+                    toastOnErrorApiResponse(
+                        error,
+                        t.customers.customer.api.deleteCustomerError
+                    );
+                });
         }
     };
 
     const loadCustomers = function (url: string) {
-        api.authAxios
+        authAxios
             .get(url)
             .then(response => setCustomers(response.data))
-            .catch(() => {
-                toast.error('Error while loading customers');
+            .catch(error => {
+                toastOnErrorApiResponse(
+                    error,
+                    t.customers.customer.api.getCustomersError
+                );
             });
     };
 

@@ -6,16 +6,17 @@ import {
     EASY_ERP_FIDELITY_CARD_BASE_URL,
 } from '../../../utils/urls';
 import Head from 'next/head';
-import toast from 'react-hot-toast';
 import { CustomerDetail, FidelityCard } from '../../../utils/types';
-import { toastOnErrorApiResponse } from '../../../utils/toast';
+import {
+    toastOnErrorApiResponse,
+    toastOnSuccessApiResponse,
+} from '../../../utils/toast';
 import useTranslation from '../../../components/useTranslation';
 
 export default function Customer() {
     const router = useRouter();
-    const api = useApi();
+    const { authAxios } = useApi();
     const { t } = useTranslation();
-
     const { id } = router.query;
 
     const [customer, setCustomer] = useState<CustomerDetail>({});
@@ -52,40 +53,62 @@ export default function Customer() {
             customer!.fidelity_card = newFidelityCard;
         }
 
-        if (isNewCustomer) {
-            let newCustomer = customer;
-            delete newCustomer.id;
-            api.authAxios
-                .post(`${EASY_ERP_CUSTOMER_BASE_URL}/-1`, newCustomer)
-                .then(response => {
-                    toast.success('Customer created succesfully');
-                    router.replace(
-                        `${EASY_ERP_CUSTOMER_BASE_URL}/${response.data.id}`
-                    );
-                })
-                .catch(error => {
-                    toastOnErrorApiResponse(error);
-                });
-        } else {
-            api.authAxios
-                .put(`${EASY_ERP_CUSTOMER_BASE_URL}/${id}`, customer)
-                .then(() => {
-                    toast.success('Customer updated succesfully');
-                    setIsEditing(false);
-                });
-        }
+        isNewCustomer ? createCustomer() : updateCustomer();
+    };
+
+    const updateCustomer = function () {
+        authAxios
+            .put(`${EASY_ERP_CUSTOMER_BASE_URL}/${id}`, customer)
+            .then(response => {
+                toastOnSuccessApiResponse(
+                    response,
+                    t.customers.customer.detail.api.updateCustomerSuccess
+                );
+                setIsEditing(false);
+            })
+            .catch(error => {
+                toastOnErrorApiResponse(
+                    error,
+                    t.customers.customer.detail.api.updateCustomerError
+                );
+            });
+    };
+
+    const createCustomer = function () {
+        let newCustomer = customer;
+        delete newCustomer.id;
+        authAxios
+            .post(`${EASY_ERP_CUSTOMER_BASE_URL}/-1`, newCustomer)
+            .then(response => {
+                toastOnSuccessApiResponse(
+                    response,
+                    t.customers.customer.detail.api.createCustomerSuccess
+                );
+                router.replace(
+                    `${EASY_ERP_CUSTOMER_BASE_URL}/${response.data.id}`
+                );
+            })
+            .catch(error => {
+                toastOnErrorApiResponse(
+                    error,
+                    t.customers.customer.detail.api.createCustomerError
+                );
+            });
     };
 
     const loadAllActiveAndAvailableFidelityCards = function () {
-        api.authAxios
+        authAxios
             .get(
                 `${EASY_ERP_FIDELITY_CARD_BASE_URL}?is_active=true&is_available=true`
             )
             .then(response => {
                 setFidelityCards(response.data.results);
             })
-            .catch(() => {
-                toast.error('Error while loading fidelity cards');
+            .catch(error => {
+                toastOnErrorApiResponse(
+                    error,
+                    t.customers.customer.detail.api.getFidelityCardError
+                );
             });
     };
 
@@ -96,17 +119,21 @@ export default function Customer() {
             setIsNewCustomer(true);
         } else if (id !== undefined) {
             setIsNewCustomer(false);
-            api.authAxios
+            authAxios
                 .get(`${EASY_ERP_CUSTOMER_BASE_URL}/${id}`)
                 .then(response => {
                     setCustomer(response.data);
                     setBeforeUpdateCustomer(response.data);
                 })
-                .catch(() => {
-                    toast.error('Error while retrieving customer info');
+                .catch(error => {
+                    toastOnErrorApiResponse(
+                        error,
+                        t.customers.customer.detail.api.getCustomerInfoError
+                    );
                 });
         }
     }, [id]);
+
     return (
         <>
             <Head>
