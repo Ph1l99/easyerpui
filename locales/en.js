@@ -71,12 +71,12 @@ export const en = {
                 newFidelityCard: 'New fidelity card',
                 selectNewFidelityCard: 'Select new fidelity card',
                 api: {
-                    createCustomerSuccess: '',
-                    createCustomerError: '',
-                    updateCustomerSuccess: '',
-                    updateCustomerError: '',
+                    createCustomerSuccess: 'Customer created',
+                    createCustomerError: 'Error during customer creation',
+                    updateCustomerSuccess: 'Customer updated',
+                    updateCustomerError: 'Error during customer update',
                     getFidelityCardError: 'Error while loading fidelity cards',
-                    getCustomerInfoError: '',
+                    getCustomerInfoError: 'Error while loading customer info',
                 },
             },
             api: {
@@ -106,6 +106,17 @@ export const en = {
                 },
                 barcode: 'Barcode',
                 active: 'Active',
+                api: {
+                    createFidelityCardSuccess: 'Fidelity card created',
+                    createFidelityCardError:
+                        'Error while creating fidelity card',
+                    updateFidelityCardSuccess: 'Fidelity card updated',
+                    updateFidelityCardError:
+                        'Error while updating fidelity card',
+                },
+            },
+            api: {
+                loadFidelityCardsError: 'Error while loading fidelity cards',
             },
         },
     },

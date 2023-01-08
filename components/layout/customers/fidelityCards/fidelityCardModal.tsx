@@ -6,6 +6,10 @@ import { EASY_ERP_FIDELITY_CARD_BASE_URL } from '../../../../utils/urls';
 import toast from 'react-hot-toast';
 import { FidelityCard } from '../../../../utils/types';
 import useTranslation from '../../../useTranslation';
+import {
+    toastOnErrorApiResponse,
+    toastOnSuccessApiResponse,
+} from '../../../../utils/toast';
 
 export default function FidelityCardModal({
     isOpen,
@@ -16,7 +20,7 @@ export default function FidelityCardModal({
     onClose: Function;
     fidelityCard: FidelityCard;
 }) {
-    const api = useApi();
+    const { authAxios } = useApi();
     const { t } = useTranslation();
 
     const [isNewFidelityCard, setIsNewFidelityCard] = useState(false);
@@ -28,33 +32,51 @@ export default function FidelityCardModal({
     };
 
     const saveFidelityCard = function () {
-        if (isNewFidelityCard) {
-            api.authAxios
-                .post(
-                    `${EASY_ERP_FIDELITY_CARD_BASE_URL}/${localFidelityCard.barcode}`,
-                    localFidelityCard
-                )
-                .then(() => {
-                    toast.success('Fidelity card created succesfully');
-                    closeModal(true);
-                })
-                .catch(() => {
-                    toast.error('Error while creating fidelity card');
-                });
-        } else {
-            api.authAxios
-                .put(
-                    `${EASY_ERP_FIDELITY_CARD_BASE_URL}/${localFidelityCard.barcode}`,
-                    localFidelityCard
-                )
-                .then(() => {
-                    toast.success('Fidelity card updated succesfully');
-                    closeModal(true);
-                })
-                .catch(() => {
-                    toast.error('Error while updating fidelity card');
-                });
-        }
+        isNewFidelityCard ? createFidelityCard() : updateFidelityCard();
+    };
+
+    const createFidelityCard = function () {
+        authAxios
+            .post(
+                `${EASY_ERP_FIDELITY_CARD_BASE_URL}/${localFidelityCard.barcode}`,
+                localFidelityCard
+            )
+            .then(response => {
+                toastOnSuccessApiResponse(
+                    response,
+                    t.customers.fidelityCards.modal.api
+                        .createFidelityCardSuccess
+                );
+                closeModal(true);
+            })
+            .catch(error => {
+                toastOnErrorApiResponse(
+                    error,
+                    t.customers.fidelityCards.modal.api.createFidelityCardError
+                );
+            });
+    };
+
+    const updateFidelityCard = function () {
+        authAxios
+            .put(
+                `${EASY_ERP_FIDELITY_CARD_BASE_URL}/${localFidelityCard.barcode}`,
+                localFidelityCard
+            )
+            .then(response => {
+                toastOnSuccessApiResponse(
+                    response,
+                    t.customers.fidelityCards.modal.api
+                        .updateFidelityCardSuccess
+                );
+                closeModal(true);
+            })
+            .catch(error => {
+                toastOnErrorApiResponse(
+                    error,
+                    t.customers.fidelityCards.modal.api.updateFidelityCardError
+                );
+            });
     };
 
     const revertChanges = function () {

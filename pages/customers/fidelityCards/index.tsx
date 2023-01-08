@@ -5,13 +5,12 @@ import useApi from '../../../components/useApi';
 import { EASY_ERP_FIDELITY_CARD_BASE_URL } from '../../../utils/urls';
 import FidelityCardRow from '../../../components/layout/customers/fidelityCards/fidelityCardRow';
 import SearchAdd from '../../../components/layout/appLayout/search/searchAdd';
-import toast from 'react-hot-toast';
-import Modal from '../../../components/layout/modal';
 import FidelityCardModal from '../../../components/layout/customers/fidelityCards/fidelityCardModal';
 import PaginatedContent from '../../../components/layout/appLayout/pagination/paginatedContent';
 import { FidelityCard, PaginationResult } from '../../../utils/types';
 import FilterBoxGroup from '../../../components/layout/appLayout/filtering/filterBoxGroup';
 import useTranslation from '../../../components/useTranslation';
+import { toastOnErrorApiResponse } from '../../../utils/toast';
 
 export default function FidelityCards() {
     const api = useApi();
@@ -37,8 +36,11 @@ export default function FidelityCards() {
             .then(response => {
                 setFidelityCards(response.data);
             })
-            .catch(() => {
-                toast.error('Error while retrieving fidelity cards');
+            .catch(error => {
+                toastOnErrorApiResponse(
+                    error,
+                    t.customers.fidelityCards.api.loadFidelityCardsError
+                );
             });
     };
 
