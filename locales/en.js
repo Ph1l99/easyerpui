@@ -162,7 +162,17 @@ export const en = {
                 reorderThreshold: 'Reorder threshold',
             },
         },
-        inventory: {},
+        inventory: {
+            pageTitle: 'Inventory',
+            buttonCycle: {
+                title: 'Execute inventory cycle',
+                lastCycle: '',
+                nextCycle: '',
+            },
+            row: {
+                currentAvailability: 'Current availability',
+            },
+        },
         transactions: {},
     },
     genericComponents: {
