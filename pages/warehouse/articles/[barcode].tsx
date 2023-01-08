@@ -9,10 +9,14 @@ import Head from 'next/head';
 import toast from 'react-hot-toast';
 import { ArticleDetail } from '../../../utils/types';
 import useTranslation from '../../../components/useTranslation';
+import {
+    toastOnErrorApiResponse,
+    toastOnSuccessApiResponse,
+} from '../../../utils/toast';
 
 export default function Article() {
     const router = useRouter();
-    const api = useApi();
+    const { authAxios } = useApi();
     const { t } = useTranslation();
     const { barcode } = router.query;
 
@@ -35,35 +39,50 @@ export default function Article() {
     };
 
     const saveArticle = function () {
-        if (isNewArticle) {
-            let articleToBeSaved = article;
+        isNewArticle ? createArticle() : updateArticle();
+    };
 
-            // If new article and no barcode is provided, set barcode to -1
-            if (article.barcode == '') {
-                articleToBeSaved.barcode = '-1';
-            }
+    const updateArticle = function () {
+        authAxios
+            .put(`${EASY_ERP_ARTICLES_URL}/${barcode}`, article)
+            .then(response => {
+                toastOnSuccessApiResponse(
+                    response,
+                    t.warehouse.articles.detail.api.updateArticleSuccess
+                );
+            })
+            .catch(error => {
+                toastOnErrorApiResponse(
+                    error,
+                    t.warehouse.articles.detail.api.updateArticleError
+                );
+            });
+    };
 
-            api.authAxios
-                .post(`${EASY_ERP_ARTICLES_URL}/-1`, articleToBeSaved)
-                .then(response => {
-                    toast.success('Article created succesfully');
-                    router.replace(
-                        `${EASY_ERP_ARTICLES_URL}/${response.data.barcode}`
-                    );
-                })
-                .catch(() => {
-                    toast.error('Error while creating article');
-                });
-        } else {
-            api.authAxios
-                .put(`${EASY_ERP_ARTICLES_URL}/${barcode}`, article)
-                .then(() => {
-                    toast.success('Article updated succesfully');
-                })
-                .catch(() => {
-                    toast.error('Error while updating article');
-                });
+    const createArticle = function () {
+        let articleToBeSaved = article;
+        // If new article and no barcode is provided, set barcode to -1
+        if (article.barcode == '') {
+            articleToBeSaved.barcode = '-1';
         }
+
+        authAxios
+            .post(`${EASY_ERP_ARTICLES_URL}/-1`, articleToBeSaved)
+            .then(response => {
+                toastOnSuccessApiResponse(
+                    response,
+                    t.warehouse.articles.detail.api.createArticleSuccess
+                );
+                router.replace(
+                    `${EASY_ERP_ARTICLES_URL}/${response.data.barcode}`
+                );
+            })
+            .catch(error => {
+                toastOnErrorApiResponse(
+                    error,
+                    t.warehouse.articles.detail.api.createArticleError
+                );
+            });
     };
 
     const revertChanges = function () {
@@ -73,13 +92,19 @@ export default function Article() {
 
     const printArticleLabel = function () {
         if (barcode) {
-            api.authAxios
+            authAxios
                 .post(`${EASY_ERP_ARTICLES_URL}/${barcode}/label`)
-                .then(() => {
-                    toast.success('Label printed succesfully');
+                .then(response => {
+                    toastOnSuccessApiResponse(
+                        response,
+                        t.warehouse.articles.detail.api.printLabelSuccess
+                    );
                 })
-                .catch(() => {
-                    toast.error('Error while printing label');
+                .catch(error => {
+                    toastOnErrorApiResponse(
+                        error,
+                        t.warehouse.articles.detail.api.printLabelError
+                    );
                 });
         }
     };
@@ -90,14 +115,17 @@ export default function Article() {
             setIsNewArticle(true);
         } else if (barcode !== undefined) {
             setIsNewArticle(false);
-            api.authAxios
+            authAxios
                 .get(`${EASY_ERP_ARTICLES_URL}/${barcode}`)
                 .then(response => {
                     setArticle(response.data);
                     setBeforeUpdateArticle(response.data);
                 })
-                .catch(() => {
-                    toast.error('Error while retrieving article info');
+                .catch(error => {
+                    toastOnErrorApiResponse(
+                        error,
+                        t.warehouse.articles.detail.api.getArticleError
+                    );
                 });
         }
     }, [barcode]);

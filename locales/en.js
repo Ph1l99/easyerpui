@@ -225,6 +225,15 @@ export const en = {
                 barcode: 'Barcode',
                 active: 'Active',
                 reorderThreshold: 'Reorder threshold',
+                api: {
+                    getArticleError: 'Error while loading article',
+                    printLabelError: 'Error while printing label',
+                    printLabelSuccess: 'Label printed',
+                    createArticleSuccess: 'Article created',
+                    createArticleError: 'Error while creating article',
+                    updateArticleSuccess: 'Article updated',
+                    updateArticleError: 'Error while updating article',
+                },
             },
             api: {
                 getArticlesError: 'Error while loading articles',
