@@ -9,10 +9,12 @@ import Head from 'next/head';
 import toast from 'react-hot-toast';
 import { CustomerDetail, FidelityCard } from '../../../utils/types';
 import { toastOnErrorApiResponse } from '../../../utils/toast';
+import useTranslation from '../../../components/useTranslation';
 
 export default function Customer() {
     const router = useRouter();
     const api = useApi();
+    const { t } = useTranslation();
 
     const { id } = router.query;
 
@@ -109,12 +111,15 @@ export default function Customer() {
         <>
             <Head>
                 <title>
-                    {isNewCustomer ? 'Nuovo cliente' : `Cliente: ${id}`}
+                    {isNewCustomer
+                        ? `${t.customers.customer.detail.pageTitle.newCustomer}`
+                        : `${t.customers.customer.detail.pageTitle.customer}: ${id}`}
                 </title>
             </Head>
             <div className="flex flex-col p-8 h-full">
                 <div className="basis-1 /12 font-bold text-xl">
-                    Cliente: {isNewCustomer ? '-' : id}
+                    {t.customers.customer.detail.pageTitle.customer}:{' '}
+                    {isNewCustomer ? '-' : id}
                 </div>
 
                 <div className="basis-1/12 flex justify-end">
@@ -122,13 +127,13 @@ export default function Customer() {
                         <>
                             <input
                                 type="button"
-                                value="Salva"
+                                value={t.genericComponents.buttons.save}
                                 className="basis-1/12 py-1 rounded-lg bg-green-600 text-white outline-none mr-4 text-center h-fit cursor-pointer font-bold"
                                 onClick={saveCustomer}
                             />
                             <input
                                 type="button"
-                                value="Annulla"
+                                value={t.genericComponents.buttons.cancel}
                                 className="basis-1/12 py-1 rounded-lg bg-red-600 text-white outline-none text-center h-fit cursor-pointer font-bold"
                                 onClick={revertChanges}
                             />
@@ -140,7 +145,7 @@ export default function Customer() {
                         <input
                             id="first_name"
                             type="text"
-                            placeholder="Nome"
+                            placeholder={t.customers.customer.detail.firstName}
                             className="basis-4/12 bg-zinc-200 w-full outline-none p-2 placeholder-black rounded-md"
                             value={customer?.first_name}
                             onChange={e => changeFormValue(e, 'first_name')}
@@ -148,7 +153,7 @@ export default function Customer() {
                         <input
                             id="last_name"
                             type="text"
-                            placeholder="Cognome"
+                            placeholder={t.customers.customer.detail.lastName}
                             className="basis-4/12 bg-zinc-200 w-full outline-none p-2 placeholder-black rounded-md"
                             value={customer?.last_name}
                             onChange={e => changeFormValue(e, 'last_name')}
@@ -156,7 +161,7 @@ export default function Customer() {
                         <input
                             id="phone"
                             type="text"
-                            placeholder="Recapito"
+                            placeholder={t.customers.customer.detail.phone}
                             className="basis-4/12 bg-zinc-200 w-full outline-none p-2 placeholder-black rounded-md"
                             value={customer?.phone}
                             onChange={e => changeFormValue(e, 'phone')}
@@ -167,7 +172,9 @@ export default function Customer() {
                             id="oldFidelityCard"
                             type="text"
                             readOnly
-                            placeholder="Tessera fedeltà"
+                            placeholder={
+                                t.customers.customer.detail.fidelityCard
+                            }
                             className="basis-4/12 bg-zinc-200 w-full outline-none p-2 placeholder-black rounded-md cursor-not-allowed"
                             value={customer?.fidelity_card}
                         />
@@ -176,7 +183,7 @@ export default function Customer() {
                                 htmlFor="isNewFidelityCardCheckbox"
                                 className="pr-2"
                             >
-                                Assegna nuova tessera fedeltà
+                                {t.customers.customer.detail.assignFidelityCard}
                             </label>
                             <input
                                 id="isNewFidelityCardCheckbox"
@@ -193,7 +200,9 @@ export default function Customer() {
                         {assignNewFidelityCard && (
                             <select
                                 id="fidelity_card"
-                                placeholder="Nuova tessera fedeltà"
+                                placeholder={
+                                    t.customers.customer.detail.newFidelityCard
+                                }
                                 className="basis-4/12 bg-zinc-200 w-full outline-none p-2 placeholder-black rounded-md"
                                 value={newFidelityCard}
                                 onChange={e =>
@@ -201,7 +210,10 @@ export default function Customer() {
                                 }
                             >
                                 <option value="">
-                                    Seleziona una carta fedeltà
+                                    {
+                                        t.customers.customer.detail
+                                            .selectNewFidelityCard
+                                    }
                                 </option>
                                 {fidelityCards!.map(fidelityCard => (
                                     <option
