@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { ListCustomer } from '../../../../utils/types';
+import useTranslation from '../../../useTranslation';
 
 export default function CustomerRow({
     customer,
@@ -11,6 +12,7 @@ export default function CustomerRow({
     navigateToCustomerPage: Function;
     deleteCustomer: Function;
 }) {
+    const { t } = useTranslation();
     return (
         <div
             className="flex px-2 py-2 bg-zinc-200 rounded-lg justify-start items-center cursor-pointer h-16 mt-3"
@@ -21,7 +23,7 @@ export default function CustomerRow({
                 <div className="basis-3/12">{customer.last_name}</div>
                 <div className="basis-3/12">{customer.first_name}</div>
                 <div className="basis-3/12">
-                    Tessera fedeltà:{' '}
+                    {t.customers.customer.row.fidelityCard}:{' '}
                     <span className="font-bold">
                         {customer.fidelity_card ? customer.fidelity_card : '-'}
                     </span>
@@ -31,7 +33,7 @@ export default function CustomerRow({
                 <FontAwesomeIcon
                     className="mx-2 fa-lg text-red-600"
                     icon={faTrash}
-                    title="Elimina cliente"
+                    title={t.customers.customer.row.deleteButton}
                     onClick={e => {
                         e.stopPropagation();
                         deleteCustomer(customer.id);

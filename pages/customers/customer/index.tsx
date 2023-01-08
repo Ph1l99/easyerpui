@@ -12,10 +12,12 @@ import CustomerRow from '../../../components/layout/customers/customer/customerR
 import toast from 'react-hot-toast';
 import PaginatedContent from '../../../components/layout/appLayout/pagination/paginatedContent';
 import { PaginationResult } from '../../../utils/types';
+import useTranslation from '../../../components/useTranslation';
 
 export default function Customer() {
     const router = useRouter();
     const api = useApi();
+    const { t } = useTranslation();
 
     const [customers, setCustomers] = useState<PaginationResult>();
 
@@ -61,13 +63,13 @@ export default function Customer() {
     return (
         <>
             <Head>
-                <title>Clienti</title>
+                <title>{t.customers.customer.pageTitle}</title>
             </Head>
-            <SectionTitle title="Clienti" />
+            <SectionTitle title={t.customers.customer.pageTitle} />
             <SearchAdd
                 addItem={addNewCustomer}
                 searchItem={searchCustomer}
-                buttonTitle="Nuovo cliente"
+                buttonTitle={t.customers.customer.buttonAdd}
             />
             <PaginatedContent
                 next={customers?.next}
