@@ -6,17 +6,17 @@ import {
 import { useState } from 'react';
 import useApi from '../../../useApi';
 import { EASY_ERP_TRANSACTIONS_URL } from '../../../../utils/urls';
-import toast from 'react-hot-toast';
 import TransactionDetailRow from './transactionDetailRow';
 import { Transaction } from '../../../../utils/types';
 import useTranslation from '../../../useTranslation';
+import { toastOnErrorApiResponse } from '../../../../utils/toast';
 
 export default function TransactionRow({
     transaction,
 }: {
     transaction: Transaction;
 }) {
-    const api = useApi();
+    const { authAxios } = useApi();
     const { t } = useTranslation();
 
     const [transactionDetails, setTransactionDetails] = useState([
@@ -31,13 +31,16 @@ export default function TransactionRow({
         useState(false);
 
     const loadTransactionDetails = function () {
-        api.authAxios
+        authAxios
             .get(`${EASY_ERP_TRANSACTIONS_URL}/${transaction.id}/details`)
             .then(response => {
                 setTransactionDetails(response.data);
             })
-            .catch(() => {
-                toast.error('Error while loading transaction details');
+            .catch(error => {
+                toastOnErrorApiResponse(
+                    error,
+                    t.warehouse.transactions.row.api.getTransactionDetailError
+                );
             });
     };
     return (

@@ -270,12 +270,20 @@ export const en = {
                     quantity: 'Quantity',
                     reference: 'Reference',
                 },
+                api: {
+                    getTransactionDetailError: '',
+                },
             },
             modal: {
                 title: 'New transaction',
                 selectReference: 'Select reference',
                 quantity: 'Quantity',
                 available: 'Available',
+            },
+            api: {
+                getTransactionsError: 'Error while loading transactions',
+                getTransactionReferenceError:
+                    'Error while loading transaction references',
             },
         },
     },

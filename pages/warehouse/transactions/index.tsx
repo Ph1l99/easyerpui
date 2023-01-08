@@ -6,16 +6,16 @@ import {
     EASY_ERP_TRANSACTION_REFERENCES_URL,
     EASY_ERP_TRANSACTIONS_URL,
 } from '../../../utils/urls';
-import toast from 'react-hot-toast';
 import TransactionRow from '../../../components/layout/warehouse/transaction/transactionRow';
 import NewTransactionModal from '../../../components/layout/warehouse/transaction/newTransactionModal';
 import { PaginationResult, TransactionReference } from '../../../utils/types';
 import PaginatedContent from '../../../components/layout/appLayout/pagination/paginatedContent';
 import AddButton from '../../../components/layout/appLayout/search/addButton';
 import useTranslation from '../../../components/useTranslation';
+import { toastOnErrorApiResponse } from '../../../utils/toast';
 
 export default function Transactions() {
-    const api = useApi();
+    const { authAxios } = useApi();
     const { t } = useTranslation();
 
     const [transactions, setTransactions] = useState<PaginationResult>();
@@ -30,24 +30,30 @@ export default function Transactions() {
     };
 
     const loadTransactions = function (url: string) {
-        api.authAxios
+        authAxios
             .get(url)
             .then(response => {
                 setTransactions(response.data);
             })
-            .catch(() => {
-                toast.error('Error while loading transactions');
+            .catch(error => {
+                toastOnErrorApiResponse(
+                    error,
+                    t.warehouse.transactions.api.getTransactionsError
+                );
             });
     };
 
     const loadTransactionReferences = function () {
-        api.authAxios
+        authAxios
             .get(`${EASY_ERP_TRANSACTION_REFERENCES_URL}`)
             .then(response => {
                 setTransactionReferences(response.data);
             })
-            .catch(() => {
-                toast.error('Error while downloading transaction references');
+            .catch(error => {
+                toastOnErrorApiResponse(
+                    error,
+                    t.warehouse.transactions.api.getTransactionReferenceError
+                );
             });
     };
 
