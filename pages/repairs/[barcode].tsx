@@ -10,16 +10,18 @@ import {
 } from '../../utils/urls';
 import useApi from '../../components/useApi';
 import { useRouter } from 'next/router';
-import toast from 'react-hot-toast';
 import { CustomerDetail, RepairStatus } from '../../utils/types';
 import CustomerRepairModal from '../../components/layout/customers/customer/customerRepairModal';
 import useTranslation from '../../components/useTranslation';
+import {
+    toastOnErrorApiResponse,
+    toastOnSuccessApiResponse,
+} from '../../utils/toast';
 
 export default function Repair() {
     const router = useRouter();
-    const api = useApi();
+    const { authAxios } = useApi();
     const { t } = useTranslation();
-
     const { barcode } = router.query;
 
     const [repair, setRepair] = useState({
@@ -40,63 +42,84 @@ export default function Repair() {
 
     const printRepairReceipt = function () {
         if (barcode) {
-            api.authAxios
+            authAxios
                 .post(`${EASY_ERP_REPAIRS_URL}${barcode}/receipt`)
-                .then(() => {
-                    toast.success('Receipt printed succesfully');
+                .then(response => {
+                    toastOnSuccessApiResponse(
+                        response,
+                        t.repairs.detail.api.printRepairReceiptSuccess
+                    );
                 })
-                .catch(() => {
-                    toast.error('Error while printing receipt');
+                .catch(error => {
+                    toastOnErrorApiResponse(
+                        error,
+                        t.repairs.detail.api.printRepairReceiptError
+                    );
                 });
         }
     };
     const printRepairLabel = function () {
         if (barcode) {
-            api.authAxios
+            authAxios
                 .post(`${EASY_ERP_REPAIRS_URL}${barcode}/label`)
-                .then(() => {
-                    toast.success('Label printed succesfully');
+                .then(response => {
+                    toastOnSuccessApiResponse(
+                        response,
+                        t.repairs.detail.api.printRepairLabelSuccess
+                    );
                 })
-                .catch(() => {
-                    toast.error('Error while printing label');
+                .catch(error => {
+                    toastOnErrorApiResponse(
+                        error,
+                        t.repairs.detail.api.printRepairLabelError
+                    );
                 });
         }
     };
 
     const loadRepairInfo = function () {
         if (barcode) {
-            api.authAxios
+            authAxios
                 .get(`${EASY_ERP_REPAIRS_URL}${barcode}`)
                 .then(response => {
                     setRepair(response.data);
                     setBeforeUpdateRepair(response.data);
                     loadRepairCustomerInfo(response.data.customer);
                 })
-                .catch(() => {
-                    toast.error('Error while loading repair info');
+                .catch(error => {
+                    toastOnErrorApiResponse(
+                        error,
+                        t.repairs.detail.api.getRepairInfoError
+                    );
                 });
         }
     };
 
     const loadRepairStatusInfo = function () {
-        api.authAxios
+        authAxios
             .get(EASY_ERP_REPAIR_STATUS_URL)
             .then(response => {
                 setRepairStatuses(response.data);
             })
-            .catch(() => {
-                toast.error('Error while loading repair status info');
+            .catch(error => {
+                toastOnErrorApiResponse(
+                    error,
+                    t.repairs.detail.api.getRepairInfoError
+                );
             });
     };
 
     const loadRepairCustomerInfo = function (customer: string) {
-        api.authAxios
+        authAxios
             .get(`${EASY_ERP_CUSTOMER_BASE_URL}/${customer}`)
             .then(response => {
                 setRepairCustomer(response.data);
             })
-            .catch(() => {
-                toast.error('Error while retrieving repair customer info');
+            .catch(error => {
+                toastOnErrorApiResponse(
+                    error,
+                    t.repairs.detail.api.getRepairCustomerInfoError
+                );
             });
     };
 
@@ -113,29 +136,45 @@ export default function Repair() {
     };
 
     const saveRepair = function () {
-        if (isNewRepair) {
-            api.authAxios
-                .post(`${EASY_ERP_REPAIRS_URL}-1`, repair)
-                .then(response => {
-                    toast.success('Repair created succesfully');
-                    router.replace(
-                        `${EASY_ERP_REPAIRS_URL}${response.data.barcode}`
-                    );
-                })
-                .catch(() => {
-                    toast.error('Error while creating repair');
-                });
-        } else {
-            api.authAxios
-                .put(`${EASY_ERP_REPAIRS_URL}${barcode}`, repair)
-                .then(() => {
-                    toast.success('Repair updated succesfully');
-                    setIsEditing(false);
-                })
-                .catch(() => {
-                    toast.error('Error while updating repair');
-                });
-        }
+        isNewRepair ? createRepair() : updateRepair();
+    };
+
+    const updateRepair = function () {
+        authAxios
+            .put(`${EASY_ERP_REPAIRS_URL}${barcode}`, repair)
+            .then(response => {
+                toastOnSuccessApiResponse(
+                    response,
+                    t.repairs.detail.api.updateRepairSuccess
+                );
+                setIsEditing(false);
+            })
+            .catch(error => {
+                toastOnErrorApiResponse(
+                    error,
+                    t.repairs.detail.api.updateRepairError
+                );
+            });
+    };
+
+    const createRepair = function () {
+        authAxios
+            .post(`${EASY_ERP_REPAIRS_URL}-1`, repair)
+            .then(response => {
+                toastOnSuccessApiResponse(
+                    response,
+                    t.repairs.detail.api.createRepairSuccess
+                );
+                router.replace(
+                    `${EASY_ERP_REPAIRS_URL}${response.data.barcode}`
+                );
+            })
+            .catch(error => {
+                toastOnErrorApiResponse(
+                    error,
+                    t.repairs.detail.api.createRepairError
+                );
+            });
     };
 
     const closeCustomerModal = function (
@@ -213,7 +252,7 @@ export default function Repair() {
                         icon={faReceipt}
                         title={t.repairs.detail.print.receipt}
                         onClick={printRepairReceipt}
-                    ></FontAwesomeIcon>
+                    />
                     <FontAwesomeIcon
                         className={clsx(
                             'mx-2 fa-xl',
@@ -224,7 +263,7 @@ export default function Repair() {
                         icon={faTag}
                         title={t.repairs.detail.print.label}
                         onClick={printRepairLabel}
-                    ></FontAwesomeIcon>
+                    />
                 </div>
                 <div className="basis-9/12">
                     <input

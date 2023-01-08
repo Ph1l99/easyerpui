@@ -10,15 +10,18 @@ import RepairRow from '../../components/layout/repair/repairRow';
 import useApi from '../../components/useApi';
 import Head from 'next/head';
 import React, { useEffect, useState } from 'react';
-import toast from 'react-hot-toast';
 import PaginatedContent from '../../components/layout/appLayout/pagination/paginatedContent';
 import { PaginationResult, RepairDetail } from '../../utils/types';
 import FilterBoxGroup from '../../components/layout/appLayout/filtering/filterBoxGroup';
 import useTranslation from '../../components/useTranslation';
+import {
+    toastOnErrorApiResponse,
+    toastOnSuccessApiResponse,
+} from '../../utils/toast';
 
 export default function Repairs() {
     const router = useRouter();
-    const api = useApi();
+    const { authAxios } = useApi();
     const { t } = useTranslation();
 
     const [repairs, setRepairs] = useState<PaginationResult>();
@@ -31,15 +34,15 @@ export default function Repairs() {
         navigateToRepairPage('-1');
     };
     const searchRepair = function (input: string) {
-        api.authAxios
+        authAxios
             .get(`${EASY_ERP_REPAIRS_URL}${input}`)
             .then(response => {
                 if (response.data) {
                     router.push(`${EASY_ERP_REPAIRS_URL}/${input}`);
                 }
             })
-            .catch(() => {
-                toast.error('Repair does not exist');
+            .catch(error => {
+                toastOnErrorApiResponse(error, t.repairs.api.getRepairError);
             });
     };
     const searchRepairFromFilters = function (values: Array<string>) {
@@ -53,7 +56,7 @@ export default function Repairs() {
         loadRepairs(`${EASY_ERP_REPAIRS_URL}${url}`);
     };
     const loadRepairStatuses = function () {
-        api.authAxios
+        authAxios
             .get(EASY_ERP_REPAIR_STATUS_URL)
             .then(response => {
                 setRepairStatuses(
@@ -64,30 +67,39 @@ export default function Repairs() {
                     }))
                 );
             })
-            .catch(() => {
-                toast.error('Error while loading repair status info');
+            .catch(error => {
+                toastOnErrorApiResponse(
+                    error,
+                    t.repairs.api.getRepairStatusError
+                );
             });
     };
     const loadRepairs = function (url: string) {
-        api.authAxios
+        authAxios
             .get(url)
             .then(response => {
                 setRepairs(response.data);
             })
-            .catch(() => {
-                toast.error('Error while loading repairs');
+            .catch(error => {
+                toastOnErrorApiResponse(error, t.repairs.api.getRepairsError);
             });
     };
     const deleteRepair = function (barcode: string) {
         if (barcode) {
-            api.authAxios
+            authAxios
                 .delete(`${EASY_ERP_REPAIRS_URL}${barcode}`)
-                .then(() => {
-                    toast.success('Repair deleted succesfully');
+                .then(response => {
+                    toastOnSuccessApiResponse(
+                        response,
+                        t.repairs.api.deleteRepairSuccess
+                    );
                     loadRepairs(`${EASY_ERP_REPAIRS_BASE_URL}`);
                 })
-                .catch(() => {
-                    toast.success('Error while deleting repair');
+                .catch(error => {
+                    toastOnErrorApiResponse(
+                        error,
+                        t.repairs.api.deleteRepairError
+                    );
                 });
         }
     };

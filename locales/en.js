@@ -145,6 +145,20 @@ export const en = {
             status: 'Select status',
             customer: 'Customer',
             customerPhone: 'Phone',
+            api: {
+                printRepairReceiptSuccess: 'Receipt printed',
+                printRepairReceiptError: 'Error while printing receipt',
+                printRepairLabelSuccess: 'Label printed',
+                printRepairLabelError: 'Error while printing label',
+                getRepairInfoError: 'Error while loading repair',
+                getRepairStatusError: 'Error while loading repair status',
+                getRepairCustomerInfoError:
+                    'Error while loading repair customer',
+                createRepairSuccess: 'Repair created',
+                createRepairError: 'Error while creating repair',
+                updateRepairSuccess: 'Repair updated',
+                updateRepairError: 'Error while updating repair',
+            },
         },
         modal: {
             title: {
@@ -153,6 +167,16 @@ export const en = {
             },
             selectedCustomer: 'Selected customer',
             selectCustomer: 'Select',
+            api: {
+                getCustomersError: 'Error while loading customers',
+            },
+        },
+        api: {
+            getRepairError: 'Repair not found',
+            getRepairStatusError: 'Error while loading repair status',
+            getRepairsError: 'Error while loading repairs',
+            deleteRepairSuccess: 'Repair deleted',
+            deleteRepairError: 'Error while deleting repair',
         },
     },
     selling: {

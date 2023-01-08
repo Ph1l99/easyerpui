@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import Pagination from '../../appLayout/pagination/pagination';
 import useTranslation from '../../../useTranslation';
+import { toastOnErrorApiResponse } from '../../../../utils/toast';
 
 export default function CustomerRepairModal({
     isOpen,
@@ -17,7 +18,7 @@ export default function CustomerRepairModal({
     onClose: Function;
     customer: CustomerDetail;
 }) {
-    const api = useApi();
+    const { authAxios } = useApi();
     const { t } = useTranslation();
 
     const [isNewAssignment, setIsNewAssignment] = useState(false);
@@ -32,9 +33,17 @@ export default function CustomerRepairModal({
     };
 
     const loadCustomers = function (url: string) {
-        api.authAxios.get(url).then(response => {
-            setAvailableCustomers(response.data);
-        });
+        authAxios
+            .get(url)
+            .then(response => {
+                setAvailableCustomers(response.data);
+            })
+            .catch(error => {
+                toastOnErrorApiResponse(
+                    error,
+                    t.repairs.modal.api.getCustomersError
+                );
+            });
     };
 
     const revertChanges = function () {
