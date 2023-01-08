@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 import clsx from 'clsx';
+import useTranslation from '../../../useTranslation';
 
 type TransactionDetail = {
     id?: Number;
@@ -20,6 +21,7 @@ export default function TransactionDetailRow({
 }: {
     transactionDetail: TransactionDetail;
 }) {
+    const { t } = useTranslation();
     return (
         <>
             <div className="flex px-2 py-2 bg-zinc-200 rounded-lg justify-start items-center h-16 mx-3 mt-2">
@@ -36,18 +38,18 @@ export default function TransactionDetailRow({
                             : faMinus
                     }
                     size="lg"
-                ></FontAwesomeIcon>
+                />
                 <div className="basis-4/12">
                     {transactionDetail.article?.name}
                 </div>
                 <div className="basis-3/12">
-                    Quantità{' '}
+                    {`${t.warehouse.transactions.row.detailRow.quantity} `}
                     <span className="font-bold">
                         {transactionDetail.quantity?.toString()}
                     </span>
                 </div>
                 <div className="basis-4/12 font-light text-sm overflow-hidden">
-                    Causale{' '}
+                    {`${t.warehouse.transactions.row.detailRow.reference} `}
                     <span className="font-bold">
                         {transactionDetail.reference?.description}
                     </span>

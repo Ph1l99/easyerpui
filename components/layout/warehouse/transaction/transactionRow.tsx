@@ -75,8 +75,8 @@ export default function TransactionRow({
                     </span>
                 </div>
                 <div className="basis-4/12 font-light text-sm overflow-hidden">
-                    {t.warehouse.transactions.row.username}
-                    <span className="font-bold">{` ${transaction.username}`}</span>
+                    {`${t.warehouse.transactions.row.username} `}
+                    <span className="font-bold">{transaction.username}</span>
                 </div>
             </div>
             {isOpenTransactionDetails &&
