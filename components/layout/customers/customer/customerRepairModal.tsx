@@ -74,9 +74,7 @@ export default function CustomerRepairModal({
                 }
             >
                 <div className="flex flex-row">
-                    `${t.repairs.modal.selectedCustomer}: `
-                    {localSelectedCustomer.last_name}{' '}
-                    {localSelectedCustomer.first_name}
+                    {`${t.repairs.modal.selectedCustomer}: ${localSelectedCustomer.last_name} ${localSelectedCustomer.first_name}`}
                 </div>
                 <hr className="mt-4" />
                 <div className="flex flex-col">
