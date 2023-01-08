@@ -146,10 +146,10 @@ export const en = {
             customer: 'Customer',
             customerPhone: 'Phone',
             api: {
-                printRepairReceiptSuccess: 'Receipt printed',
-                printRepairReceiptError: 'Error while printing receipt',
-                printRepairLabelSuccess: 'Label printed',
-                printRepairLabelError: 'Error while printing label',
+                printReceiptSuccess: 'Receipt printed',
+                printReceiptError: 'Error while printing receipt',
+                printLabelSuccess: 'Label printed',
+                printLabelError: 'Error while printing label',
                 getRepairInfoError: 'Error while loading repair',
                 getRepairStatusError: 'Error while loading repair status',
                 getRepairCustomerInfoError:
@@ -225,6 +225,11 @@ export const en = {
                 barcode: 'Barcode',
                 active: 'Active',
                 reorderThreshold: 'Reorder threshold',
+            },
+            api: {
+                getArticlesError: 'Error while loading articles',
+                printLabelError: 'Error while printing label',
+                printLabelSuccess: 'Label printed',
             },
         },
         inventory: {

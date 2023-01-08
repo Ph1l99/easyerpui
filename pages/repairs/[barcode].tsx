@@ -47,13 +47,13 @@ export default function Repair() {
                 .then(response => {
                     toastOnSuccessApiResponse(
                         response,
-                        t.repairs.detail.api.printRepairReceiptSuccess
+                        t.repairs.detail.api.printReceiptSuccess
                     );
                 })
                 .catch(error => {
                     toastOnErrorApiResponse(
                         error,
-                        t.repairs.detail.api.printRepairReceiptError
+                        t.repairs.detail.api.printReceiptError
                     );
                 });
         }
@@ -65,13 +65,13 @@ export default function Repair() {
                 .then(response => {
                     toastOnSuccessApiResponse(
                         response,
-                        t.repairs.detail.api.printRepairLabelSuccess
+                        t.repairs.detail.api.printLabelSuccess
                     );
                 })
                 .catch(error => {
                     toastOnErrorApiResponse(
                         error,
-                        t.repairs.detail.api.printRepairLabelError
+                        t.repairs.detail.api.printLabelError
                     );
                 });
         }

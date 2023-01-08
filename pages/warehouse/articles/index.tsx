@@ -11,10 +11,14 @@ import PaginatedContent from '../../../components/layout/appLayout/pagination/pa
 import { PaginationResult } from '../../../utils/types';
 import FilterBoxGroup from '../../../components/layout/appLayout/filtering/filterBoxGroup';
 import useTranslation from '../../../components/useTranslation';
+import {
+    toastOnErrorApiResponse,
+    toastOnSuccessApiResponse,
+} from '../../../utils/toast';
 
 export default function Articles() {
     const router = useRouter();
-    const api = useApi();
+    const { authAxios } = useApi();
     const { t } = useTranslation();
 
     const [articles, setArticles] = useState<PaginationResult>();
@@ -31,13 +35,19 @@ export default function Articles() {
     };
     const printArticleLabel = function (barcode: string) {
         if (barcode) {
-            api.authAxios
+            authAxios
                 .post(`${EASY_ERP_ARTICLES_URL}/${barcode}/label`)
-                .then(() => {
-                    toast.success('Label printed succesfully');
+                .then(response => {
+                    toastOnSuccessApiResponse(
+                        response,
+                        t.warehouse.articles.api.printLabelSuccess
+                    );
                 })
-                .catch(() => {
-                    toast.error('Error while printing label');
+                .catch(error => {
+                    toastOnErrorApiResponse(
+                        error,
+                        t.warehouse.articles.api.printLabelError
+                    );
                 });
         }
     };
@@ -55,13 +65,15 @@ export default function Articles() {
     const searchArticle = function (input: string) {
         loadArticles(`${EASY_ERP_ARTICLES_URL}?search=${input}`);
     };
-
     const loadArticles = function (url: string) {
-        api.authAxios
+        authAxios
             .get(url)
             .then(response => setArticles(response.data))
-            .catch(() => {
-                toast.error('Error while loading articles');
+            .catch(error => {
+                toastOnErrorApiResponse(
+                    error,
+                    t.warehouse.articles.api.getArticlesError
+                );
             });
     };
 
