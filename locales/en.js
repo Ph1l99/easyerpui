@@ -116,7 +116,14 @@ export const en = {
             customer: 'Customer',
             customerPhone: 'Phone',
         },
-        modal: {},
+        modal: {
+            title: {
+                newCustomer: 'Assign new customer to repair',
+                editCustomer: 'Edit repair customer',
+            },
+            selectedCustomer: 'Selected customer',
+            selectCustomer: 'Select',
+        },
     },
     genericComponents: {
         buttons: {
