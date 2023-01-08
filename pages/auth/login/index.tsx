@@ -5,10 +5,12 @@ import InputField from '../../../components/layout/inputField';
 import { useAuth } from '../../../components/useAuth';
 import Head from 'next/head';
 import toast from 'react-hot-toast';
+import useTranslation from '../../../components/useTranslation';
 
 export default function Login() {
     const router = useRouter();
     const { login } = useAuth();
+    const { t } = useTranslation();
 
     const emailRef = useRef<HTMLInputElement>(null);
     const passwordRef = useRef<HTMLInputElement>(null);
@@ -45,21 +47,22 @@ export default function Login() {
                 >
                     <InputField
                         type="email"
-                        placeholder="Email"
+                        placeholder={t.auth.login.email}
                         ref={emailRef}
                     />
                     <InputField
                         type="password"
-                        placeholder="Password"
+                        placeholder={t.auth.login.password}
                         ref={passwordRef}
                     />
                     <input
                         type="submit"
                         className="border text-center rounded px-5 py-1 bg-zinc-200 font-semibold outline-none focus:outline focus:outline-offset-4 focus:outline-white"
-                        value="Login"
+                        value={t.auth.login.login}
                     />
                     <Link href="/auth/signup" className="mt-2 text-white">
-                        Non hai un account? <u>Registrati!</u>
+                        {t.auth.login.signupMessage}{' '}
+                        <u>{t.auth.login.signup}</u>
                     </Link>
                 </form>
             </div>
