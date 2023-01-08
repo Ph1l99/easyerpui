@@ -62,17 +62,21 @@ export default function TransactionRow({
                     }}
                 />
                 <div className="basis-2/12">
-                    Trans. {transaction.id!.toString()}
+                    {`${
+                        t.warehouse.transactions.row.transaction
+                    } ${transaction.id!.toString()}`}
                 </div>
                 <div className="basis-6/12">
-                    Data{' '}
+                    {t.warehouse.transactions.row.date}
                     <span className="font-bold">
-                        {new Date(transaction.date_and_time!).toLocaleString()}
+                        {` ${new Date(
+                            transaction.date_and_time!
+                        ).toLocaleString()}`}
                     </span>
                 </div>
                 <div className="basis-4/12 font-light text-sm overflow-hidden">
-                    Utente{' '}
-                    <span className="font-bold">{transaction.username}</span>
+                    {t.warehouse.transactions.row.username}
+                    <span className="font-bold">{` ${transaction.username}`}</span>
                 </div>
             </div>
             {isOpenTransactionDetails &&
