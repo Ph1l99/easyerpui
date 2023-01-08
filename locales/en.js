@@ -78,7 +78,7 @@ export const en = {
                     active: 'Active',
                     inactive: 'Inactive',
                 },
-                editCardButton: 'Edit card',
+                editButton: 'Edit card',
             },
             modal: {
                 title: {
@@ -89,6 +89,34 @@ export const en = {
                 active: 'Active',
             },
         },
+    },
+    repairs: {
+        pageTitle: 'Repairs',
+        buttonAdd: 'New repair',
+        filter: {
+            title: 'Filter',
+        },
+        row: {
+            delivery: 'Delivery',
+            deleteButton: 'Delete repair',
+        },
+        detail: {
+            pageTitle: {
+                newRepair: 'New repair',
+                repair: 'Repair',
+            },
+            print: {
+                receipt: 'Print receipt',
+                label: 'Print label',
+            },
+            title: 'Title',
+            description: 'Description',
+            deliveryDate: 'Delivery date',
+            status: 'Select status',
+            customer: 'Customer',
+            customerPhone: 'Phone',
+        },
+        modal: {},
     },
     genericComponents: {
         buttons: {
