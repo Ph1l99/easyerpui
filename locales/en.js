@@ -188,6 +188,17 @@ export const en = {
         row: {
             quantity: 'Quantity',
         },
+        availabilityEqZeroMessage:
+            'Reached maximum number of articles to be sold',
+        maxArticlesMessage: 'Current availability equal to 0',
+        api: {
+            createSellingTransactionSuccess:
+                'Selling transaction correctly registered',
+            createSellingTransactionError:
+                'Error while processing selling transaction',
+            getArticleNotFound: 'Article not found',
+            getArticleError: 'Error while loading article',
+        },
     },
     warehouse: {
         articles: {

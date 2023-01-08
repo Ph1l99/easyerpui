@@ -10,9 +10,13 @@ import toast from 'react-hot-toast';
 import ArticleSellRow from '../../components/layout/selling/articleSellRow';
 import { TRANSACTION_REFERENCE_ID_SELLING_TO_CUSTOMER } from '../../utils/constants';
 import useTranslation from '../../components/useTranslation';
+import {
+    toastOnErrorApiResponse,
+    toastOnSuccessApiResponse,
+} from '../../utils/toast';
 
 export default function Selling() {
-    const api = useApi();
+    const { authAxios } = useApi();
     const { t } = useTranslation();
 
     const [currentArticle, setCurrentArticle] = useState('');
@@ -27,7 +31,7 @@ export default function Selling() {
 
     const manageArticle = function () {
         if (currentArticle !== '') {
-            api.authAxios
+            authAxios
                 .get(`${EASY_ERP_ARTICLES_URL}/${currentArticle}`)
                 .then(response => {
                     // Check if current availability is gt 0
@@ -62,9 +66,7 @@ export default function Selling() {
                                 // Finally the article is pushed to the list
                                 pushArticleToList(sellingArticle);
                             } else {
-                                toast.error(
-                                    'Raggiunto numero massimo parti scaricabili!'
-                                );
+                                toast.error(t.selling.maxArticlesMessage);
                             }
                         } else {
                             // Otherwise I set it to 1
@@ -77,12 +79,20 @@ export default function Selling() {
                             pushArticleToList(sellingArticle);
                         }
                     } else {
-                        toast.error('Current availability equal to 0');
+                        toast.error(t.selling.availabilityEqZeroMessage);
                     }
                 })
                 .catch(error => {
                     if (error.statusCode == 404) {
-                        toast.error('Article not found');
+                        toastOnErrorApiResponse(
+                            error,
+                            t.selling.api.getArticleNotFound
+                        );
+                    } else {
+                        toastOnErrorApiResponse(
+                            error,
+                            t.selling.api.getArticleError
+                        );
                     }
                 });
         }
@@ -130,16 +140,22 @@ export default function Selling() {
                     reference: TRANSACTION_REFERENCE_ID_SELLING_TO_CUSTOMER,
                 });
             });
-            api.authAxios
+            authAxios
                 .post(`${EASY_ERP_TRANSACTIONS_URL}/-1`, {
                     details: sellTransactionDetails,
                 })
-                .then(() => {
-                    toast.success('Selling transaction correctly registered');
+                .then(response => {
+                    toastOnSuccessApiResponse(
+                        response,
+                        t.selling.api.createSellingTransactionSuccess
+                    );
                     rollbackSelling();
                 })
-                .catch(() => {
-                    toast.error('Error while processing selling transaction');
+                .catch(error => {
+                    toastOnErrorApiResponse(
+                        error,
+                        t.selling.api.createSellingTransactionError
+                    );
                 });
         }
     };
