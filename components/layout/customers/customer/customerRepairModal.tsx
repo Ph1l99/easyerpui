@@ -6,6 +6,7 @@ import { EASY_ERP_CUSTOMERS_BASE_URL } from '../../../../utils/urls';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import Pagination from '../../appLayout/pagination/pagination';
+import useTranslation from '../../../useTranslation';
 
 export default function CustomerRepairModal({
     isOpen,
@@ -17,6 +18,7 @@ export default function CustomerRepairModal({
     customer: CustomerDetail;
 }) {
     const api = useApi();
+    const { t } = useTranslation();
 
     const [isNewAssignment, setIsNewAssignment] = useState(false);
     const [localSelectedCustomer, setLocalSelectedCustomer] =
@@ -67,12 +69,13 @@ export default function CustomerRepairModal({
                 }}
                 title={
                     isNewAssignment
-                        ? 'Assegna cliente riparazione'
-                        : 'Modifica cliente riparazione'
+                        ? `${t.repairs.modal.title.newCustomer}`
+                        : `${t.repairs.modal.title.editCustomer}`
                 }
             >
                 <div className="flex flex-row">
-                    Cliente selezionato: {localSelectedCustomer.last_name}{' '}
+                    `${t.repairs.modal.selectedCustomer}: `
+                    {localSelectedCustomer.last_name}{' '}
                     {localSelectedCustomer.first_name}
                 </div>
                 <hr className="mt-4" />
@@ -92,7 +95,7 @@ export default function CustomerRepairModal({
                                 <FontAwesomeIcon
                                     icon={faCheck}
                                     className="text-gray-600 cursor-pointer"
-                                    title="Seleziona"
+                                    title={t.repairs.modal.selectCustomer}
                                     onClick={() => {
                                         setLocalSelectedCustomer(customer);
                                     }}
@@ -115,13 +118,13 @@ export default function CustomerRepairModal({
                 <div className="flex flex-row justify-end mt-4">
                     <input
                         type="button"
-                        value="Salva"
+                        value={t.genericComponents.buttons.save}
                         className="basis-2/12 py-1 px-1 rounded-lg bg-green-600 text-white outline-none mr-4 text-center h-fit font-bold cursor-pointer"
                         onClick={saveCustomerAssignment}
                     />
                     <input
                         type="button"
-                        value="Annulla"
+                        value={t.genericComponents.buttons.cancel}
                         className="basis-2/12 py-1 px-1 rounded-lg bg-red-600 text-white outline-none text-center h-fit cursor-pointer font-bold"
                         onClick={revertChanges}
                     />
