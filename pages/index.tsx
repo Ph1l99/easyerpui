@@ -12,10 +12,12 @@ import useApi from '../components/useApi';
 import { EASY_ERP_ARTICLES_URL, EASY_ERP_REPAIRS_URL } from '../utils/urls';
 import toast from 'react-hot-toast';
 import clsx from 'clsx';
+import useTranslation from '../components/useTranslation';
 
 export default function Home() {
     const { user, getProfileInfo } = useAuth();
     const api = useApi();
+    const { t } = useTranslation();
 
     const [articlesDashboard, setArticlesDashboard] =
         useState<ArticleDashboard>({});
@@ -60,13 +62,13 @@ export default function Home() {
             </Head>
 
             <main>
-                <SectionTitle title={`Benvenuto, ${user?.firstName}`} />
+                <SectionTitle title={`${t.home.welcome}, ${user?.firstName}`} />
             </main>
 
             <div className="flex flex-col px-2 h-[calc(100vh-19rem)]">
                 <div className="basis-4/12">
                     <div className="basis-1/12 py-2 font-bold text-xl">
-                        Riparazioni
+                        {t.home.repairs}
                     </div>
                     <div className="flex flex-row w-full gap-2.5 mt-3">
                         {repairsDashboard.dashboard?.map(
@@ -90,7 +92,7 @@ export default function Home() {
                 </div>
                 <div className="basis-4/12">
                     <div className="basis-1/12 py-2 font-bold text-xl">
-                        Articoli
+                        {t.home.articles}
                     </div>
                     <div className="flex flex-row w-full gap-2.5 mt-3">
                         {articlesDashboard.dashboard?.map(
