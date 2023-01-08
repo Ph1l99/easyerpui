@@ -180,8 +180,9 @@ export default function Repair() {
             </Head>
             <div className="flex flex-col p-8 h-full">
                 <div className="basis-1 /12 font-bold text-xl">
-                    `${t.repairs.detail.pageTitle.repair} - `
-                    {isNewRepair ? '' : repair.barcode}
+                    {`${t.repairs.detail.pageTitle.repair} - ${
+                        isNewRepair ? '' : repair.barcode
+                    }`}
                 </div>
                 <div className="basis-1/12 flex justify-end">
                     {isEditing && (
