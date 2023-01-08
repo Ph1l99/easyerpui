@@ -28,7 +28,7 @@ export default function FidelityCardRow({
                 <FontAwesomeIcon
                     className="mx-2 fa-lg cursor-pointer"
                     icon={faEdit}
-                    title={t.customers.fidelityCards.row.editCardButton}
+                    title={t.customers.fidelityCards.row.editButton}
                     onClick={() => {
                         editFidelityCard(fidelityCard.barcode);
                     }}
