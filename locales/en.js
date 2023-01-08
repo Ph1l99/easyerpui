@@ -166,14 +166,32 @@ export const en = {
             pageTitle: 'Inventory',
             buttonCycle: {
                 title: 'Execute inventory cycle',
-                lastCycle: '',
-                nextCycle: '',
+                lastCycle: 'Last inventory cycle',
+                nextCycle: 'Next inventory cycle',
             },
             row: {
                 currentAvailability: 'Current availability',
             },
         },
-        transactions: {},
+        transactions: {
+            pageTitle: 'Transactions',
+            buttonAdd: 'New transaction',
+            row: {
+                transaction: 'Trans.',
+                date: 'Date',
+                username: 'User',
+                detailRow: {
+                    quantity: 'Quantity',
+                    reference: 'Reference',
+                },
+            },
+            modal: {
+                title: 'New transaction',
+                selectReference: 'Select reference',
+                quantity: 'Quantity',
+                available: 'Available',
+            },
+        },
     },
     genericComponents: {
         buttons: {
