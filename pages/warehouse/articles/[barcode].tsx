@@ -141,7 +141,7 @@ export default function Article() {
             </Head>
             <div className="flex flex-col p-8 h-full">
                 <div className="basis-1 /12 font-bold text-xl">
-                    `${t.warehouse.articles.detail.pageTitle.article}: `
+                    {`${t.warehouse.articles.detail.pageTitle.article}: `}
                     {isNewArticle ? '-' : `${barcode}`}
                 </div>
 
