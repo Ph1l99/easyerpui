@@ -5,10 +5,12 @@ import { useAuth } from '../../../components/useAuth';
 import { EASY_ERP_LOGIN_URL } from '../../../utils/urls';
 import { useRouter } from 'next/router';
 import toast from 'react-hot-toast';
+import useTranslation from '../../../components/useTranslation';
 
 export default function Signup() {
     const router = useRouter();
     const { signup } = useAuth();
+    const { t } = useTranslation();
 
     const firstNameRef = useRef<HTMLInputElement>(null);
     const lastNameRef = useRef<HTMLInputElement>(null);
@@ -49,7 +51,7 @@ export default function Signup() {
     return (
         <>
             <Head>
-                <title>Signup</title>
+                <title>{t.auth.signup.pageTitle}</title>
             </Head>
             <div className="flex flex-col items-center justify-center h-screen gap-4">
                 <h1 className="text-upper text-sky-900 font-bold text-3xl">
@@ -61,33 +63,33 @@ export default function Signup() {
                 >
                     <InputField
                         type="text"
-                        placeholder="Nome"
+                        placeholder={t.auth.signup.firstName}
                         ref={firstNameRef}
                     />
                     <InputField
                         type="text"
-                        placeholder="Cognome"
+                        placeholder={t.auth.signup.lastName}
                         ref={lastNameRef}
                     />
                     <InputField
                         type="text"
-                        placeholder="Username"
+                        placeholder={t.auth.signup.username}
                         ref={usernameRef}
                     />
                     <InputField
                         type="email"
-                        placeholder="Email"
+                        placeholder={t.auth.signup.email}
                         ref={emailRef}
                     />
                     <InputField
                         type="password"
-                        placeholder="Password"
+                        placeholder={t.auth.signup.password}
                         ref={passwordRef}
                     />
                     <input
                         type="submit"
                         className="border text-center rounded px-5 py-1 bg-zinc-200 font-semibold outline-none focus:outline focus:outline-offset-4 focus:outline-white"
-                        value="Registrami"
+                        value={t.auth.signup.signup}
                     />
                 </form>
             </div>
