@@ -38,7 +38,7 @@ export default function Repairs() {
             .get(`${EASY_ERP_REPAIRS_URL}${input}`)
             .then(response => {
                 if (response.data) {
-                    router.push(`${EASY_ERP_REPAIRS_URL}/${input}`);
+                    router.push(`${EASY_ERP_REPAIRS_URL}${input}`);
                 }
             })
             .catch(error => {
