@@ -8,18 +8,17 @@ import useApi from '../../../useApi';
 import { EASY_ERP_TRANSACTIONS_URL } from '../../../../utils/urls';
 import toast from 'react-hot-toast';
 import TransactionDetailRow from './transactionDetailRow';
+import { Transaction } from '../../../../utils/types';
+import useTranslation from '../../../useTranslation';
 
-type Transaction = {
-    id?: Number;
-    date_and_time?: string;
-    username?: string;
-};
 export default function TransactionRow({
     transaction,
 }: {
     transaction: Transaction;
 }) {
     const api = useApi();
+    const { t } = useTranslation();
+
     const [transactionDetails, setTransactionDetails] = useState([
         {
             id: -1,
@@ -30,6 +29,7 @@ export default function TransactionRow({
     ]);
     const [isOpenTransactionDetails, setIsOpenTransactionDetails] =
         useState(false);
+
     const loadTransactionDetails = function () {
         api.authAxios
             .get(`${EASY_ERP_TRANSACTIONS_URL}/${transaction.id}/details`)
@@ -60,7 +60,7 @@ export default function TransactionRow({
                             loadTransactionDetails();
                         }
                     }}
-                ></FontAwesomeIcon>
+                />
                 <div className="basis-2/12">
                     Trans. {transaction.id!.toString()}
                 </div>

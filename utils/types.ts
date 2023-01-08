@@ -18,6 +18,11 @@ type TransactionReference = {
     operation_type?: string;
     is_active?: boolean;
 };
+type Transaction = {
+    id?: Number;
+    date_and_time?: string;
+    username?: string;
+};
 type InventoryArticle = {
     barcode?: string;
     name?: string;
@@ -89,6 +94,7 @@ export type {
     ArticleDetail,
     TransactionArticle,
     TransactionReference,
+    Transaction,
     InventoryArticle,
     SellingArticle,
     ArticleDashboardDetail,
