@@ -10,10 +10,12 @@ import toast from 'react-hot-toast';
 import PaginatedContent from '../../../components/layout/appLayout/pagination/paginatedContent';
 import { PaginationResult } from '../../../utils/types';
 import FilterBoxGroup from '../../../components/layout/appLayout/filtering/filterBoxGroup';
+import useTranslation from '../../../components/useTranslation';
 
 export default function Articles() {
     const router = useRouter();
     const api = useApi();
+    const { t } = useTranslation();
 
     const [articles, setArticles] = useState<PaginationResult>();
     const [articleFilters, setArticleFilters] = useState([
@@ -70,16 +72,18 @@ export default function Articles() {
     return (
         <>
             <Head>
-                <title>Articoli</title>
+                <title>{t.warehouse.articles.pageTitle}</title>
             </Head>
-            <SectionTitle title="Articoli" />
+            <SectionTitle title={t.warehouse.articles.pageTitle} />
             <SearchAdd
                 addItem={openNewArticlePage}
                 searchItem={searchArticle}
-                buttonTitle="Nuovo articolo"
+                buttonTitle={t.warehouse.articles.buttonAdd}
             />
             <div className="flex gap-4 text-white">
-                <span className="text-black font-semibold">Filtra per:</span>
+                <span className="text-black font-semibold">
+                    {t.warehouse.articles.filter.filter}
+                </span>
                 <FilterBoxGroup
                     items={articleFilters}
                     search={searchArticleFromFilters}

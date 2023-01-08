@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTag } from '@fortawesome/free-solid-svg-icons';
 import { faImage } from '@fortawesome/free-regular-svg-icons';
 import { ArticleDetail } from '../../../../utils/types';
+import useTranslation from '../../../useTranslation';
 
 export default function ArticleRow({
     article,
@@ -12,6 +13,7 @@ export default function ArticleRow({
     navigateToArticlePage: Function;
     printArticleLabel: Function;
 }) {
+    const { t } = useTranslation();
     return (
         <div
             className="flex px-2 py-2 bg-zinc-200 rounded-lg justify-start items-center cursor-pointer h-16 mt-3"
@@ -30,7 +32,7 @@ export default function ArticleRow({
                 <FontAwesomeIcon
                     className="mx-2 fa-lg"
                     icon={faTag}
-                    title="Stampa etichetta"
+                    title={t.warehouse.articles.row.print.label}
                     onClick={e => {
                         e.stopPropagation();
                         printArticleLabel(article.barcode);
