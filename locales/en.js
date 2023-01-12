@@ -72,6 +72,7 @@ export const en = {
                 phone: 'Phone',
                 fidelityCard: 'Fidelity card',
                 assignFidelityCard: 'Assign new fidelity card',
+                removeFidelityCard: 'Unassign fidelity card',
                 newFidelityCard: 'New fidelity card',
                 selectNewFidelityCard: 'Select new fidelity card',
                 customerRepairs: 'Repairs associated to customer',

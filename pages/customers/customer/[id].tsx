@@ -70,8 +70,13 @@ export default function Customer() {
     };
 
     const updateCustomer = function () {
+        let updatedCustomer = customer;
+        if (updatedCustomer.fidelity_card == '') {
+            delete updatedCustomer.id;
+        }
+
         authAxios
-            .put(`${EASY_ERP_CUSTOMER_BASE_URL}/${id}`, customer)
+            .put(`${EASY_ERP_CUSTOMER_BASE_URL}/${id}`, updatedCustomer)
             .then(response => {
                 toastOnSuccessApiResponse(
                     response,
@@ -129,6 +134,14 @@ export default function Customer() {
         authAxios.get(url).then(response => {
             setRepairsForCustomer(response.data);
         });
+    };
+
+    const unassignFidelityCard = function () {
+        setIsEditing(true);
+        setCustomer(prevState => ({
+            ...prevState,
+            fidelity_card: '',
+        }));
     };
 
     useEffect(() => {
@@ -216,7 +229,7 @@ export default function Customer() {
                             onChange={e => changeFormValue(e, 'phone')}
                         />
                     </div>
-                    <div className="flex mt-5 justify-start">
+                    <div className="flex mt-5 justify-between gap-2">
                         <input
                             id="oldFidelityCard"
                             type="text"
@@ -224,10 +237,28 @@ export default function Customer() {
                             placeholder={
                                 t.customers.customer.detail.fidelityCard
                             }
-                            className="basis-4/12 bg-zinc-200 w-full outline-none p-2 placeholder-black rounded-md cursor-not-allowed"
+                            className="basis-3/12 bg-zinc-200 w-full outline-none p-2 placeholder-black rounded-md cursor-not-allowed"
                             value={customer?.fidelity_card}
                         />
-                        <div className="basis-4/12 flex justify-center text-center items-center">
+                        <input
+                            type="button"
+                            value={
+                                t.customers.customer.detail.removeFidelityCard
+                            }
+                            disabled={
+                                assignNewFidelityCard ||
+                                customer.fidelity_card == null
+                            }
+                            className={clsx(
+                                'basis-3/12 py-1 rounded-lg bg-red-600 text-white outline-none text-center font-bold',
+                                assignNewFidelityCard ||
+                                    customer.fidelity_card == null
+                                    ? 'cursor-not-allowed'
+                                    : 'cursor-pointer'
+                            )}
+                            onClick={unassignFidelityCard}
+                        />
+                        <div className="basis-3/12 flex justify-center text-center items-center">
                             <label
                                 htmlFor="isNewFidelityCardCheckbox"
                                 className="pr-2"
@@ -246,34 +277,36 @@ export default function Customer() {
                                 }}
                             />
                         </div>
-                        {assignNewFidelityCard && (
-                            <select
-                                id="fidelity_card"
-                                placeholder={
-                                    t.customers.customer.detail.newFidelityCard
+                        <select
+                            id="fidelity_card"
+                            placeholder={
+                                t.customers.customer.detail.newFidelityCard
+                            }
+                            className={clsx(
+                                'basis-3/12 bg-zinc-200 w-full outline-none p-2 placeholder-black rounded-md',
+                                !assignNewFidelityCard
+                                    ? 'cursor-not-allowed'
+                                    : 'cursor-pointer'
+                            )}
+                            value={newFidelityCard}
+                            disabled={!assignNewFidelityCard}
+                            onChange={e => setNewFidelityCard(e.target.value)}
+                        >
+                            <option value="">
+                                {
+                                    t.customers.customer.detail
+                                        .selectNewFidelityCard
                                 }
-                                className="basis-4/12 bg-zinc-200 w-full outline-none p-2 placeholder-black rounded-md"
-                                value={newFidelityCard}
-                                onChange={e =>
-                                    setNewFidelityCard(e.target.value)
-                                }
-                            >
-                                <option value="">
-                                    {
-                                        t.customers.customer.detail
-                                            .selectNewFidelityCard
-                                    }
+                            </option>
+                            {fidelityCards!.map(fidelityCard => (
+                                <option
+                                    key={fidelityCard.barcode}
+                                    value={fidelityCard.barcode}
+                                >
+                                    {fidelityCard.barcode}
                                 </option>
-                                {fidelityCards!.map(fidelityCard => (
-                                    <option
-                                        key={fidelityCard.barcode}
-                                        value={fidelityCard.barcode}
-                                    >
-                                        {fidelityCard.barcode}
-                                    </option>
-                                ))}
-                            </select>
-                        )}
+                            ))}
+                        </select>
                     </div>
                 </div>
                 <div className="basis-1/12 font-bold">
