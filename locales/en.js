@@ -308,6 +308,7 @@ export const en = {
         pagination: {
             nextPage: 'Next page',
             previousPage: 'Previous page',
+            noResults: 'No results to display',
         },
     },
 };
