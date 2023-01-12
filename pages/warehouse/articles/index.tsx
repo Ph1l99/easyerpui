@@ -15,6 +15,7 @@ import {
     toastOnErrorApiResponse,
     toastOnSuccessApiResponse,
 } from '../../../utils/toast';
+import NoResults from '../../../components/layout/appLayout/pagination/noResults';
 
 export default function Articles() {
     const router = useRouter();
@@ -118,6 +119,7 @@ export default function Articles() {
                         printArticleLabel={printArticleLabel}
                     />
                 ))}
+                {articles?.results?.length === 0 && <NoResults />}
             </PaginatedContent>
         </>
     );

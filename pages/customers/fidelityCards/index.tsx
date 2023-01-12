@@ -11,6 +11,7 @@ import { FidelityCard, PaginationResult } from '../../../utils/types';
 import FilterBoxGroup from '../../../components/layout/appLayout/filtering/filterBoxGroup';
 import useTranslation from '../../../components/useTranslation';
 import { toastOnErrorApiResponse } from '../../../utils/toast';
+import NoResults from '../../../components/layout/appLayout/pagination/noResults';
 
 export default function FidelityCards() {
     const { authAxios } = useApi();
@@ -103,6 +104,7 @@ export default function FidelityCards() {
                         }
                     />
                 ))}
+                {fidelityCards?.results?.length === 0 && <NoResults />}
             </PaginatedContent>
             <FidelityCardModal
                 isOpen={isOpenModalFidelityCard}

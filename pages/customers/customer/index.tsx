@@ -16,6 +16,7 @@ import {
     toastOnErrorApiResponse,
     toastOnSuccessApiResponse,
 } from '../../../utils/toast';
+import NoResults from '../../../components/layout/appLayout/pagination/noResults';
 
 export default function Customer() {
     const router = useRouter();
@@ -103,6 +104,7 @@ export default function Customer() {
                         navigateToCustomerPage={navigateToCustomer}
                     />
                 ))}
+                {customers?.results?.length === 0 && <NoResults />}
             </PaginatedContent>
         </>
     );

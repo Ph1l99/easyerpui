@@ -17,6 +17,7 @@ import {
     toastOnErrorApiResponse,
     toastOnSuccessApiResponse,
 } from '../../../utils/toast';
+import NoResults from '../../../components/layout/appLayout/pagination/noResults';
 
 export default function Inventory() {
     const { authAxios } = useApi();
@@ -148,6 +149,7 @@ export default function Inventory() {
                         }}
                     />
                 ))}
+                {inventory?.results?.length === 0 && <NoResults />}
             </PaginatedContent>
         </>
     );

@@ -18,6 +18,7 @@ import {
     toastOnErrorApiResponse,
     toastOnSuccessApiResponse,
 } from '../../utils/toast';
+import NoResults from '../../components/layout/appLayout/pagination/noResults';
 
 export default function Repairs() {
     const router = useRouter();
@@ -149,6 +150,7 @@ export default function Repairs() {
                         deleteRepair={deleteRepair}
                     />
                 ))}
+                {repairs?.results?.length === 0 && <NoResults />}
             </PaginatedContent>
         </>
     );

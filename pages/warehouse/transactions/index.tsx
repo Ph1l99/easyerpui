@@ -13,6 +13,7 @@ import PaginatedContent from '../../../components/layout/appLayout/pagination/pa
 import AddButton from '../../../components/layout/appLayout/search/addButton';
 import useTranslation from '../../../components/useTranslation';
 import { toastOnErrorApiResponse } from '../../../utils/toast';
+import NoResults from '../../../components/layout/appLayout/pagination/noResults';
 
 export default function Transactions() {
     const { authAxios } = useApi();
@@ -90,6 +91,7 @@ export default function Transactions() {
                         }}
                     />
                 ))}
+                {transactions?.results?.length === 0 && <NoResults />}
             </PaginatedContent>
 
             <NewTransactionModal
