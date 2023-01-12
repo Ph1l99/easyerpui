@@ -22,6 +22,7 @@ import Pagination from '../../../components/layout/appLayout/pagination/paginati
 import clsx from 'clsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowUpRightFromSquare } from '@fortawesome/free-solid-svg-icons';
+import NoResults from '../../../components/layout/appLayout/pagination/noResults';
 
 export default function Customer() {
     const router = useRouter();
@@ -324,11 +325,7 @@ export default function Customer() {
                                 </div>
                             )
                         )}
-                    {repairsForCustomer.results?.length === 0 && (
-                        <div className="h-full flex flex-col justify-center text-center">
-                            {t.genericComponents.pagination.noResults}
-                        </div>
-                    )}
+                    {repairsForCustomer.results?.length === 0 && <NoResults />}
                     <Pagination
                         hasPreviousPage={!!repairsForCustomer.previous}
                         hasNextPage={!!repairsForCustomer.next}
