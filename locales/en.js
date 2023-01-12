@@ -75,6 +75,7 @@ export const en = {
                 newFidelityCard: 'New fidelity card',
                 selectNewFidelityCard: 'Select new fidelity card',
                 customerRepairs: 'Repairs associated to customer',
+                navigateToCustomerRepair: 'Open repair',
                 api: {
                     createCustomerSuccess: 'Customer created',
                     createCustomerError: 'Error during customer creation',
