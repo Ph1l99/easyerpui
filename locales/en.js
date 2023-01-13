@@ -278,7 +278,8 @@ export const en = {
                     reference: 'Reference',
                 },
                 api: {
-                    getTransactionDetailError: '',
+                    getTransactionDetailError:
+                        'Error while loading transaction details',
                 },
             },
             modal: {
