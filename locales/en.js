@@ -291,8 +291,8 @@ export const en = {
                     'Article already added to the transaction',
                 api: {
                     getArticleError: 'Unable to retrieve article info',
-                    createTransactionSuccess: '',
-                    createTransactionError: '',
+                    createTransactionSuccess: 'Transaction created',
+                    createTransactionError: 'Error while creating transaction',
                 },
             },
             api: {
