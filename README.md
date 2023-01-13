@@ -14,7 +14,7 @@ To run it with docker:
 - Download the project
 - Install the needed dependencies `npm install`
 - Build the image `docker build -t easyerpui`
-- Execute the container `docker run -d -p 3000:3000 -t easyerp:latest`
+- Execute the container `docker run -d -p 3000:3000 -e EASYERP_BACKEND_SERVER="YOUR BACKEND HOSTNAME" -t easyerp:latest`
 
 #### Additional notes
 Each repair status has its own color: since tailwind scans the project for used classes, make sure
