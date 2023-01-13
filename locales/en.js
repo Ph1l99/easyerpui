@@ -4,8 +4,8 @@ export const en = {
         repairs: 'Repairs',
         articles: 'Articles',
         api: {
-            getArticleDashboardError: '',
-            getRepairDashboardError: '',
+            getArticleDashboardError: 'Error while loading article dashboard',
+            getRepairDashboardError: 'Error while loading repair dashboard',
         },
     },
     drawer: {
@@ -259,7 +259,7 @@ export const en = {
                 currentAvailability: 'Current availability',
             },
             api: {
-                getInventoryCycleError: 'Erroe while loading inventory cycle',
+                getInventoryCycleError: 'Error while loading inventory cycle',
                 getInventoryError: 'Error while loading inventory',
                 createInventoryCycleSuccess: 'Inventory cycle created',
                 createInventoryCycleError:
