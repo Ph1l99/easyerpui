@@ -138,188 +138,203 @@ export const it = {
         },
     },
     repairs: {
-        pageTitle: 'Repairs',
-        buttonAdd: 'New repair',
+        pageTitle: 'Riparazioni',
+        buttonAdd: 'Nuova riparazione',
         filter: {
-            title: 'Filter',
+            title: 'Filtra',
         },
         row: {
-            delivery: 'Delivery',
-            deleteButton: 'Delete repair',
+            delivery: 'Consegna',
+            deleteButton: 'Elimina riparazione',
         },
         detail: {
             pageTitle: {
-                newRepair: 'New repair',
-                repair: 'Repair',
+                newRepair: 'Nuova riparazione',
+                repair: 'Riparazione',
             },
             print: {
-                receipt: 'Print receipt',
-                label: 'Print label',
+                receipt: 'Stampa ricevuta',
+                label: 'Stampa etichetta',
             },
-            title: 'Title',
-            description: 'Description',
-            deliveryDate: 'Delivery date',
-            status: 'Select status',
-            customer: 'Customer',
-            customerPhone: 'Phone',
+            title: 'Titolo',
+            description: 'Descrizione',
+            deliveryDate: 'Data di consegna',
+            status: 'Seleziona uno stato',
+            customer: 'Cliente',
+            customerPhone: 'Recapito',
             api: {
-                printReceiptSuccess: 'Receipt printed',
-                printReceiptError: 'Error while printing receipt',
-                printLabelSuccess: 'Label printed',
-                printLabelError: 'Error while printing label',
-                getRepairInfoError: 'Error while loading repair',
-                getRepairStatusError: 'Error while loading repair status',
+                printReceiptSuccess: 'Ricevuta stampata con successo',
+                printReceiptError: 'Errore durante la stampa della ricevuta',
+                printLabelSuccess: 'Etichetta stampata con successo',
+                printLabelError: "Errore durante la stampa dell'etichetta",
+                getRepairInfoError:
+                    'Errore durante il recupero della riparazione',
+                getRepairStatusError:
+                    'Errore durante il recupero degli stati riparazione',
                 getRepairCustomerInfoError:
-                    'Error while loading repair customer',
-                createRepairSuccess: 'Repair created',
-                createRepairError: 'Error while creating repair',
-                updateRepairSuccess: 'Repair updated',
-                updateRepairError: 'Error while updating repair',
+                    'Errore durante il recupero dei clienti',
+                createRepairSuccess: 'Riparazione creata con successo',
+                createRepairError:
+                    'Errore durante la creazione della riparazione',
+                updateRepairSuccess: 'Riparazione aggiornata con successo',
+                updateRepairError:
+                    "Errore durante l'aggiornamento della riparazione",
             },
         },
         modal: {
             title: {
-                newCustomer: 'Assign new customer to repair',
-                editCustomer: 'Edit repair customer',
+                newCustomer: 'Assegna cliente riparazione',
+                editCustomer: 'Modifica cliente riparazione',
             },
-            selectedCustomer: 'Selected customer',
-            selectCustomer: 'Select',
+            selectedCustomer: 'Cliente selezionato',
+            selectCustomer: 'Seleziona',
             api: {
-                getCustomersError: 'Error while loading customers',
+                getCustomersError: 'Errore durante il recupero dei clienti',
             },
         },
         api: {
-            getRepairError: 'Repair not found',
-            getRepairStatusError: 'Error while loading repair status',
-            getRepairsError: 'Error while loading repairs',
-            deleteRepairSuccess: 'Repair deleted',
-            deleteRepairError: 'Error while deleting repair',
+            getRepairError: 'Riparazione non trovata',
+            getRepairStatusError:
+                'Errore durante il recupero degli stati riparazione',
+            getRepairsError: 'Errore durante il recupero delle riparazioni',
+            deleteRepairSuccess: 'Riparazione eliminata con successo',
+            deleteRepairError:
+                "Errore durante l'eliminazione della riparazione",
         },
     },
     selling: {
-        pageTitle: 'Selling',
+        pageTitle: 'Vendita',
         buttons: {
-            save: 'Save selling',
-            cancel: 'Cancel selling',
+            save: 'Chiudi vendita',
+            cancel: 'Annulla vendita',
         },
         row: {
-            quantity: 'Quantity',
+            quantity: 'Quantità',
         },
         availabilityEqZeroMessage:
-            'Reached maximum number of articles to be sold',
-        maxArticlesMessage: 'Current availability equal to 0',
+            'Raggiunto numero massimo di parti scaricabili per articolo',
+        maxArticlesMessage: 'Disponibilità residua pari a zero',
         api: {
             createSellingTransactionSuccess:
-                'Selling transaction correctly registered',
+                'Movimentazione di vendita registrata con successo',
             createSellingTransactionError:
-                'Error while processing selling transaction',
-            getArticleNotFound: 'Article not found',
-            getArticleError: 'Error while loading article',
+                "Errore durante l'elaborazione della transazione di vendita",
+            getArticleNotFound: 'Articolo non trovato',
+            getArticleError: "Errore durante il recupero dell'articolo",
         },
     },
     warehouse: {
         articles: {
-            pageTitle: 'Articles',
-            buttonAdd: 'New article',
+            pageTitle: 'Articoli',
+            buttonAdd: 'Nuovo articolo',
             filter: {
-                filter: 'Filter',
+                filter: 'Filtra',
             },
             row: {
                 print: {
-                    label: 'Print label',
+                    label: 'Stampa etichetta',
                 },
             },
             detail: {
                 pageTitle: {
-                    newArticle: 'New article',
-                    article: 'Article',
+                    newArticle: 'Nuovo articolo',
+                    article: 'Articolo',
                 },
                 print: {
-                    label: 'Print label',
+                    label: 'Stampa etichetta',
                 },
-                title: 'Title',
-                description: 'Description',
+                title: 'Titolo',
+                description: 'Descrizione',
                 barcode: 'Barcode',
-                active: 'Active',
-                reorderThreshold: 'Reorder threshold',
+                active: 'Attivo',
+                reorderThreshold: 'Soglia riordino',
                 api: {
-                    getArticleError: 'Error while loading article',
-                    printLabelError: 'Error while printing label',
-                    printLabelSuccess: 'Label printed',
-                    createArticleSuccess: 'Article created',
-                    createArticleError: 'Error while creating article',
-                    updateArticleSuccess: 'Article updated',
-                    updateArticleError: 'Error while updating article',
+                    getArticleError: "Errore durante il recupero dell'articolo",
+                    printLabelError: "Errore durante la stampa dell'etichetta",
+                    printLabelSuccess: 'Etichetta stampata con successo',
+                    createArticleSuccess: 'Articolo creato con successo',
+                    createArticleError:
+                        "Errore durante la creazione dell'articolo",
+                    updateArticleSuccess: 'Articolo aggiornato con successo',
+                    updateArticleError:
+                        "Errore durante l'aggiornamento dell'articolo",
                 },
             },
             api: {
-                getArticlesError: 'Error while loading articles',
-                printLabelError: 'Error while printing label',
-                printLabelSuccess: 'Label printed',
+                getArticlesError: 'Errore durante il recupero degli articoli',
+                printLabelError: "Errore durante la stampa dell'etichetta",
+                printLabelSuccess: 'Etichetta stampata con successo',
             },
         },
         inventory: {
-            pageTitle: 'Inventory',
+            pageTitle: 'Inventario',
             buttonCycle: {
-                title: 'Execute inventory cycle',
-                lastCycle: 'Last inventory cycle',
-                nextCycle: 'Next inventory cycle',
+                title: 'Lancia valorizzazione storico magazzino',
+                lastCycle: 'Data ultima valorizzazione',
+                nextCycle: 'Data prossima valorizzazione',
             },
             row: {
-                currentAvailability: 'Current availability',
+                currentAvailability: 'Disponibilità attuale',
             },
             api: {
-                getInventoryCycleError: 'Erroe while loading inventory cycle',
-                getInventoryError: 'Error while loading inventory',
-                createInventoryCycleSuccess: 'Inventory cycle created',
+                getInventoryCycleError:
+                    'Errore durante il recupero dei dettagli valorizzazione storico',
+                getInventoryError: "Errore durante il recupero dell'inventario",
+                createInventoryCycleSuccess:
+                    'Valorizzazione storico creata con successo',
                 createInventoryCycleError:
-                    'Error while creating inventory cycle',
+                    'Errore durante la creazione valorizzazione storico',
             },
         },
         transactions: {
-            pageTitle: 'Transactions',
-            buttonAdd: 'New transaction',
+            pageTitle: 'Movimentazioni',
+            buttonAdd: 'Nuova movimentazione',
             row: {
-                transaction: 'Trans.',
-                date: 'Date',
-                username: 'User',
+                transaction: 'Mov.',
+                date: 'Data',
+                username: 'Utente',
                 detailRow: {
-                    quantity: 'Quantity',
-                    reference: 'Reference',
+                    quantity: 'Quantità',
+                    reference: 'Causale',
                 },
                 api: {
-                    getTransactionDetailError: '',
+                    getTransactionDetailError:
+                        'Errore durante il recupero dei dettagli movimentazione',
                 },
             },
             modal: {
-                title: 'New transaction',
-                selectReference: 'Select reference',
-                quantity: 'Quantity',
-                available: 'Available',
+                title: 'Nuova movimentazione',
+                selectReference: 'Seleziona causale',
+                quantity: 'Quantità',
+                available: 'Disponibile',
                 articleAlreadyAddedMessage:
-                    'Article already added to the transaction',
+                    'Articolo già aggiunto alla movimentazione',
                 api: {
-                    getArticleError: 'Unable to retrieve article info',
-                    createTransactionSuccess: '',
-                    createTransactionError: '',
+                    getArticleError:
+                        'Impossibile recuperare i dettagli articolo',
+                    createTransactionSuccess:
+                        'Movimentazione creata con successo',
+                    createTransactionError:
+                        'Errore durante la creazione movimentazione',
                 },
             },
             api: {
-                getTransactionsError: 'Error while loading transactions',
+                getTransactionsError:
+                    'Errore durante il recupero delle movimentazioni',
                 getTransactionReferenceError:
-                    'Error while loading transaction references',
+                    'Errore durante il recupero delle causali movimentazioni',
             },
         },
     },
     genericComponents: {
         buttons: {
-            save: 'Save',
-            cancel: 'Cancel',
+            save: 'Salva',
+            cancel: 'Annulla',
         },
         pagination: {
-            nextPage: 'Next page',
-            previousPage: 'Previous page',
-            noResults: 'No results to display',
+            nextPage: 'Prossima pagina',
+            previousPage: 'Pagina precedente',
+            noResults: 'Nessun risultato',
         },
     },
 };
