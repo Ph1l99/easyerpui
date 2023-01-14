@@ -1,7 +1,4 @@
-const EASY_ERP_BASE_URL =
-    process.env.NODE_ENV === 'development'
-        ? 'http://localhost:8000/api'
-        : process.env.EASYERP_BACKEND_URL;
+const EASY_ERP_BASE_URL = process.env.NEXT_PUBLIC_EASYERP_BACKEND_URL;
 
 // Base urls
 const EASY_ERP_AUTH_BASE_URL = '/auth';
