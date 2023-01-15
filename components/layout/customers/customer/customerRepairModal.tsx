@@ -59,7 +59,7 @@ export default function CustomerRepairModal({
     };
 
     useEffect(() => {
-        loadCustomers(`${EASY_ERP_CUSTOMERS_BASE_URL}/`);
+        if (isOpen) loadCustomers(`${EASY_ERP_CUSTOMERS_BASE_URL}/`);
         if (customer.id === -1) {
             setIsNewAssignment(true);
             setLocalSelectedCustomer({});
@@ -83,7 +83,9 @@ export default function CustomerRepairModal({
                 }
             >
                 <div className="flex flex-row">
-                    {`${t.repairs.modal.selectedCustomer}: ${localSelectedCustomer.last_name} ${localSelectedCustomer.first_name}`}
+                    {localSelectedCustomer.last_name
+                        ? `${t.repairs.modal.selectedCustomer}: ${localSelectedCustomer.last_name} ${localSelectedCustomer.first_name}`
+                        : `${t.repairs.modal.selectedCustomer}:`}
                 </div>
                 <hr className="mt-4" />
                 <div className="flex flex-col">

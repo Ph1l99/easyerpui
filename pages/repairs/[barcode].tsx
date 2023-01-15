@@ -314,7 +314,11 @@ export default function Repair() {
                             placeholder={t.repairs.detail.customer}
                             readOnly
                             className="basis-3/12 bg-zinc-200 w-full outline-none p-2 placeholder-black rounded-md cursor-pointer"
-                            value={`${repairCustomer.last_name} ${repairCustomer.first_name}`}
+                            value={
+                                repairCustomer.last_name
+                                    ? `${repairCustomer.last_name} ${repairCustomer.first_name}`
+                                    : ''
+                            }
                             onClick={() => {
                                 setIsCustomerModalOpen(true);
                             }}
