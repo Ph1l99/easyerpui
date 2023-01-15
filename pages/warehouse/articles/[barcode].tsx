@@ -91,7 +91,7 @@ export default function Article() {
     };
 
     const printArticleLabel = function () {
-        if (barcode) {
+        if (barcode !== '-1') {
             authAxios
                 .post(`${EASY_ERP_ARTICLES_URL}/${barcode}/label`)
                 .then(response => {
@@ -165,7 +165,12 @@ export default function Article() {
                 </div>
                 <div className="basis-1/12 text-right">
                     <FontAwesomeIcon
-                        className="mx-2 fa-xl cursor-pointer"
+                        className={clsx(
+                            'mx-2 fa-xl',
+                            isNewArticle
+                                ? 'cursor-not-allowed'
+                                : 'cursor-pointer'
+                        )}
                         icon={faTag}
                         title={t.warehouse.articles.detail.print.label}
                         onClick={printArticleLabel}

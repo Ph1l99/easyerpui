@@ -41,7 +41,7 @@ export default function Repair() {
     const [isCustomerModalOpen, setIsCustomerModalOpen] = useState(false);
 
     const printRepairReceipt = function () {
-        if (barcode) {
+        if (barcode !== '-1') {
             authAxios
                 .post(`${EASY_ERP_REPAIRS_URL}${barcode}/receipt`)
                 .then(response => {
@@ -59,7 +59,7 @@ export default function Repair() {
         }
     };
     const printRepairLabel = function () {
-        if (barcode) {
+        if (barcode !== '-1') {
             authAxios
                 .post(`${EASY_ERP_REPAIRS_URL}${barcode}/label`)
                 .then(response => {
@@ -247,7 +247,7 @@ export default function Repair() {
                             'mx-2 fa-xl',
                             isNewRepair
                                 ? 'cursor-not-allowed'
-                                : ' cursor-pointer'
+                                : 'cursor-pointer'
                         )}
                         icon={faReceipt}
                         title={t.repairs.detail.print.receipt}
@@ -258,7 +258,7 @@ export default function Repair() {
                             'mx-2 fa-xl',
                             isNewRepair
                                 ? 'cursor-not-allowed'
-                                : ' cursor-pointer'
+                                : 'cursor-pointer'
                         )}
                         icon={faTag}
                         title={t.repairs.detail.print.label}
