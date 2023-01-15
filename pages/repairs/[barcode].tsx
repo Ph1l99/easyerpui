@@ -10,7 +10,7 @@ import {
 } from '../../utils/urls';
 import useApi from '../../components/useApi';
 import { useRouter } from 'next/router';
-import { CustomerDetail, RepairStatus } from '../../utils/types';
+import { CustomerDetail, RepairDetail, RepairStatus } from '../../utils/types';
 import CustomerRepairModal from '../../components/layout/customers/customer/customerRepairModal';
 import useTranslation from '../../components/useTranslation';
 import {
@@ -24,15 +24,7 @@ export default function Repair() {
     const { t } = useTranslation();
     const { barcode } = router.query;
 
-    const [repair, setRepair] = useState({
-        title: '',
-        description: '',
-        barcode: '',
-        delivery_date: '',
-        customer: -1,
-        insert_date_time: '',
-        status: '',
-    });
+    const [repair, setRepair] = useState<RepairDetail>({ barcode: '-1' });
     const [repairStatuses, setRepairStatuses] = useState<RepairStatus[]>([]);
     const [repairCustomer, setRepairCustomer] = useState<CustomerDetail>({});
     const [beforeUpdateRepair, setBeforeUpdateRepair] = useState(repair);
@@ -136,10 +128,14 @@ export default function Repair() {
     };
 
     const saveRepair = function () {
-        isNewRepair ? createRepair() : updateRepair();
+        let repairToSend = repair;
+        if (repair.delivery_date == '') {
+            delete repairToSend.delivery_date;
+        }
+        isNewRepair ? createRepair(repairToSend) : updateRepair(repairToSend);
     };
 
-    const updateRepair = function () {
+    const updateRepair = function (repair: any) {
         authAxios
             .put(`${EASY_ERP_REPAIRS_URL}${barcode}`, repair)
             .then(response => {
@@ -157,7 +153,7 @@ export default function Repair() {
             });
     };
 
-    const createRepair = function () {
+    const createRepair = function (repair: any) {
         authAxios
             .post(`${EASY_ERP_REPAIRS_URL}-1`, repair)
             .then(response => {

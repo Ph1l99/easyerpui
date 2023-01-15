@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import clsx from 'clsx';
-import { RepairDetail } from '../../../utils/types';
+import { RepairInfo } from '../../../utils/types';
 import useTranslation from '../../useTranslation';
 
 export default function RepairRow({
@@ -9,7 +9,7 @@ export default function RepairRow({
     navigateToRepairPage,
     deleteRepair,
 }: {
-    repair: RepairDetail;
+    repair: RepairInfo;
     navigateToRepairPage: Function;
     deleteRepair: Function;
 }) {

@@ -44,12 +44,17 @@ type SellingArticle = {
 };
 
 // Repairs
-type RepairDetail = {
+type Repair = {
     barcode?: string;
     title?: string;
     description?: string;
     delivery_date?: string;
+};
+type RepairInfo = Repair & {
     status?: RepairStatus;
+};
+type RepairDetail = Repair & {
+    status?: number;
 };
 type RepairStatus = {
     id?: number;
@@ -99,6 +104,7 @@ export type {
     SellingArticle,
     ArticleDashboardDetail,
     ArticleDashboard,
+    RepairInfo,
     RepairDetail,
     RepairStatus,
     RepairDashboardDetail,

@@ -11,7 +11,7 @@ import useApi from '../../components/useApi';
 import Head from 'next/head';
 import React, { useEffect, useState } from 'react';
 import PaginatedContent from '../../components/layout/appLayout/pagination/paginatedContent';
-import { PaginationResult, RepairDetail } from '../../utils/types';
+import { PaginationResult, RepairInfo } from '../../utils/types';
 import FilterBoxGroup from '../../components/layout/appLayout/filtering/filterBoxGroup';
 import useTranslation from '../../components/useTranslation';
 import {
@@ -136,7 +136,7 @@ export default function Repairs() {
                 previous={repairs?.previous}
                 loadItems={loadRepairs}
             >
-                {repairs?.results?.map((repair: RepairDetail) => (
+                {repairs?.results?.map((repair: RepairInfo) => (
                     <RepairRow
                         key={repair.barcode}
                         repair={{

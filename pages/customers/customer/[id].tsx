@@ -11,7 +11,7 @@ import {
     CustomerDetail,
     FidelityCard,
     PaginationResult,
-    RepairDetail,
+    RepairInfo,
 } from '../../../utils/types';
 import {
     toastOnErrorApiResponse,
@@ -315,7 +315,7 @@ export default function Customer() {
                 <div className="basis-6/12 flex flex-col justify-between">
                     {repairsForCustomer.results?.length! > 0 &&
                         repairsForCustomer.results?.map(
-                            (repairForCustomer: RepairDetail) => (
+                            (repairForCustomer: RepairInfo) => (
                                 <div
                                     className="flex px-2 py-2 bg-zinc-200 rounded-lg justify-start items-center h-10 mt-3"
                                     key={repairForCustomer.barcode}
