@@ -7,7 +7,7 @@ import {
     faCircleUser,
     faRightFromBracket,
 } from '@fortawesome/free-solid-svg-icons';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import useTranslation from '../../useTranslation';
 
 export default function Header({
@@ -17,9 +17,13 @@ export default function Header({
     isOpen: boolean;
     onOpenStateChange: Function;
 }) {
-    const { user, logout } = useAuth();
+    const { user, logout, getProfileInfo } = useAuth();
     const { t } = useTranslation();
     const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+
+    useEffect(() => {
+        if (isUserMenuOpen && !user?.username) getProfileInfo();
+    }, [isUserMenuOpen]);
 
     return (
         <>
