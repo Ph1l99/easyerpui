@@ -76,7 +76,8 @@ export default function Repair() {
                 .then(response => {
                     setRepair(response.data);
                     setBeforeUpdateRepair(response.data);
-                    loadRepairCustomerInfo(response.data.customer);
+                    if (response.data.customer)
+                        loadRepairCustomerInfo(response.data.customer);
                 })
                 .catch(error => {
                     toastOnErrorApiResponse(
