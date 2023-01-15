@@ -98,7 +98,7 @@ export default function FidelityCardModal({
     };
 
     useEffect(() => {
-        if (fidelityCard.barcode !== '') {
+        if (fidelityCard.barcode && fidelityCard.barcode !== '') {
             setLocalFidelityCard(fidelityCard);
             setIsNewFidelityCard(false);
         } else {
