@@ -62,7 +62,7 @@ export default function Article() {
     const createArticle = function () {
         let articleToBeSaved = article;
         // If new article and no barcode is provided, set barcode to -1
-        if (article.barcode == '') {
+        if (!article.barcode) {
             articleToBeSaved.barcode = '-1';
         }
 
