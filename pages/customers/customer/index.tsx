@@ -48,7 +48,7 @@ export default function Customer() {
                         response,
                         t.customers.customer.api.deleteCustomerSuccess
                     );
-                    loadCustomers(`${EASY_ERP_CUSTOMERS_BASE_URL}`);
+                    loadCustomers(`${EASY_ERP_CUSTOMERS_BASE_URL}/`);
                 })
                 .catch(error => {
                     toastOnErrorApiResponse(
