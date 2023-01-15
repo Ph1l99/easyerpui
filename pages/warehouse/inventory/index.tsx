@@ -23,7 +23,7 @@ export default function Inventory() {
     const { authAxios } = useApi();
     const { t } = useTranslation();
 
-    const [nextInventoryCycleDetails, setNextInventoryCycleDetails] = useState({
+    const [inventoryCycleDetails, setInventoryCycleDetails] = useState({
         last_inventory_cycle: '',
         next_inventory_cycle: '',
     });
@@ -35,7 +35,7 @@ export default function Inventory() {
         authAxios
             .get(`${EASY_ERP_INVENTORY_CYCLE_NEXT_URL}`)
             .then(response => {
-                setNextInventoryCycleDetails(response.data);
+                setInventoryCycleDetails(response.data);
             })
             .catch(error => {
                 toastOnErrorApiResponse(
@@ -61,11 +61,12 @@ export default function Inventory() {
 
     const computeInventoryCycleOptions = function () {
         if (
-            nextInventoryCycleDetails.next_inventory_cycle == null ||
-            new Date(nextInventoryCycleDetails.next_inventory_cycle) <=
-                new Date()
+            inventoryCycleDetails.next_inventory_cycle == null ||
+            new Date(inventoryCycleDetails.next_inventory_cycle) <= new Date()
         ) {
             setIsEnabledInventoryCycleButton(true);
+        } else {
+            setIsEnabledInventoryCycleButton(false);
         }
     };
 
@@ -98,7 +99,7 @@ export default function Inventory() {
 
     useEffect(() => {
         computeInventoryCycleOptions();
-    }, [nextInventoryCycleDetails]);
+    }, [inventoryCycleDetails]);
 
     return (
         <>
@@ -111,10 +112,10 @@ export default function Inventory() {
                 <input
                     type="button"
                     className={clsx(
-                        'p-2 rounded-lg bg-fuchsia-600 text-white outline-none text-center cursor-pointer font-bold',
+                        'p-2 rounded-lg bg-fuchsia-600 text-white outline-none text-center font-bold',
                         !isEnabledInventoryCycleButton
                             ? 'cursor-not-allowed'
-                            : ''
+                            : 'cursor-pointer'
                     )}
                     value={t.warehouse.inventory.buttonCycle.title}
                     readOnly={!isEnabledInventoryCycleButton}
@@ -122,12 +123,12 @@ export default function Inventory() {
                     title={
                         `${t.warehouse.inventory.buttonCycle.lastCycle}: ` +
                         new Date(
-                            nextInventoryCycleDetails.last_inventory_cycle
+                            inventoryCycleDetails.last_inventory_cycle
                         ).toLocaleDateString() +
                         '\n' +
                         `${t.warehouse.inventory.buttonCycle.nextCycle}: ` +
                         new Date(
-                            nextInventoryCycleDetails.next_inventory_cycle
+                            inventoryCycleDetails.next_inventory_cycle
                         ).toLocaleDateString()
                     }
                     onClick={executeInventoryCycle}
