@@ -313,51 +313,56 @@ export default function Customer() {
                     {t.customers.customer.detail.customerRepairs}
                 </div>
                 <div className="basis-6/12 flex flex-col justify-between">
-                    {repairsForCustomer.results?.length! > 0 &&
-                        repairsForCustomer.results?.map(
-                            (repairForCustomer: RepairInfo) => (
-                                <div
-                                    className="flex px-2 py-2 bg-zinc-200 rounded-lg justify-start items-center h-10 mt-3"
-                                    key={repairForCustomer.barcode}
-                                >
-                                    <div className="basis-4/12">
-                                        {repairForCustomer.title}
-                                    </div>
-                                    <div className="basis-4/12">
-                                        <div
-                                            className={clsx(
-                                                'w-6/12 font-bold text-white text-center rounded-lg capitalize',
-                                                repairForCustomer.status
-                                                    ?.class_name
-                                                    ? `bg-${repairForCustomer.status.class_name}`
-                                                    : 'bg-sky-900'
-                                            )}
-                                        >
-                                            {repairForCustomer.status?.status}
+                    <div className="basis-10/12 flex flex-col">
+                        {repairsForCustomer.results?.length! > 0 &&
+                            repairsForCustomer.results?.map(
+                                (repairForCustomer: RepairInfo) => (
+                                    <div
+                                        className="flex px-2 py-2 bg-zinc-200 rounded-lg justify-start items-center h-10 mt-3"
+                                        key={repairForCustomer.barcode}
+                                    >
+                                        <div className="basis-4/12">
+                                            {repairForCustomer.title}
                                         </div>
+                                        <div className="basis-4/12">
+                                            <div
+                                                className={clsx(
+                                                    'w-6/12 font-bold text-white text-center rounded-lg capitalize',
+                                                    repairForCustomer.status
+                                                        ?.class_name
+                                                        ? `bg-${repairForCustomer.status.class_name}`
+                                                        : 'bg-sky-900'
+                                                )}
+                                            >
+                                                {
+                                                    repairForCustomer.status
+                                                        ?.status
+                                                }
+                                            </div>
+                                        </div>
+                                        <div className="basis-3/12 font-bold">
+                                            <span className="font-normal">
+                                                {`${t.repairs.row.delivery}: `}
+                                            </span>
+                                            {repairForCustomer.delivery_date}
+                                        </div>
+                                        <FontAwesomeIcon
+                                            icon={faArrowUpRightFromSquare}
+                                            className="basis-1/12 cursor-pointer"
+                                            title={
+                                                t.customers.customer.detail
+                                                    .navigateToCustomerRepair
+                                            }
+                                            onClick={() => {
+                                                router.push(
+                                                    `${EASY_ERP_REPAIRS_URL}${repairForCustomer.barcode}`
+                                                );
+                                            }}
+                                        />
                                     </div>
-                                    <div className="basis-3/12 font-bold">
-                                        <span className="font-normal">
-                                            {`${t.repairs.row.delivery}: `}
-                                        </span>
-                                        {repairForCustomer.delivery_date}
-                                    </div>
-                                    <FontAwesomeIcon
-                                        icon={faArrowUpRightFromSquare}
-                                        className="basis-1/12 cursor-pointer"
-                                        title={
-                                            t.customers.customer.detail
-                                                .navigateToCustomerRepair
-                                        }
-                                        onClick={() => {
-                                            router.push(
-                                                `${EASY_ERP_REPAIRS_URL}${repairForCustomer.barcode}`
-                                            );
-                                        }}
-                                    />
-                                </div>
-                            )
-                        )}
+                                )
+                            )}
+                    </div>
                     {repairsForCustomer.results?.length === 0 && <NoResults />}
                     <Pagination
                         hasPreviousPage={!!repairsForCustomer.previous}
