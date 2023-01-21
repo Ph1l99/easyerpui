@@ -307,6 +307,8 @@ export const it = {
                 selectReference: 'Seleziona causale',
                 quantity: 'Quantità',
                 available: 'Disponibile',
+                saveTransaction: 'Salva movimentazione',
+                printLabels: 'Stampa etichette per articoli caricati',
                 articleAlreadyAddedMessage:
                     'Articolo già aggiunto alla movimentazione',
                 api: {

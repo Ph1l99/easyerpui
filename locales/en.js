@@ -287,6 +287,8 @@ export const en = {
                 selectReference: 'Select reference',
                 quantity: 'Quantity',
                 available: 'Available',
+                saveTransaction: 'Save transaction',
+                printLabels: 'Print labels for articles being loaded',
                 articleAlreadyAddedMessage:
                     'Article already added to the transaction',
                 api: {
