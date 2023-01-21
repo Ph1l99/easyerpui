@@ -33,8 +33,10 @@ export default function NewTransactionModal({
         TransactionArticle[]
     >([]);
     const [lastTransactionArticle, setLastTransactionArticle] = useState('');
+    const [printLabels, setPrintLabels] = useState(true);
 
     const closeModal = function (refresh: boolean) {
+        setPrintLabels(true);
         onClose(refresh);
     };
 
@@ -74,6 +76,7 @@ export default function NewTransactionModal({
         authAxios
             .post(`${EASY_ERP_TRANSACTIONS_URL}/-1`, {
                 details: transactionDetails,
+                print_labels: printLabels,
             })
             .then(response => {
                 toastOnSuccessApiResponse(
@@ -234,10 +237,26 @@ export default function NewTransactionModal({
                         />
                     </div>
                     <hr />
-                    <div className="flex flex-row justify-end mt-4">
+                    <div className="flex flex-row justify-end mt-4 gap-2.5">
+                        <div>
+                            <label
+                                htmlFor="checkBoxPrintLabels"
+                                className="pr-2"
+                            >
+                                {t.warehouse.transactions.modal.printLabels}
+                            </label>
+                            <input
+                                id="checkBoxPrintLabels"
+                                type="checkbox"
+                                checked={printLabels}
+                                onChange={e => setPrintLabels(e.target.checked)}
+                            />
+                        </div>
                         <input
                             type="button"
-                            value="Salva movimentazione"
+                            value={
+                                t.warehouse.transactions.modal.saveTransaction
+                            }
                             className={clsx(
                                 'py-1 px-1 rounded-lg bg-indigo-600 text-white outline-none mr-4 text-center h-fit font-bold cursor-pointer'
                             )}
