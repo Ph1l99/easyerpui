@@ -143,6 +143,7 @@ export default function Selling() {
             authAxios
                 .post(`${EASY_ERP_TRANSACTIONS_URL}/-1`, {
                     details: sellTransactionDetails,
+                    print_labels: false,
                 })
                 .then(response => {
                     toastOnSuccessApiResponse(
