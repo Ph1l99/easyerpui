@@ -5,6 +5,7 @@ import SectionTitle from '../components/layout/sectionTitle';
 import {
     ArticleDashboard,
     ArticleDashboardDetail,
+    ArticleDetail,
     RepairDashboard,
     RepairDashboardDetail,
 } from '../utils/types';
@@ -13,6 +14,8 @@ import { EASY_ERP_ARTICLES_URL, EASY_ERP_REPAIRS_URL } from '../utils/urls';
 import clsx from 'clsx';
 import useTranslation from '../components/useTranslation';
 import { toastOnErrorApiResponse } from '../utils/toast';
+import ArticleDashboardItem from '../components/layout/dashboard/articleDashboardItem';
+import Modal from '../components/layout/modal';
 
 export default function Home() {
     const { user, getProfileInfo } = useAuth();
@@ -24,6 +27,27 @@ export default function Home() {
     const [repairsDashboard, setRepairsDashboard] = useState<RepairDashboard>(
         {}
     );
+    const [isArticleDashboardModalOpen, setIsArticleDashboardModalOpen] =
+        useState(false);
+    const [itemsDashboardModal, setItemsDashboardModal] = useState<
+        Array<ArticleDetail>
+    >([]);
+    const [articleDashboardModalTitle, setArticleDashboardModalTitle] =
+        useState('');
+
+    const openModalDashboardArticle = function (
+        modalTitle: string,
+        items: Array<ArticleDetail>
+    ) {
+        setItemsDashboardModal(items);
+        setArticleDashboardModalTitle(modalTitle);
+        setIsArticleDashboardModalOpen(true);
+    };
+    const closeModal = function () {
+        setIsArticleDashboardModalOpen(false);
+        setArticleDashboardModalTitle('');
+        setItemsDashboardModal([]);
+    };
 
     const loadArticlesDashboard = function () {
         authAxios
@@ -103,21 +127,42 @@ export default function Home() {
                     <div className="flex flex-row w-full gap-2.5 mt-3">
                         {articlesDashboard.dashboard?.map(
                             (articleDashboard: ArticleDashboardDetail) => (
-                                <div
-                                    className="bg-red-400 w-1/4 flex rounded-lg text-white text-xl uppercase justify-around p-2.5 h-fit"
-                                    key={articleDashboard.label}
-                                >
-                                    <div className="font-bold">
-                                        {articleDashboard.value}
-                                    </div>
-                                    <div className="text-left">
-                                        {articleDashboard.label}
-                                    </div>
-                                </div>
+                                <ArticleDashboardItem
+                                    key={articleDashboard.label!}
+                                    label={articleDashboard.label!}
+                                    value={articleDashboard.value!}
+                                    isClickEnabled={
+                                        articleDashboard.items?.length! > 0
+                                    }
+                                    openModalDetail={() => {
+                                        openModalDashboardArticle(
+                                            articleDashboard.label!,
+                                            articleDashboard.items!
+                                        );
+                                    }}
+                                />
                             )
                         )}
                     </div>
                 </div>
+                <Modal
+                    isOpen={isArticleDashboardModalOpen}
+                    title={articleDashboardModalTitle}
+                    onClose={closeModal}
+                >
+                    {itemsDashboardModal.map((article: ArticleDetail) => (
+                        <div
+                            className="flex justify-between px-2"
+                            key={article.barcode}
+                        >
+                            <div className="basis-6/12">{article.name}</div>
+                            <div className="basis-6/12 flex justify-end">
+                                {`${t.warehouse.inventory.row.currentAvailability}: `}
+                                {article.current_availability}
+                            </div>
+                        </div>
+                    ))}
+                </Modal>
             </div>
         </>
     );

@@ -31,6 +31,7 @@ type InventoryArticle = {
 type ArticleDashboardDetail = {
     label?: string;
     value?: number;
+    items?: Array<ArticleDetail>;
 };
 type ArticleDashboard = {
     dashboard?: Array<ArticleDashboardDetail>;
