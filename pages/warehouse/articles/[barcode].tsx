@@ -50,6 +50,7 @@ export default function Article() {
                     response,
                     t.warehouse.articles.detail.api.updateArticleSuccess
                 );
+                setIsEditing(false);
             })
             .catch(error => {
                 toastOnErrorApiResponse(
