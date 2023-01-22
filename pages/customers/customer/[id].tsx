@@ -270,9 +270,6 @@ export default function Customer() {
                                 type="checkbox"
                                 checked={assignNewFidelityCard}
                                 onChange={e => {
-                                    e.target.checked
-                                        ? setIsEditing(true)
-                                        : setIsEditing(false);
                                     setAssignNewFidelityCard(e.target.checked);
                                 }}
                             />
@@ -290,7 +287,12 @@ export default function Customer() {
                             )}
                             value={newFidelityCard}
                             disabled={!assignNewFidelityCard}
-                            onChange={e => setNewFidelityCard(e.target.value)}
+                            onChange={e => {
+                                if (e.target.value != '') {
+                                    setIsEditing(true);
+                                }
+                                setNewFidelityCard(e.target.value);
+                            }}
                         >
                             <option value="">
                                 {
