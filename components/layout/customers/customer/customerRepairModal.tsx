@@ -8,6 +8,7 @@ import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import Pagination from '../../appLayout/pagination/pagination';
 import useTranslation from '../../../useTranslation';
 import { toastOnErrorApiResponse } from '../../../../utils/toast';
+import Search from '../../appLayout/search/search';
 
 export default function CustomerRepairModal({
     isOpen,
@@ -44,6 +45,10 @@ export default function CustomerRepairModal({
                     t.repairs.modal.api.getCustomersError
                 );
             });
+    };
+
+    const searchCustomer = function (input: string) {
+        loadCustomers(`${EASY_ERP_CUSTOMERS_BASE_URL}?search=${input}`);
     };
 
     const revertChanges = function () {
@@ -88,7 +93,8 @@ export default function CustomerRepairModal({
                         : `${t.repairs.modal.selectedCustomer}:`}
                 </div>
                 <hr className="mt-4" />
-                <div className="flex flex-col">
+                <Search searchItem={searchCustomer} />
+                <div className="flex flex-col mt-4">
                     {availableCustomers.results?.map(
                         (customer: CustomerDetail) => (
                             <div
