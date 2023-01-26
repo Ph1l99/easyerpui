@@ -178,6 +178,10 @@ export const en = {
                 getCustomersError: 'Error while loading customers',
             },
         },
+        deleteModal: {
+            title: 'Delete repair',
+            content: 'Are you sure you want to remove the selected repair?',
+        },
         api: {
             getRepairError: 'Repair not found',
             getRepairStatusError: 'Error while loading repair status',
@@ -308,6 +312,7 @@ export const en = {
         buttons: {
             save: 'Save',
             cancel: 'Cancel',
+            delete: 'Delete',
         },
         pagination: {
             nextPage: 'Next page',

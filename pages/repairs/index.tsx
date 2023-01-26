@@ -19,6 +19,7 @@ import {
     toastOnSuccessApiResponse,
 } from '../../utils/toast';
 import NoResults from '../../components/layout/appLayout/pagination/noResults';
+import Modal from '../../components/layout/modal';
 
 export default function Repairs() {
     const router = useRouter();
@@ -27,6 +28,10 @@ export default function Repairs() {
 
     const [repairs, setRepairs] = useState<PaginationResult>();
     const [repairStatuses, setRepairStatuses] = useState<any>([]);
+    const [isModalDeleteRepairOpen, setIsModalDeleteRepairOpen] =
+        useState(false);
+    const [modalDeleteRepairInfo, setModalDeleteRepairInfo] =
+        useState<RepairInfo>({});
 
     const navigateToRepairPage = function (barcode: string) {
         if (barcode) router.push(`${EASY_ERP_REPAIRS_URL}${barcode}`);
@@ -94,7 +99,7 @@ export default function Repairs() {
                         response,
                         t.repairs.api.deleteRepairSuccess
                     );
-                    loadRepairs(`${EASY_ERP_REPAIRS_BASE_URL}`);
+                    loadRepairs(`${EASY_ERP_REPAIRS_BASE_URL}/`);
                 })
                 .catch(error => {
                     toastOnErrorApiResponse(
@@ -103,6 +108,15 @@ export default function Repairs() {
                     );
                 });
         }
+    };
+    const openModalDeleteRepair = function (repair: RepairInfo) {
+        setIsModalDeleteRepairOpen(true);
+        setModalDeleteRepairInfo(repair);
+    };
+
+    const closeModalDelete = function () {
+        setIsModalDeleteRepairOpen(false);
+        setModalDeleteRepairInfo({});
     };
 
     useEffect(() => {
@@ -147,11 +161,36 @@ export default function Repairs() {
                             status: repair.status,
                         }}
                         navigateToRepairPage={navigateToRepairPage}
-                        deleteRepair={deleteRepair}
+                        deleteRepair={openModalDeleteRepair}
                     />
                 ))}
                 {repairs?.results?.length === 0 && <NoResults />}
             </PaginatedContent>
+            <Modal
+                isOpen={isModalDeleteRepairOpen}
+                title={`${t.repairs.deleteModal.title}: ${modalDeleteRepairInfo.title}`}
+                onClose={closeModalDelete}
+            >
+                <div className="mb-4">{t.repairs.deleteModal.content}</div>
+                <hr />
+                <div className="flex flex-row justify-end mt-4">
+                    <input
+                        type="button"
+                        value={t.genericComponents.buttons.delete}
+                        className="basis-2/12 py-1 px-1 rounded-lg bg-green-600 text-white outline-none mr-4 text-center h-fit font-bold cursor-pointer"
+                        onClick={() => {
+                            deleteRepair(modalDeleteRepairInfo.barcode!);
+                            closeModalDelete();
+                        }}
+                    />
+                    <input
+                        type="button"
+                        value={t.genericComponents.buttons.cancel}
+                        className="basis-2/12 py-1 px-1 rounded-lg bg-red-600 text-white outline-none text-center h-fit cursor-pointer font-bold"
+                        onClick={closeModalDelete}
+                    />
+                </div>
+            </Modal>
         </>
     );
 }

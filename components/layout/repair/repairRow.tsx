@@ -47,7 +47,7 @@ export default function RepairRow({
                     title={t.repairs.row.deleteButton}
                     onClick={e => {
                         e.stopPropagation();
-                        deleteRepair(repair.barcode);
+                        deleteRepair(repair);
                     }}
                 />
             </div>

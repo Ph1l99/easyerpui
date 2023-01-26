@@ -192,6 +192,11 @@ export const it = {
                 getCustomersError: 'Errore durante il recupero dei clienti',
             },
         },
+        deleteModal: {
+            title: 'Eliminazione riparazione',
+            content:
+                'Sei sicuro di voler rimuovere la riparazione selezionata?',
+        },
         api: {
             getRepairError: 'Riparazione non trovata',
             getRepairStatusError:
@@ -332,6 +337,7 @@ export const it = {
         buttons: {
             save: 'Salva',
             cancel: 'Annulla',
+            delete: 'Elimina',
         },
         pagination: {
             nextPage: 'Prossima pagina',
