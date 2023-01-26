@@ -86,6 +86,11 @@ export const en = {
                     getCustomerInfoError: 'Error while loading customer info',
                 },
             },
+            modal: {
+                title: 'Delete customer',
+                content:
+                    'Are you sure you want to delete the selected customer?',
+            },
             api: {
                 deleteCustomerSuccess: 'Deleted customer',
                 deleteCustomerError: 'Error while deleting customer',

@@ -36,7 +36,7 @@ export default function CustomerRow({
                     title={t.customers.customer.row.deleteButton}
                     onClick={e => {
                         e.stopPropagation();
-                        deleteCustomer(customer.id);
+                        deleteCustomer(customer);
                     }}
                 />
             </div>

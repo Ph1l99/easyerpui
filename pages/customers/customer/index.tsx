@@ -10,13 +10,18 @@ import SearchAdd from '../../../components/layout/appLayout/search/searchAdd';
 import useApi from '../../../components/useApi';
 import CustomerRow from '../../../components/layout/customers/customer/customerRow';
 import PaginatedContent from '../../../components/layout/appLayout/pagination/paginatedContent';
-import { PaginationResult } from '../../../utils/types';
+import {
+    ListCustomer,
+    PaginationResult,
+    RepairInfo,
+} from '../../../utils/types';
 import useTranslation from '../../../components/useTranslation';
 import {
     toastOnErrorApiResponse,
     toastOnSuccessApiResponse,
 } from '../../../utils/toast';
 import NoResults from '../../../components/layout/appLayout/pagination/noResults';
+import Modal from '../../../components/layout/modal';
 
 export default function Customer() {
     const router = useRouter();
@@ -24,6 +29,10 @@ export default function Customer() {
     const { t } = useTranslation();
 
     const [customers, setCustomers] = useState<PaginationResult>();
+    const [isModalDeleteCustomerOpen, setIsModalDeleteCustomerOpen] =
+        useState(false);
+    const [modalDeleteCustomerInfo, setModalDeleteCustomerInfo] =
+        useState<ListCustomer>({});
 
     const navigateToCustomer = function (id: Number) {
         if (id) {
@@ -71,6 +80,16 @@ export default function Customer() {
             });
     };
 
+    const openModalDeleteRepair = function (customer: ListCustomer) {
+        setIsModalDeleteCustomerOpen(true);
+        setModalDeleteCustomerInfo(customer);
+    };
+
+    const closeModalDelete = function () {
+        setIsModalDeleteCustomerOpen(false);
+        setModalDeleteCustomerInfo({});
+    };
+
     useEffect(() => {
         loadCustomers(`${EASY_ERP_CUSTOMERS_BASE_URL}/`);
     }, []);
@@ -100,12 +119,37 @@ export default function Customer() {
                             last_name: customer.last_name,
                             fidelity_card: customer.fidelity_card,
                         }}
-                        deleteCustomer={deleteCustomer}
+                        deleteCustomer={openModalDeleteRepair}
                         navigateToCustomerPage={navigateToCustomer}
                     />
                 ))}
                 {customers?.results?.length === 0 && <NoResults />}
             </PaginatedContent>
+            <Modal
+                isOpen={isModalDeleteCustomerOpen}
+                title={`${t.customers.customer.modal.title}: ${modalDeleteCustomerInfo.last_name} - ${modalDeleteCustomerInfo.first_name}`}
+                onClose={closeModalDelete}
+            >
+                <div className="mb-4">{t.customers.customer.modal.content}</div>
+                <hr />
+                <div className="flex flex-row justify-end mt-4">
+                    <input
+                        type="button"
+                        value={t.genericComponents.buttons.delete}
+                        className="basis-2/12 py-1 px-1 rounded-lg bg-green-600 text-white outline-none mr-4 text-center h-fit font-bold cursor-pointer"
+                        onClick={() => {
+                            deleteCustomer(modalDeleteCustomerInfo.id!);
+                            closeModalDelete();
+                        }}
+                    />
+                    <input
+                        type="button"
+                        value={t.genericComponents.buttons.cancel}
+                        className="basis-2/12 py-1 px-1 rounded-lg bg-red-600 text-white outline-none text-center h-fit cursor-pointer font-bold"
+                        onClick={closeModalDelete}
+                    />
+                </div>
+            </Modal>
         </>
     );
 }

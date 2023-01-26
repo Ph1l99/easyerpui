@@ -92,6 +92,11 @@ export const it = {
                         'Errore durante il recupero delle info cliente',
                 },
             },
+            modal: {
+                title: 'Elimina cliente',
+                content:
+                    'Sei sicuro di voler eliminare il cliente selezionato?',
+            },
             api: {
                 deleteCustomerSuccess: 'Cliente eliminato con successo',
                 deleteCustomerError:
@@ -193,7 +198,7 @@ export const it = {
             },
         },
         deleteModal: {
-            title: 'Eliminazione riparazione',
+            title: 'Elimina riparazione',
             content:
                 'Sei sicuro di voler rimuovere la riparazione selezionata?',
         },
